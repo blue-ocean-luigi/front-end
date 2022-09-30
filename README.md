@@ -9,7 +9,7 @@
 * Remember to always merge updates before making a pull request 😊
   1. Commit changes to your branch `git commit`
   2. Switch to your local main branch: `git switch main`
-  3. Get the most current code from main: `git fetch origin main`
+  3. Get the most current code from main: `git fetch < origin OR upstream > main`
   4. Merge any new code from main to your branch `git switch <branch name>` then `git merge main`
 
 ## Front End Notes
