@@ -1,0 +1,7 @@
+# node dependecies
+client/node_modules
+server/node_modules
+
+# transpiled client scripts
+client/dist/bundle.js*
+
