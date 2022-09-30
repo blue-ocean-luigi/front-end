@@ -1,3 +1,3 @@
-const model = require('./model.js');
+import model from './model.js';
 
-module.exports = {}
+export const controller = {};
