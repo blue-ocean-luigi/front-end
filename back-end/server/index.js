@@ -2,9 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const router = require('./routes.js')
-
-import {pool} from '../db/postgres.js';
-import dotenv from 'dotenv';
+const pool = require('../db/postgres.js');
+const dotenv = require ('dotenv');
 dotenv.config()
 
 // pool.connect()
