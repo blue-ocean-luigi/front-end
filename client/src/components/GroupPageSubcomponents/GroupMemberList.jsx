@@ -5,12 +5,11 @@ import {
 import GroupMember from './GroupMember';
 import AdminEditMembers from './AdminEditMembers';
 
-function GroupMemberList() {
+function GroupMemberList({members}) {
   return (
     <Box>
-      This is GroupMemberList
-      <GroupMember />
-      <AdminEditMembers />
+      {members.map((m) => <GroupMember key={m.name} member={m} />)}
+
     </Box>
   );
 }

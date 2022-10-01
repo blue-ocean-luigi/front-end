@@ -8,8 +8,9 @@ import {
   Text,
   Heading,
 } from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
+import ColorModeSwitcher from './ColorModeSwitcher';
 import PageControl from './PageControl';
+
 import styles from '../style.css';
 
 export default function App() {
@@ -36,8 +37,8 @@ export default function App() {
             case 'pages':
               return <PageControl setMainDisplay={setMainDisplay} userId={userID} />;
             default:
-              // return <PageControl setMainDisplay={setMainDisplay} userId={userID} />;
-              return <Logo/>; //  or som kind of load screen. This for option loading page
+              return <PageControl setMainDisplay={setMainDisplay} userId={userID} />;
+              // return <Logo/>; //  or som kind of load screen. This for option loading page
           }
         })()}
       </div>
