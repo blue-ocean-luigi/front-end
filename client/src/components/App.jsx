@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import PageControl from './PageControl';
+import styles from '../style.css';
 
 export default function App() {
   const [mainDisplay, setMainDisplay] = useState('login');
