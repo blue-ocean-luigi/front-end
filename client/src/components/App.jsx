@@ -7,6 +7,7 @@ import {
   Text,
   Heading,
 } from '@chakra-ui/react';
+import styles from '../style.css';
 
 export default function App() {
   return (
