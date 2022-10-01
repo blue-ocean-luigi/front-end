@@ -5,3 +5,5 @@ server/node_modules
 # transpiled client scripts
 client/dist/bundle.js*
 
+# API keys and configs
+client/firebase.js
