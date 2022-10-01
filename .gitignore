@@ -1,8 +1,11 @@
 # node dependecies
 client/node_modules
-server/node_modules
+back-end/node_modules
 
 # transpiled client scripts
 client/dist/bundle.js*
 
 .DS_store
+
+back-end/.env
+

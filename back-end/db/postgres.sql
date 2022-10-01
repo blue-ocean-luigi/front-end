@@ -84,3 +84,4 @@ CREATE TABLE rsvp (
   payment_amt numeric(4, 2)
 );
 
+\q;
