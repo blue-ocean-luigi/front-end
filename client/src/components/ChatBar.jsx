@@ -17,18 +17,18 @@ export default function ChatBar() {
   return (
     <Box marginBottom="8px" bgColor='primary' position="fixed" bottom="0" left="0" width="100%">
       <Center>
-        <Flex w="80%">
+        <Flex w="100%">
+          <Center w="100%">
+            <Input  ml="4px" mr="4px" placeholder="send a message" variant='filled' />
+          </Center>
           <Menu>
-            <MenuButton w="20%"as={Button}>Chat Menu</MenuButton>
+            <MenuButton ml="4px" mr="4px" as={Button}>Chat Menu</MenuButton>
             <MenuList>
               <MenuItem>Friends</MenuItem>
               <MenuItem>Something Else...</MenuItem>
               <MenuItem>Lorem Ipsum</MenuItem>
             </MenuList>
           </Menu>
-          <Center w="100%">
-            <Input placeholder="send a message" variant='filled' w="90%"/>
-          </Center>
         </Flex>
       </Center>
     </Box>
