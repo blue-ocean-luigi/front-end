@@ -1,15 +1,14 @@
-/* html:body {
+html body {
   font-size: 16px;
   margin: 0px;
   width: 100vw;
   overflow-x: hidden;
   font-family: "Poppins", sans-serif;
   background: var(--gradient-body);
-  color: rgb(80, 80, 80);
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-} */
+}
