@@ -27,7 +27,7 @@ function GroupPage() {
     <Flex w="100%" justifyContent="right" bg="tomato">
       <VStack w="100%">
         <Flex w="100%" bg="lightpink">
-          <Box p={4} w="100%">
+          <Box w="100%">
             <SearchGroup />
             <Heading mt={1} mb={1}>
               Plant Loverz
@@ -45,13 +45,13 @@ function GroupPage() {
         </Flex>
         <Flex w="100%">
           <HStack w="100%">
-            <Box p={4} h="100%" w="30%" bg="blue">
+            <Box h="100%" w="30%" bg="blue">
               <Button variant="ghost">
                 Invite your friends
               </Button>
               <GroupMemberList members={members} />
             </Box>
-            <Box p={4} h="100%" w="70%" bg="green">
+            <Box position="relative" h="100%" w="70%" bg="green">
               <GroupFeed />
             </Box>
           </HStack>
