@@ -14,7 +14,7 @@ import PageControl from './PageControl';
 import styles from '../style.css';
 
 export default function App() {
-  const [mainDisplay, setMainDisplay] = useState('login');
+  const [mainDisplay, setMainDisplay] = useState('pages');
   const [userID, setUserID] = useState('');
   return (
     <ChakraProvider>
