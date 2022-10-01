@@ -1,12 +1,13 @@
 import React from 'react';
 import {
   Box,
+  Text,
 } from '@chakra-ui/react';
 
-function GroupMember() {
+function GroupMember({ member }) {
   return (
-    <Box>
-      This is GroupMember
+    <Box bg="gold">
+        { member.name }
     </Box>
   );
 }

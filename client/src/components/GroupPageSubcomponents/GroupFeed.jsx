@@ -10,15 +10,15 @@ import {
 function GroupFeed() {
   return (
     <Box>
-      <Box position="absolute" w="100%" justifyContent="center" bg="orange">
+      <Box position="absolute" w="100%" align="center" bg="orange">
         <Box>
-          <Text>This is where group events and posts go</Text>
+          This is where group events and posts go
         </Box>
         <Box>
-          <Text>This is where group events and posts go</Text>
+          This is where group events and posts go
         </Box>
         <Box>
-          <Text>This is where group events and posts go</Text>
+          This is where group events and posts go
         </Box>
       </Box>
       <Flex position="absolute" bottom={0} w="100%" justifyContent="flex-end" bg="magenta">
