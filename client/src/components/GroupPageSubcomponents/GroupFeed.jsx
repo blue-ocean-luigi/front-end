@@ -10,14 +10,14 @@ import {
 function GroupFeed() {
   return (
     <Box>
-      <Flex justifyContent="center">
+      <Flex mt={1} justifyContent="center" bg="orange">
         <VStack>
           <Text>This is where group events and posts go</Text>
           <Text>This is where group events and posts go</Text>
           <Text>This is where group events and posts go</Text>
         </VStack>
       </Flex>
-      <Flex justifyContent="flex-end">
+      <Flex mt="auto" justifyContent="flex-end" bg="magenta">
         <Button variant="ghost">
           New Event
         </Button>

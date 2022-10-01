@@ -1,6 +1,9 @@
 /* eslint-disable import/extensions */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+import {
+  Box,
+} from '@chakra-ui/react';
 import GroupPage from './GroupPage';
 import HomePage from './HomePage/HomePage.jsx';
 
@@ -9,7 +12,7 @@ function PageControl({ userID }) {
   return (
     <div>
       <nav> Nave bar goes here </nav>
-      <div>
+      <Box>
         {(() => {
           switch (page) {
             case 'home':
@@ -25,7 +28,7 @@ function PageControl({ userID }) {
               return <HomePage setPage={setPage} userID={userID} />;
           }
         })()}
-      </div>
+      </Box>
       <nav> Chat bar goes here </nav>
     </div>
   );
