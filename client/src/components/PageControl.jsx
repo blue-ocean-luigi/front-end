@@ -10,7 +10,7 @@ import HomePage from './HomePage/HomePage.jsx';
 function PageControl({ userID }) {
   const [page, setPage] = useState('group');
   return (
-    <div>
+    <Box>
       <nav> Nave bar goes here </nav>
       <Box>
         {(() => {
@@ -30,7 +30,7 @@ function PageControl({ userID }) {
         })()}
       </Box>
       <nav> Chat bar goes here </nav>
-    </div>
+    </Box>
   );
 }
 
