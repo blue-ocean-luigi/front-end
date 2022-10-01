@@ -4,11 +4,10 @@ import React, { useState } from 'react';
 import GroupPage from './GroupPage';
 import HomePage from './HomePage/HomePage.jsx';
 
-function PageControl({ userID }) {
+function PageControl({ setMainDisplay, userID }) {
   const [page, setPage] = useState('home');
   return (
     <div>
-      <nav> Nave bar goes here </nav>
       <div>
         {(() => {
           switch (page) {
@@ -26,7 +25,6 @@ function PageControl({ userID }) {
           }
         })()}
       </div>
-      <nav> Chat bar goes here </nav>
     </div>
   );
 }
