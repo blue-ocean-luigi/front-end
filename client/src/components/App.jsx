@@ -8,13 +8,14 @@ import {
   Text,
   Heading,
 } from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
 import LoginOption from './LoginOption';
+import ColorModeSwitcher from './ColorModeSwitcher';
 import PageControl from './PageControl';
+
 import styles from '../style.css';
 
 export default function App() {
-  const [mainDisplay, setMainDisplay] = useState('login');
+  const [mainDisplay, setMainDisplay] = useState('pages');
   const [userID, setUserID] = useState('');
   return (
     <ChakraProvider>
@@ -38,7 +39,7 @@ export default function App() {
               return <PageControl setMainDisplay={setMainDisplay} userId={userID} />;
             default:
               return <PageControl setMainDisplay={setMainDisplay} userId={userID} />;
-              //return <Logo/>; //  or som kind of load screen. This for option loading page
+              // return <Logo/>; //  or som kind of load screen. This for option loading page
           }
         })()}
       </div>
