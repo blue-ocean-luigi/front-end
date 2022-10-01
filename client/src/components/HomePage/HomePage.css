@@ -16,20 +16,33 @@
 }
 
 .hp_search_bar_container {
-  width: 90%;
+  width: 100%;
   background: rgba(200, 200, 0, 0.8);
   display: flex;
   justify-content: center;
 }
 
 .hp_search_bar {
-  width: 30%;
+  width: 20vw;
+  padding: 5px;
+}
+
+.hp_search_btn {
+  border: none;
+  width: 8vw;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: rgba(80,80,190,0.8);
 }
 
 .hp_sidebar {
   width: 30%;
   background: rgba(200, 20, 20, 0.5);
   padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .hp_profile_img_container {
@@ -46,6 +59,36 @@
   height: auto;
   aspect-ratio: 1/1;
   border-radius: 50%;
+}
+
+.hp_group_list_container {
+  width: 80%;
+  min-height: 20vh;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background: rgba(200,200,200,0.5);
+}
+
+.hp_group_name {
+  cursor: pointer;
+}
+
+.hp_friends_list_container {
+  width: 80%;
+  min-height: 20vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background: rgba(200,200,200,0.5);
+  margin-top: 1em;
+}
+
+.hp_friend_name {
+  cursor: pointer;
 }
 
 .hp_home_feed {
