@@ -1,3 +1,3 @@
-const pool =require('../db/postgres.js');
+const pool = require('../db/postgres.js')
 
 module.exports = {}
