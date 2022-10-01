@@ -43,13 +43,13 @@ function Signup({setExistingUser, setMainPage}) {
   }, [user, loading]);
 
   return (
-      <Center minH="500px" maxH="800px">
-        <Flex flexDirection="column" h="100%">
+      <Center>
+        <Flex flexDirection="column" h="calc(100vh)">
           <Center>
             <Heading>Sign Up</Heading>
           </Center>
           <Spacer />
-          <Box minH="300px" minW="400px" maxH="600px" maxW="600px">
+          <Box >
             <FormControl>
               <Flex flexDirection="column">
                   <Box>
