@@ -77,7 +77,7 @@ CREATE TABLE comments (
   post_id int REFERENCES posts(id),
   user_id int REFERENCES users(id),
   message text NOT NULL,
-  createdAt date DEFAULT now()
+  createdAt timestamp DEFAULT now()
 );
 -- future, add likes and like table
 
@@ -96,31 +96,31 @@ CREATE TABLE rsvp (
 );
 
 
-COPY comments
-FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/comments.csv' DELIMITER ',' CSV HEADER;
-COPY friends
-FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/friends.csv' DELIMITER ',' CSV HEADER;
-COPY group_members
-FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/group_members.csv' DELIMITER ',' CSV HEADER;
-COPY group_request
-FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/group)request.csv' DELIMITER ',' CSV HEADER;
-COPY groups
-FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/groups.csv' DELIMITER ',' CSV HEADER;
-COPY messages
-FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/messages.csv' DELIMITER ',' CSV HEADER;
-COPY post_photos
-FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/post_photos.csv' DELIMITER ',' CSV HEADER;
-COPY posts
-FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/posts.csv' DELIMITER ',' CSV HEADER;
-COPY rsvp
-FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/rsvp.csv' DELIMITER ',' CSV HEADER;
 COPY users
 FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/users.csv' DELIMITER ',' CSV HEADER;
+COPY groups
+FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/groups.csv' DELIMITER ',' CSV HEADER;
+COPY group_members
+FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/group_members.csv' DELIMITER ',' CSV HEADER;
+COPY group_requests
+FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/groups_request.csv' DELIMITER ',' CSV HEADER;
+COPY friends
+FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/friends.csv' DELIMITER ',' CSV HEADER;
+COPY messages
+FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/messages.csv' DELIMITER ',' CSV HEADER;
+COPY posts
+FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/posts.csv' DELIMITER ',' CSV HEADER;
+COPY post_photos
+FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/post_photos.csv' DELIMITER ',' CSV HEADER;
+COPY comments
+FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/comments.csv' DELIMITER ',' CSV HEADER;
+COPY rsvp
+FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/rsvp.csv' DELIMITER ',' CSV HEADER;
 
 SELECT setval('comments_id_seq', COALESCE((SELECT MAX(id)+1 FROM comments), 1), false);
 SELECT setval('friends_id_seq', COALESCE((SELECT MAX(id)+1 FROM friends), 1), false);
 SELECT setval('group_members_id_seq', COALESCE((SELECT MAX(id)+1 FROM group_members), 1), false);
-SELECT setval('group_request_id_seq', COALESCE((SELECT MAX(id)+1 FROM group_request), 1), false);
+SELECT setval('group_requests_id_seq', COALESCE((SELECT MAX(id)+1 FROM group_requests), 1), false);
 SELECT setval('groups_id_seq', COALESCE((SELECT MAX(id)+1 FROM groups), 1), false);
 SELECT setval('messages_id_seq', COALESCE((SELECT MAX(id)+1 FROM messages), 1), false);
 SELECT setval('post_photos_id_seq', COALESCE((SELECT MAX(id)+1 FROM post_photos), 1), false);
