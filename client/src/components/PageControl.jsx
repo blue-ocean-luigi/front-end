@@ -1,12 +1,11 @@
 /* eslint-disable import/extensions */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-// eslint-disable-next-line import/extensions
-import HomePage from './HomePage.jsx';
-import GroupPage from './GroupPage.jsx';
+import GroupPage from './GroupPage';
+import HomePage from './HomePage/HomePage.jsx';
 
 function PageControl({ userID }) {
-  const [page, setPage] = useState('group');
+  const [page, setPage] = useState('home');
   return (
     <div>
       <nav> Nave bar goes here </nav>
@@ -22,6 +21,7 @@ function PageControl({ userID }) {
             // case 'profile':
             //   return <ProfilePage setPage={setPage} userID={userID} />;
             default:
+              // return <GroupPage setPage={setPage} userID={userID} />;
               return <HomePage setPage={setPage} userID={userID} />;
           }
         })()}

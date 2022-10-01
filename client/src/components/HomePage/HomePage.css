@@ -1,0 +1,54 @@
+.hp_home_feed_container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.hp_body_container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.hp_search_bar_container {
+  width: 90%;
+  background: rgba(200, 200, 0, 0.8);
+  display: flex;
+  justify-content: center;
+}
+
+.hp_search_bar {
+  width: 30%;
+}
+
+.hp_sidebar {
+  width: 30%;
+  background: rgba(200, 20, 20, 0.5);
+  padding: 1em;
+}
+
+.hp_profile_img_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /* different bc of parent padding */
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+
+.hp_profile_img {
+  width: 50%;
+  height: auto;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+}
+
+.hp_home_feed {
+  width: 60%;
+  background: rgba(200, 0, 200, 0.5);
+}
