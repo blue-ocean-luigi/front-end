@@ -19,6 +19,7 @@ function HomePage() {
 
   const [newUser, setNewUser] = useState(false);
   const [posts, setPosts] = useState(testobjpost);
+  const [groups, setGroups] = useState(testobjgroup);
 
   return (
     <div className="hp_home_feed_container">
@@ -36,13 +37,16 @@ function HomePage() {
         {newUser ? (
           <div className="hp_home_feed">
             <h1>NEW USER</h1>
+            {groups.map((post, i) => (
+              <HomeFeedPost key={i} type="group" post={post} />
+            ))}
           </div>
         ) : (
           <div className="hp_home_feed">
-            {posts.map((post, i) => (
-              <HomeFeedPost key={i} post={post} />
-            ))}
             <h1>EXISTING USER</h1>
+            {posts.map((post, i) => (
+              <HomeFeedPost key={i} type="post" post={post} />
+            ))}
           </div>
         )}
       </div>
