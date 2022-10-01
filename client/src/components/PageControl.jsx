@@ -10,9 +10,9 @@ import HomePage from './HomePage/HomePage.jsx';
 function PageControl({ userID }) {
   const [page, setPage] = useState('group');
   return (
-    <Box>
+    <div>
       <nav> Nave bar goes here </nav>
-      <Box>
+      <div>
         {(() => {
           switch (page) {
             case 'home':
@@ -28,9 +28,8 @@ function PageControl({ userID }) {
               return <HomePage setPage={setPage} userID={userID} />;
           }
         })()}
-      </Box>
-      <nav> Chat bar goes here </nav>
-    </Box>
+      </div>
+    </div>
   );
 }
 
