@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import './App.css';
-import LoginOption from './LoginOption';
-import PageControl from './PageControl';
 import {
   ChakraProvider,
   Center,
@@ -10,12 +8,19 @@ import {
   Text,
   Heading,
 } from '@chakra-ui/react';
+import { ColorModeSwitcher } from './ColorModeSwitcher';
+import LoginOption from './LoginOption';
+import PageControl from './PageControl';
+import styles from '../style.css';
 
 export default function App() {
   const [mainDisplay, setMainDisplay] = useState('login');
   const [userID, setUserID] = useState('');
   return (
     <ChakraProvider>
+      <Flex justifyContent="right">
+        <ColorModeSwitcher />
+      </Flex>
       <Center>
         <Flex>
           <Box>
@@ -27,11 +32,12 @@ export default function App() {
       <div>
         {(() => {
           switch (mainDisplay) {
-            case 'login':
-              return <LoginOption setMainDisplay={setMainDisplay} setUserID={setUserID} />; // James
+             case 'login':
+               return <LoginOption setMainDisplay={setMainDisplay} setUserID={setUserID} />;
             case 'pages':
               return <PageControl setMainDisplay={setMainDisplay} userId={userID} />;
             default:
+              // return <PageControl setMainDisplay={setMainDisplay} userId={userID} />;
               return <Logo/>; //  or som kind of load screen. This for option loading page
           }
         })()}
