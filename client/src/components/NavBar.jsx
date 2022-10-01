@@ -1,5 +1,5 @@
 import React from 'react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
+import ColorModeSwitcher from './ColorModeSwitcher';
 import {
   Tab,
   Tabs,
