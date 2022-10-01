@@ -4,15 +4,20 @@ import {
   Text,
   Button,
   Flex,
+  VStack,
 } from '@chakra-ui/react';
 
 function GroupFeed() {
   return (
     <Box>
       <Flex justifyContent="center">
-        <Text>This is where group events and posts go</Text>
+        <VStack>
+          <Text>This is where group events and posts go</Text>
+          <Text>This is where group events and posts go</Text>
+          <Text>This is where group events and posts go</Text>
+        </VStack>
       </Flex>
-      <Flex justifyContent="right">
+      <Flex justifyContent="flex-end">
         <Button variant="ghost">
           New Event
         </Button>
