@@ -100,10 +100,10 @@ function Signup({setExistingUser, setMainDisplay}) {
   );
 }
 
-function Login({setExistingUser, setMainDisplay}) {
+function Login({user, loading, error, setExistingUser, setMainDisplay}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [user, loading, error] = useAuthState(auth);
+  //const [user, loading, error] = useAuthState(auth);
   useEffect(() => {
     if (loading) {
       // trigger loading screen?
@@ -170,10 +170,16 @@ function Login({setExistingUser, setMainDisplay}) {
   )
 }
 
-export default function LoginOption({ setMainDisplay, setUserID }) {
+export default function LoginOption({ user, loading, error, setMainDisplay, setUserID }) {
   const [existingUser, setExistingUser] = useState(true);
   if (existingUser) {
-    return <Login setMainDisplay={setMainDisplay} setExistingUser={setExistingUser}/>
+    return <Login
+              setMainDisplay={setMainDisplay}
+              setExistingUser={setExistingUser}
+              user={user}
+              loading={loading}
+              error={error}
+            />
   } else {
     return <Signup setExistingUser={setExistingUser} setMainDisplay={setMainDisplay}/>
   }
