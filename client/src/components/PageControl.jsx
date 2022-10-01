@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import GroupPage from './GroupPage';
+import NavBar from './NavBar';
+import ChatBar from './ChatBar';
 
-function PageControl({ userID }) {
+function PageControl({ setMainDisplay, userID }) {
   const [page, setPage] = useState('group');
   return (
     <div>
-      <nav> Nave bar goes here </nav>
+      <NavBar setMainDisplay={setMainDisplay}/>
       <div>
         {(() => {
           switch (page) {
@@ -21,7 +23,7 @@ function PageControl({ userID }) {
           }
         })()}
       </div>
-      <nav> Chat bar goes here </nav>
+      <ChatBar />
     </div>
   );
 }
