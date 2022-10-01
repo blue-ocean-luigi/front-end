@@ -4,9 +4,11 @@ import {
 } from '@chakra-ui/react';
 
 function AdminEditMembers() {
-  <Box>
-    This is AdminEditMembers subcomponent!
-  </Box>;
+  return (
+    <Box>
+      This is AdminEditMembers subcomponent!
+    </Box>
+  );
 }
 
 export default AdminEditMembers;

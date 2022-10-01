@@ -8,6 +8,7 @@ import {
   Text,
   Heading,
 } from '@chakra-ui/react';
+import { ColorModeSwitcher } from './ColorModeSwitcher';
 import PageControl from './PageControl';
 
 export default function App() {
@@ -15,6 +16,9 @@ export default function App() {
   const [userID, setUserID] = useState('');
   return (
     <ChakraProvider>
+      <Flex justifyContent="right">
+        <ColorModeSwitcher />
+      </Flex>
       <Center>
         <Flex>
           <Box>

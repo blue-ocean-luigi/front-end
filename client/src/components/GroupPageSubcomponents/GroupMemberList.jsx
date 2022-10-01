@@ -6,11 +6,13 @@ import GroupMember from './GroupMember';
 import AdminEditMembers from './AdminEditMembers';
 
 function GroupMemberList() {
-  <Box>
-    This is GroupMemberList
-    <GroupMember />
-    <AdminEditMembers />
-  </Box>;
+  return (
+    <Box>
+      This is GroupMemberList
+      <GroupMember />
+      <AdminEditMembers />
+    </Box>
+  );
 }
 
 export default GroupMemberList;

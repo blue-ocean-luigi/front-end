@@ -6,11 +6,13 @@ import GroupFeed from './GroupPageSubcomponents/GroupFeed';
 import GroupMemberList from './GroupPageSubcomponents/GroupMemberList';
 
 function GroupPage() {
-  <Box>
-    This is Group Page big component!
-    <GroupFeed />
-    <GroupMemberList />
-  </Box>;
+  return (
+    <Box>
+      This is Group Page big component!
+      <GroupFeed />
+      <GroupMemberList />
+    </Box>
+  );
 }
 
 export default GroupPage;
