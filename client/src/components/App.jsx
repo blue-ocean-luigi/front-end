@@ -7,9 +7,11 @@ import {
   Box,
   Text,
   Heading,
+  Image,
 } from '@chakra-ui/react';
 import ColorModeSwitcher from './ColorModeSwitcher';
 import PageControl from './PageControl';
+
 import styles from '../style.css';
 
 export default function App() {
