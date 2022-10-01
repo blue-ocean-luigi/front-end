@@ -12,8 +12,8 @@ import { logout } from './Auth';
 export default function NavBar({setMainDisplay}) {
   return (
     <div>
-      <ColorModeSwitcher position="absolute" top="0" right="0" zIndex={1}/>
-      <Tabs position="absolute" top="0" left="0" w="100%" zIndex={0}>
+      <ColorModeSwitcher position="fixed" top="0" right="0" zIndex={1}/>
+      <Tabs align="center" position="absolute" top="0" left="0" w="100%" zIndex={0}>
         <TabList>
           <Tab>Something</Tab>
           <Tab>Thing 2</Tab>
@@ -23,16 +23,6 @@ export default function NavBar({setMainDisplay}) {
             Log Out
           </Tab>
         </TabList>
-        <TabPanels>
-          <TabPanel>
-          </TabPanel>
-          <TabPanel>
-          </TabPanel>
-          <TabPanel>
-          </TabPanel>
-          <TabPanel>
-          </TabPanel>
-        </TabPanels>
       </Tabs>
     </div>
   );
