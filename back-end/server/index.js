@@ -3,9 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const router = require("./routes.js");
-// const pool = require('../db/postgres.js')
-
-// pool.connect()
+const pool = require('../db/postgres.js')
 
 app.use(express.json());
 app.use(cors());

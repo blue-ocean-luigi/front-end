@@ -18,63 +18,63 @@ CREATE TABLE groups (
   name varchar(40) NOT NULL,
   about text,
   location text
-)
+);
 
 CREATE TABLE group_members (
   id serial PRIMARY KEY,
   group_id int REFERENCES groups(id),
   user_id int REFERENCES users(id),
   admin boolean
-)
+);
 
 CREATE TABLE group_requests (
   id serial PRIMARY KEY,
   group_id int REFERENCES groups(id),
   requester_id int REFERENCES users(id),
   message text
-)
+);
 
 CREATE TABLE friends (
   id serial PRIMARY KEY,
   friend1 int NOT NULL,
   friend2 int NOT NULL,
   status boolean DEFAULT false
-)
+);
 
 CREATE TABLE messages (
   id serial PRIMARY KEY,
   sender_id int,
   receiver_id int,
   message text NOT NULL,
-  createdAt: bigint NOT NULL
-)
+  createdAt timestamp DEFAULT now()
+);
 
 CREATE TABLE posts (
   id serial PRIMARY KEY,
   user_id int REFERENCES users(id),
   group_id int REFERENCES groups(id),
   content text NOT NULL,
-  createdAt bigint,
+  createdAt timestamp DEFAULT now(),
   isEvent boolean,
-  name varchar(40)
+  name varchar(40),
   location text,
-  date bigint,
-)
+  date bigint
+);
 
 CREATE TABLE comments (
   id serial PRIMARY KEY,
-  post_id REFERENCES post(id),
+  post_id int REFERENCES posts(id),
   user_id int REFERENCES users(id),
   message text NOT NULL,
-  createdAt bigint,
+  createdAt date DEFAULT now(),
   likes int DEFAULT 0
-)
+);
 
 CREATE TABLE post_photos (
   id serial PRIMARY KEY,
-  url: text,
-  post_id REFERENCES post(id)
-)
+  url text,
+  post_id int REFERENCES posts(id)
+);
 
 CREATE TABLE rsvp (
   id serial PRIMARY KEY,
@@ -82,5 +82,6 @@ CREATE TABLE rsvp (
   group_id int REFERENCES groups(id),
   payment_required boolean,
   payment_amt numeric(4, 2)
-)
+);
 
+\q
