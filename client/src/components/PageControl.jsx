@@ -15,9 +15,10 @@ function PageControl({ userID }) {
               return <HomePage setPage={setPage} userID={userID} />; // James
             case 'group':
               return <GroupPage setPage={setPage} userID={userID} />; // set display for logout fx.
-            case 'profile':
-              return <ProfilePage setPage={setPage} userID={userID} />; // James
+            // case 'profile':
+            //   return <ProfilePage setPage={setPage} userID={userID} />; // James
             default:
+              // return <GroupPage setPage={setPage} userID={userID} />;
               return <HomePage setPage={setPage} userID={userID} />;
           }
         })()}

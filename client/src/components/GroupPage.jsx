@@ -1,17 +1,65 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Box,
+  VStack,
+  HStack,
+  Flex,
+  Text,
+  Heading,
+  Button,
 } from '@chakra-ui/react';
 import GroupFeed from './GroupPageSubcomponents/GroupFeed';
 import GroupMemberList from './GroupPageSubcomponents/GroupMemberList';
+import SearchGroup from './GroupPageSubcomponents/SearchGroup';
 
 function GroupPage() {
+  const [members, setMembers] = useState(
+    [
+      { name: 'Amberly', isAdmin: true },
+      { name: 'Brian', isAdmin: false },
+      { name: 'James', isAdmin: false },
+      { name: 'Jessie', isAdmin: false },
+      { name: 'Kevin', isAdmin: false },
+      { name: 'Matt', isAdmin: false },
+    ],
+  );
   return (
-    <Box>
-      This is Group Page big component!
-      <GroupFeed />
-      <GroupMemberList />
-    </Box>
+    <Flex w="100%" justifyContent="right">
+      <VStack w="90%">
+        <Flex w="100%" bg="lightpink">
+          <Box p={4} w="100%">
+            <SearchGroup />
+            <Heading mt={1} mb={1}>
+              Plant Loverz
+            </Heading>
+            <Text fontSize="xl">
+              A safe space for all planty talk
+              A safe space for all planty talk
+              A safe space for all planty talk
+              A safe space for all planty talk
+              A safe space for all planty talk
+              A safe space for all planty talk
+              A safe space for all planty talk
+            </Text>
+          </Box>
+        </Flex>
+        <Flex w="100%">
+          <HStack w="100%">
+            <Box w="30%" bg="blue">
+              <Button variant="ghost">
+                Invite your friends
+              </Button>
+              <GroupMemberList members={members} />
+            </Box>
+            <Box w="70%" bg="green">
+              <GroupFeed />
+            </Box>
+          </HStack>
+        </Flex>
+      </VStack>
+    </Flex>
+
+
   );
 }
 

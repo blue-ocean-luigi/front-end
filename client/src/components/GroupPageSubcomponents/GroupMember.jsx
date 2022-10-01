@@ -4,9 +4,11 @@ import {
 } from '@chakra-ui/react';
 
 function GroupMember() {
-  <Box>
-    This is GroupMember
-  </Box>;
+  return (
+    <Box>
+      This is GroupMember
+    </Box>
+  );
 }
 
 export default GroupMember;
