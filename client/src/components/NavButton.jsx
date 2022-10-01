@@ -7,7 +7,7 @@ import {
   MenuList,
   MenuItem
 } from '@chakra-ui/react';
-import { logout } from './Auth';
+import { logout } from './Auth/Auth';
 
 export default function NavButton({setMainDisplay}) {
   return (
