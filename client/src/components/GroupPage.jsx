@@ -4,23 +4,33 @@ import {
   VStack,
   HStack,
   Flex,
-  Text
+  Text,
+  Heading,
 } from '@chakra-ui/react';
 import GroupFeed from './GroupPageSubcomponents/GroupFeed';
 import GroupMemberList from './GroupPageSubcomponents/GroupMemberList';
+import SearchGroup from './GroupPageSubcomponents/SearchGroup';
 
 function GroupPage() {
   return (
     <Flex w="100%" justifyContent="right">
       <VStack w="90%">
-        <Flex w="100%" bg="tomato">
-          <VStack>
-            <Box>
-              <Box>Search bar here</Box>
-              <Text>Plant Loverz</Text>
-              <Text>A safe space for all planty talk</Text>
-            </Box>
-          </VStack>
+        <Flex w="100%" bg="lightpink">
+          <Box p={2} w="100%">
+            <SearchGroup />
+            <Heading mt={2} mb={2}>
+              Plant Loverz
+            </Heading>
+            <Text fontSize="xl">
+              A safe space for all planty talk
+              A safe space for all planty talk
+              A safe space for all planty talk
+              A safe space for all planty talk
+              A safe space for all planty talk
+              A safe space for all planty talk
+              A safe space for all planty talk
+            </Text>
+          </Box>
         </Flex>
         <Flex w="100%">
           <HStack w="100%">
