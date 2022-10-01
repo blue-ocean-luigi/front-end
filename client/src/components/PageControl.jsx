@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+import GroupPage from './GroupPage';
 
 function PageControl({ userID }) {
-  const [page, setPage] = useState('home');
+  const [page, setPage] = useState('group');
   return (
     <div>
       <nav> Nave bar goes here </nav>
