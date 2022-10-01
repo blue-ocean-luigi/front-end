@@ -8,6 +8,7 @@ import {
   Text,
   Heading,
 } from '@chakra-ui/react';
+import PageControl from './PageControl';
 
 export default function App() {
   const [mainDisplay, setMainDisplay] = useState('login');
@@ -25,12 +26,13 @@ export default function App() {
       <div>
         {(() => {
           switch (mainDisplay) {
-            case 'login':
-              return <LoginOption setMainDisplay={setMainDisplay} setUserID={setUserID} />; // James
+            // case 'login':
+            //   return <LoginOption setMainDisplay={setMainDisplay} setUserID={setUserID} />;
             case 'pages':
               return <PageControl setMainDisplay={setMainDisplay} userId={userID} />;
             default:
-              return <Logo/>; //  or som kind of load screen. This for option loading page
+              return <PageControl setMainDisplay={setMainDisplay} userId={userID} />;
+              // return <Logo/>; //  or som kind of load screen. This for option loading page
           }
         })()}
       </div>
