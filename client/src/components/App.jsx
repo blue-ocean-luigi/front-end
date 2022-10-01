@@ -15,13 +15,20 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './Auth';
 import ChatBar from './ChatBar';
 import NavButton from './NavButton';
+import { UseContextAll } from './ContextAll';
 
 import styles from '../style.css';
 
 export default function App() {
-  const [mainDisplay, setMainDisplay] = useState('login');
   const [userID, setUserID] = useState('');
   const [user, loading, error] = useAuthState(auth);
+  const {
+    mainPage,
+    setMainPage,
+    userInfo,
+    setUserInfo
+  } = UseContextAll();
+
   return (
     <ChakraProvider>
       <Flex justifyContent="right">
@@ -37,24 +44,24 @@ export default function App() {
       </Center>
       <div>
         {(() => {
-          switch (mainDisplay) {
-             case 'login':
-               return <LoginOption
-                        setMainDisplay={setMainDisplay}
+          switch (mainPage) {
+            case 'login':
+              return <LoginOption
+                        setMainDisplay={setMainPage}
                         setUserID={setUserID}
                         user={user}
                         loading={loading}
                         error={error}
                       />;
             case 'pages':
-              return <PageControl setMainDisplay={setMainDisplay} userId={userID} />;
+              return <PageControl setMainDisplay={setMainPage} user={userInfo} />;
             default:
-              return <PageControl setMainDisplay={setMainDisplay} userId={userID} />;
+              return <PageControl setMainDisplay={setMainPage} user={userInfo} />;
               // return <Logo/>; //  or som kind of load screen. This for option loading page
           }
         })()}
       </div>
-      { user ? <NavButton setMainDisplay={setMainDisplay}/> : null }
+      { user ? <NavButton setMainDisplay={setMainPage} /> : null }
       { user ? <ChatBar /> : null }
     </ChakraProvider>
   );
