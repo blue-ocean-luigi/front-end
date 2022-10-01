@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
+import LoginOption from './LoginOption';
+import PageControl from './PageControl';
 import {
   ChakraProvider,
   Center,
@@ -8,7 +10,6 @@ import {
   Text,
   Heading,
 } from '@chakra-ui/react';
-import styles from '../style.css';
 
 export default function App() {
   const [mainDisplay, setMainDisplay] = useState('login');
