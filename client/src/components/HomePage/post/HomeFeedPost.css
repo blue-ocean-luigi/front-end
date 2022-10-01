@@ -1,0 +1,13 @@
+.hp_post {
+  background: rgba(50,250,50,0.5);
+  margin: 1em;
+  padding: 1em;
+}
+
+.hp_post_name {
+  font-weight: 900;
+}
+
+.hp_post_content {
+  text-align: center;
+}
