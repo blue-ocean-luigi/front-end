@@ -8,6 +8,7 @@ import {
   Text,
   Heading,
 } from '@chakra-ui/react';
+import styles from '../style.css';
 
 export default function App() {
   const [mainDisplay, setMainDisplay] = useState('login');
