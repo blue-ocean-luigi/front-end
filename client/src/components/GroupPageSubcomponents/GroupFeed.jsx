@@ -4,7 +4,7 @@ import {
   Text,
   Button,
   Flex,
-  VStack,
+
 } from '@chakra-ui/react';
 
 function GroupFeed() {

@@ -1,9 +1,6 @@
 /* eslint-disable import/extensions */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import {
-  Box,
-} from '@chakra-ui/react';
 import GroupPage from './GroupPage';
 import HomePage from './HomePage/HomePage.jsx';
 
