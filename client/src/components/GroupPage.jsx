@@ -14,7 +14,6 @@ import GroupMemberList from './GroupPageSubcomponents/GroupMemberList';
 import SearchGroup from './GroupPageSubcomponents/SearchGroup';
 
 function GroupPage() {
-
   // TODO: remove members/setMembers from this page and replace with axios call later
   const [members, setMembers] = useState(
     [
@@ -27,6 +26,9 @@ function GroupPage() {
     ],
   );
 
+  function onClick() {
+    console.log('clicked button');
+  }
 
   return (
     <Flex h="100vh" w="100%" justifyContent="space-between" bg="gray">
@@ -51,7 +53,7 @@ function GroupPage() {
         <Flex bottom={0} h="100%" w="100%">
           <HStack h="100%" w="100%">
             <Box h="100%" w="30%" bg="blue" p={1}>
-              <Button variant="ghost">
+              <Button variant="ghost" onClick={onClick}>
                 Invite your friends
               </Button>
               <GroupMemberList members={members} />
