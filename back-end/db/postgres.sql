@@ -4,8 +4,6 @@ CREATE DATABASE crossing;
 
 CREATE TABLE users (
   id serial PRIMARY KEY,
-  username varchar(20) NOT NULL UNIQUE,
-  password varchar(20) NOT NULL,
   firstName varchar(20) NOT NULL,
   lastName varchar(20) NOT NULL,
   email varchar(30) NOT NULL UNIQUE,
