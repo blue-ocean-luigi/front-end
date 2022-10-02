@@ -7,7 +7,7 @@ import {
 function GroupMember({ member }) {
   return (
     <Box bg="gold">
-        { member.name }
+      { member.name }
     </Box>
   );
 }
