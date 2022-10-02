@@ -8,10 +8,21 @@ import {
   Heading,
   Button,
 } from '@chakra-ui/react';
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { UseContextAll } from './ContextAll';
 import GroupFeed from './GroupPageSubcomponents/GroupFeed';
 import GroupMemberList from './GroupPageSubcomponents/GroupMemberList';
 import SearchGroup from './GroupPageSubcomponents/SearchGroup';
+import InviteFriends from './GroupPageSubcomponents/InviteFriends';
 
 function GroupPage() {
   // TODO: remove members/setMembers from this page and replace with axios call later
@@ -26,9 +37,63 @@ function GroupPage() {
     ],
   );
 
+  const testFriendList = [
+    {
+      name: 'apple', profilePicture: "https://bit.ly/dan-abramov"
+    },
+    {
+      name: 'orange', profilePicture: "https://bit.ly/dan-abramov"
+    },
+    {
+      name: 'banana', profilePicture: "https://bit.ly/dan-abramov"
+    },
+    {
+      name: 'space shuttle', profilePicture: "https://bit.ly/dan-abramov"
+    },
+    {
+      name: 'pepper', profilePicture: "https://bit.ly/dan-abramov"
+    },
+    {
+      name: 'salt', profilePicture: "https://bit.ly/dan-abramov"
+    },
+    {
+      name: 'grape', profilePicture: "https://bit.ly/dan-abramov"
+    },
+    {
+      name: 'pear', profilePicture: "https://bit.ly/dan-abramov"
+    },
+    {
+      name: 'apple1', profilePicture: "https://bit.ly/dan-abramov"
+    },
+    {
+      name: 'orange1', profilePicture: "https://bit.ly/dan-abramov"
+    },
+    {
+      name: 'banana1', profilePicture: "https://bit.ly/dan-abramov"
+    },
+    {
+      name: 'space shuttle1', profilePicture: "https://bit.ly/dan-abramov"
+    },
+    {
+      name: 'pepper1', profilePicture: "https://bit.ly/dan-abramov"
+    },
+    {
+      name: 'salt1', profilePicture: "https://bit.ly/dan-abramov"
+    },
+    {
+      name: 'grape1', profilePicture: "https://bit.ly/dan-abramov"
+    },
+    {
+      name: 'pear1', profilePicture: "https://bit.ly/dan-abramov"
+    },
+  ];
+
   function onClick() {
     console.log('clicked button');
   }
+
+  // hook for handling friendsList modal
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <Flex h="100vh" w="100%" justifyContent="space-between" bg="gray">
@@ -53,9 +118,10 @@ function GroupPage() {
         <Flex bottom={0} h="100%" w="100%">
           <HStack h="100%" w="100%">
             <Box h="100%" w="30%" bg="blue" p={1}>
-              <Button variant="ghost" onClick={onClick}>
+              <Button variant="ghost" onClick={onOpen}>
                 Invite your friends
               </Button>
+              <InviteFriends onClose={onClose} isOpen={isOpen} friends={testFriendList} />
               <GroupMemberList members={members} />
             </Box>
             <Box p={1} position="relative" overflow-y="auto" h="100%" w="70%" bg="green">

@@ -22,9 +22,7 @@ function Friend({ friend }) {
             { friend.name }
           </Text>
         </Box>
-
       </Flex>
-
     </Box>
   );
 }

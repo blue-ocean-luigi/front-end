@@ -7,9 +7,11 @@ import {
   Badge,
 } from '@chakra-ui/react';
 
+// TODO: Sort group member list such that admins show up at the top of the member list
+
 function GroupMember({ member }) {
   return (
-    <Box bg="gold">
+    <Box bg="brown">
       <Flex justifyContent="left">
         <Image
           borderRadius="full"
