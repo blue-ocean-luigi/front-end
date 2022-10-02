@@ -8,7 +8,6 @@ function PageControl({ userID }) {
   const [page, setPage] = useState('group');
   return (
     <div>
-      <nav> Nave bar goes here </nav>
       <div>
         {(() => {
           switch (page) {
