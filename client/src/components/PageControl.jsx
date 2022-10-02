@@ -5,7 +5,7 @@ import GroupPage from './GroupPage';
 import HomePage from './HomePage/HomePage.jsx';
 
 function PageControl({ userID }) {
-  const [page, setPage] = useState('group');
+  const [page, setPage] = useState('home');
   return (
     <div>
       <div>

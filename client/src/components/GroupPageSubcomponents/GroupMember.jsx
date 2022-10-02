@@ -14,8 +14,8 @@ function GroupMember({ member }) {
         <Image
           borderRadius="full"
           boxSize="15%"
-          src={member.profilePicture}
-          alt="Dan Abramov"
+          src={ member.profilePicture }
+          alt={ member.name }
           p={1}
         />
         <Box p={1} align="left">

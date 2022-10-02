@@ -1,15 +1,17 @@
 import React from 'react';
 import {
   Box,
+  Heading,
 } from '@chakra-ui/react';
+import Friend from './Friend';
 
-function FriendsList() {
+function FriendsList({ friends }) {
   return (
     <Box ml={1} align="center">
       <Heading mb={1} fontSize="xl">
         Friends
       </Heading>
-      {members.map((m) => <GroupMember key={m.name} member={m} />)}
+      {friends.map((f) => <Friend key={f.name} friend={f} />)}
     </Box>
   );
 }
