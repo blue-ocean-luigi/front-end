@@ -14,7 +14,7 @@ function GroupMember({ member }) {
         <Image
           borderRadius="full"
           boxSize="15%"
-          src="https://bit.ly/dan-abramov"
+          src={member.profilePicture}
           alt="Dan Abramov"
           p={1}
         />

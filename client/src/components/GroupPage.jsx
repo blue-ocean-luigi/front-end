@@ -17,12 +17,12 @@ function GroupPage() {
   // TODO: remove members/setMembers from this page and replace with axios call later
   const [members, setMembers] = useState(
     [
-      { name: 'Amberly', isAdmin: true },
-      { name: 'Brian', isAdmin: false },
-      { name: 'James', isAdmin: false },
-      { name: 'Jessie', isAdmin: false },
-      { name: 'Kevin', isAdmin: false },
-      { name: 'Matt', isAdmin: false },
+      { name: 'Amberly', isAdmin: true, profilePicture: "https://bit.ly/dan-abramov" },
+      { name: 'Brian', isAdmin: false, profilePicture: "https://bit.ly/dan-abramov" },
+      { name: 'James', isAdmin: false, profilePicture: "https://bit.ly/dan-abramov" },
+      { name: 'Jessie', isAdmin: false, profilePicture: "https://bit.ly/dan-abramov" },
+      { name: 'Kevin', isAdmin: false, profilePicture: "https://bit.ly/dan-abramov" },
+      { name: 'Matt', isAdmin: false, profilePicture: "https://bit.ly/dan-abramov" },
     ],
   );
 

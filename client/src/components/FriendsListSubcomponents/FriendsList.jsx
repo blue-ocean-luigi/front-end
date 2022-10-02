@@ -5,8 +5,11 @@ import {
 
 function FriendsList() {
   return (
-    <Box>
-      This is FriendsList big component!
+    <Box ml={1} align="center">
+      <Heading mb={1} fontSize="xl">
+        Friends
+      </Heading>
+      {members.map((m) => <GroupMember key={m.name} member={m} />)}
     </Box>
   );
 }
