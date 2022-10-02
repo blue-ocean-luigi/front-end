@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import GroupPage from "../GroupPage.jsx";
-import FriendsList from "../FriendsList.jsx";
+import FriendsList from "..
+/FriendsListSubcomponents/FriendsList.jsx";
 import HomeFeedPost from "./post/HomeFeedPost.jsx";
 import './HomePage.css';
 
