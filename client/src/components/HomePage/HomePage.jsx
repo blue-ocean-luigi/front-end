@@ -44,7 +44,6 @@ function HomePage() {
               <HomeFeedPost key={i} post={post} />
             ))}
             <h1>EXISTING USER</h1>
-            <NewEvent />
           </div>
         )}
       </div>
