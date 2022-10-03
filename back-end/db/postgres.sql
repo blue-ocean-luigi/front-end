@@ -4,8 +4,6 @@ CREATE DATABASE crossing;
 
 CREATE TABLE users (
   id serial PRIMARY KEY,
-  username varchar(20) NOT NULL UNIQUE,
-  password varchar(20) NOT NULL,
   firstName varchar(20) NOT NULL,
   lastName varchar(20) NOT NULL,
   email varchar(30) NOT NULL UNIQUE,
@@ -18,25 +16,24 @@ CREATE TABLE groups (
   name varchar(40) NOT NULL,
   about text,
   state varchar(20) NOT NULL,
-  city varchar(20) NOT NULL,
+  city varchar(20) NOT NULL ,
   zip int NOT NULL
 );
 
 CREATE TABLE group_members (
   id serial PRIMARY KEY,
-  group_id int REFERENCES groups(id),
-  user_id int REFERENCES users(id),
+  group_id int REFERENCES groups(id) ON DELETE CASCADE,
+  user_id int REFERENCES users(id) ON DELETE CASCADE,
   admin boolean
 );
 
 CREATE TABLE group_requests (
   id serial PRIMARY KEY,
-  group_id int REFERENCES groups(id),
-  requester_id int REFERENCES users(id),
+  group_id int REFERENCES groups(id) ON DELETE CASCADE,
+  requester_id int REFERENCES users(id) ON DELETE CASCADE,
   message text
 );
 -- delete when approved
-
 
 CREATE TABLE friends (
   id serial PRIMARY KEY,
@@ -57,8 +54,8 @@ CREATE TABLE messages (
 
 CREATE TABLE posts (
   id serial PRIMARY KEY,
-  user_id int REFERENCES users(id),
-  group_id int REFERENCES groups(id),
+  user_id int REFERENCES users(id) ON DELETE CASCADE,
+  group_id int REFERENCES groups(id) ON DELETE CASCADE,
   content text NOT NULL,
   createdAt timestamp DEFAULT now(),
   isEvent boolean DEFAULT false,
@@ -69,30 +66,41 @@ CREATE TABLE posts (
   startTime int,
   startDate date,
   endTime int,
-  endDate date
+  endDate date,
+  payment_amt numeric(4, 2) DEFAULT 0
 );
 
 CREATE TABLE comments (
   id serial PRIMARY KEY,
-  post_id int REFERENCES posts(id),
-  user_id int REFERENCES users(id),
+  post_id int REFERENCES posts(id) ON DELETE CASCADE,
+  user_id int REFERENCES users(id) ON DELETE CASCADE,
   message text NOT NULL,
   createdAt timestamp DEFAULT now()
 );
--- future, add likes and like table
 
 CREATE TABLE post_photos (
   id serial PRIMARY KEY,
   url text,
-  post_id int REFERENCES posts(id)
+  post_id int REFERENCES posts(id) ON DELETE CASCADE
 );
 
 CREATE TABLE rsvp (
   id serial PRIMARY KEY,
-  post_id int REFERENCES posts(id),
-  user_id int REFERENCES users(id),
-  payment_required boolean DEFAULT false,
-  payment_amt numeric(4, 2)
+  post_id int REFERENCES posts(id) ON DELETE CASCADE,
+  user_id int REFERENCES users(id) ON DELETE CASCADE,
+  paid boolean DEFAULT false
+);
+
+CREATE TABLE post_likes (
+  post_id int REFERENCES posts(id) ON DELETE CASCADE,
+  user_id int REFERENCES users(id) ON DELETE CASCADE,
+  PRIMARY KEY (post_id, user_id)
+);
+
+CREATE TABLE comment_likes (
+  comment_id int REFERENCES comments(id) ON DELETE CASCADE,
+  user_id int REFERENCES users(id) ON DELETE CASCADE,
+  PRIMARY KEY (comment_id, user_id)
 );
 
 
@@ -128,5 +136,5 @@ SELECT setval('posts_id_seq', COALESCE((SELECT MAX(id)+1 FROM posts), 1), false)
 SELECT setval('rsvp_id_seq', COALESCE((SELECT MAX(id)+1 FROM rsvp), 1), false);
 SELECT setval('users_id_seq', COALESCE((SELECT MAX(id)+1 FROM users), 1), false);
 
-\q
+
 
