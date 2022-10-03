@@ -64,7 +64,8 @@ SELECT post_id,
         firstName,
         lastName
       FROM users INNER JOIN post_likes l
-      ON users.id = l.user_id) likes), '[]'::json) AS postLikes,
+      ON users.id = l.user_id
+      WHERE l.post_id = gigachad.post_id) likes), '[]'::json) AS postLikes,
       COALESCE(
   (SELECT json_agg(json_build_object('comment_id', id, 'author_id', user_id, 'firstName', firstName, 'lastName', lastName, 'picture', picture, 'message', message, 'date', createdAt,
   'likes', clikes))
@@ -76,17 +77,18 @@ SELECT post_id,
         picture,
         message,
         createdAt,
-        (SELECT json_agg(json_build_object(
+        COALESCE((SELECT json_agg(json_build_object(
           'id', user_id,
           'firstName', firstName,
           'lastName', lastName
-        )) clikes
+        )) cnames
       FROM
           (SELECT cl.user_id,
             firstName,
             lastName
           FROM users INNER JOIN comment_likes cl
-          ON cl.user_id = users.id) comms)
+          ON cl.user_id = users.id
+          WHERE cl.comment_id = c.id) comms), '[]'::json) clikes
       FROM comments c INNER JOIN users u
       ON c.user_id = u.id
       WHERE c.post_id = gigachad.post_id
@@ -157,9 +159,10 @@ SELECT post_id,
             firstName,
             lastName
           FROM users INNER JOIN post_likes l
-          ON users.id = l.user_id) likes), '[]'::json) AS postLikes,
+          ON users.id = l.user_id
+          WHERE l.post_id = gigachad.post_id) likes), '[]'::json) AS postLikes,
         COALESCE(
-      (SELECT json_agg(json_build_object('comment_id', id, 'author_id', user_id, 'firstName', firstname, 'lastName', lastName, 'picture', picture, 'message', message, 'date', createdAt))
+      (SELECT json_agg(json_build_object('comment_id', id, 'author_id', user_id, 'firstName', firstname, 'lastName', lastName, 'picture', picture, 'message', message, 'date', createdAt, 'likes', clikes))
       FROM
           (SELECT c.id,
             c.user_id,
@@ -167,7 +170,18 @@ SELECT post_id,
             lastName,
             picture,
             message,
-            createdAt
+            createdAt,
+            COALESCE((SELECT json_agg(json_build_object(
+                'id', user_id,
+                'firstName', firstName,
+                'lastName', lastName
+              )) cnames
+            FROM
+              (SELECT cl.user_id,
+                    firstName,
+                    lastName
+              FROM users INNER JOIN comment_likes cl ON cl.user_id = users.id
+              WHERE cl.comment_id = c.id) comms), '[]'::json) clikes
           FROM comments c INNER JOIN users u
           ON c.user_id = u.id
           WHERE c.post_id = gigachad.post_id
@@ -180,9 +194,26 @@ SELECT post_id,
 
   },
 
-  createPost: async(body) => {
-    let values, qery;
+  getRsvp: async(post_id) => {
+    const query =
+    `WITH guestlist as (
+      SELECT r.user_id as user_id,
+            firstName,
+            lastName
+      FROM rsvp r INNER JOIN users
+      ON r.user_id = users.id
+      WHERE post_id = ${post_id})
 
+    SELECT user_id,
+    firstName,
+    lastName
+    FROM guestlist`
+    const rsvp = await pool.query(query);
+    return rsvp.rows[0];
+  },
+
+  createPost: async(body) => {
+    let values, query;
 
     if (body.isEvent === false) {
       values = [
@@ -212,13 +243,14 @@ SELECT post_id,
         body.startTime,
         body.startDate,
         body.endTime,
-        body.endDate
+        body.endDate,
+        body.payment_amt
       ]
 
       query =
       `INSERT INTO posts (user_id, group_id, content, isEvent, name,
-        state, city, zip, startTime, startDate, endTime, endDate)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+        state, city, zip, startTime, startDate, endTime, endDate, payment_amt)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
       RETURNING id
       `
     }
@@ -234,7 +266,7 @@ SELECT post_id,
 
       await pool.query(photoQuery, [post_id, body.photos])
     }
-    return post_id
+    return
 
   },
 
@@ -244,15 +276,60 @@ SELECT post_id,
       body.user_id,
       body.message
     ]
-    console.log(values)
+
     const query =
     `INSERT INTO comments (post_id, user_id, message)
     VALUES ($1, $2, $3)
-    RETURNING id
     `
 
-    const comment_id = await pool.query(query, values)
-    return comment_id.rows[0].id
+    await pool.query(query, values)
+    return
+  },
+
+  createPostLike: async(body) => {
+    const values = [
+      body.post_id,
+      body.user_id
+    ]
+
+    const query =
+    `INSERT INTO post_likes (post_id, user_id)
+    VALUES ($1, $2)`
+
+    await pool.query(query, values)
+    return
+  },
+
+  createCommentLike: async(body) => {
+    const values = [
+      body.comment_id,
+      body.user_id
+    ]
+
+    const query =
+    `INSERT INTO comment_likes (comment_id, user_id)
+    VALUES ($1, $2)`
+
+    await pool.query(query, values)
+    return
+
+  },
+
+  createRsvp: async(body) => {
+    const values = [
+      body.post_id,
+      body.user_id,
+      body.paid
+    ]
+
+    const query =
+    `INSERT INTO rsvp (post_id, user_id, paid)
+    VALUES ($1, $2, $3)
+    `
+
+    await pool.query(query, values)
+    return
+
   },
 
   deletePost: async (post_id) => {
@@ -264,6 +341,27 @@ SELECT post_id,
     return
   },
 
+  deleteComment: async(comment_id) => {
+    const query =
+    `DELETE FROM comments
+    WHERE id = ${comment_id}`
+
+    await pool.query(query);
+    return
+  },
+
+  deleteRsvp: async(post_id, user_id) => {
+    const query =
+    `DELETE FROM rsvp
+    WHERE post_id = ${post_id}
+    AND user_id = ${user_id}
+    `
+
+    await pool.query(query)
+    return
+  },
+
+  // --------------------------------------
   getUser: async (email) => {
     const query = `
       SELECT

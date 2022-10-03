@@ -23,6 +23,17 @@ module.exports = {
     }
   },
 
+  getRsvp: async(req, res) => {
+    const post_id = req.query.post_id
+    try {
+      const rsvp = await model.getRsvp(post_id)
+      res.status(200).send(rsvp)
+    } catch (error) {
+      console.log(err)
+      res.sendStatus(404)
+    }
+  },
+
   createPost: async(req, res) => {
     try {
       const post_id = await model.createPost(req.body);
@@ -43,14 +54,69 @@ module.exports = {
     }
   },
 
+  createPostLike: async(req, res) => {
+    try {
+      const like_id = await model.createPostLike(req.body);
+      res.sendStatus(201)
+    } catch (err) {
+      console.log(err)
+      res.sendStatus(404)
+    }
+
+  },
+
+  createCommentLikes: async(req, res) => {
+    try {
+      const like_id = await model.createCommentLike(req.body)
+      res.sendStatus(201)
+    } catch (err) {
+      console.log(err)
+      res.sendStatus(404)
+    }
+
+  },
+
+  createRsvp: async(req, res) => {
+    try {
+      const rsvp_id = await model.createRsvp(req.body)
+      res.sendStatus(201);
+    } catch (err) {
+      console.log(err)
+      res.sendStatus(404)
+    }
+  },
+
   deletePost: async(req, res) => {
-    const post_id = req.body.post_id;
+    const post_id = req.params.post_id;
     try {
       await model.deletePost(post_id);
       res.send(200);
     } catch (error) {
       console.log(err);
       res.sendStatus(404);
+    }
+  },
+
+  deleteComment: async(req, res) => {
+    const comment_id = req.params.comment_id;
+    try {
+      await model.deleteComment(comment_id)
+      res.send(200);
+    } catch (err) {
+      console.log(err)
+      res.sendStatus(404)
+    }
+  },
+
+  deleteRsvp: async(req, res) => {
+    const post_id = req.params.post_id
+    const user_id = req.params.user_id
+    try {
+      await model.deleteRsvp(post_id, user_id)
+      res.send(200)
+    } catch (err) {
+      console.log(err)
+      res.sendStatus(404)
     }
   },
 

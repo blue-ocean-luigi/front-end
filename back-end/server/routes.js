@@ -1,11 +1,24 @@
 const router = require('express').Router();
 const controller = require('./controller.js');
 
+//posts
 router.get('/userposts', controller.getUserPosts)
 router.get('/groupposts', controller.getGroupPosts)
 router.post('/posts', controller.createPost)
+router.delete("/posts/:post_id", controller.deletePost);
+//comments
 router.post('/comment', controller.createComment)
-router.delete('/posts', controller.deletePost)
+router.delete('comment/:comment_id')
+//likes
+router.post('/likes/posts', controller.createPostLike)
+router.post('/likes/comments', controller.createCommentLikes)
+
+//rsvp
+router.get('/rsvp', controller.getRsvp)
+router.post('/rsvp', controller.createRsvp)
+router.delete('/rsvp/:post_id&:user_id', controller.deleteRsvp)
+
+
 //users
 router.get('/user/info', controller.getUser)
 router.post('/user/add', controller.addUser)
@@ -85,9 +98,11 @@ module.exports = router
 //         firstName,
 //         lastName
 //       FROM users INNER JOIN post_likes l
-//       ON users.id = l.user_id) likes), '[]'::json) AS postLikes,
+//       ON users.id = l.user_id
+//       WHERE l.post_id = gigachad.post_id) likes), '[]'::json) AS postLikes,
 //       COALESCE(
-//   (SELECT json_agg(json_build_object('comment_id', id, 'author_id', user_id, 'firstName', firstName, 'lastName', lastName, 'picture', picture, 'message', message, 'date', createdAt))
+//   (SELECT json_agg(json_build_object('comment_id', id, 'author_id', user_id, 'firstName', firstName, 'lastName', lastName, 'picture', picture, 'message', message, 'date', createdAt,
+//   'likes', clikes))
 //   FROM
 //       (SELECT c.id,
 //         c.user_id,
@@ -95,7 +110,18 @@ module.exports = router
 //         lastName,
 //         picture,
 //         message,
-//         createdAt
+//         createdAt,
+//         COALESCE((SELECT json_agg(json_build_object(
+//           'id', user_id,
+//           'firstName', firstName,
+//           'lastName', lastName
+//         )) cnames
+//       FROM
+//           (SELECT cl.user_id,
+//             firstName,
+//             lastName
+//           FROM users INNER JOIN comment_likes cl
+//           ON cl.user_id = users.id) comms), '[]'::json) clikes
 //       FROM comments c INNER JOIN users u
 //       ON c.user_id = u.id
 //       WHERE c.post_id = gigachad.post_id
