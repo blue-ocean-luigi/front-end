@@ -23,8 +23,13 @@ import GroupFeed from './GroupPageSubcomponents/GroupFeed';
 import GroupMemberList from './GroupPageSubcomponents/GroupMemberList';
 import SearchGroup from './GroupPageSubcomponents/SearchGroup';
 import InviteFriends from './GroupPageSubcomponents/InviteFriends';
+import AdminEditMembers from './GroupPageSubcomponents/AdminEditMembers';
 
 function GroupPage() {
+
+  // TODO: replace the isAdmin hook w data from auth
+  const [isGroupAdmin, setGroupAdmin] = useState(true);
+
   // TODO: remove members/setMembers from this page and replace with axios call later
   const [members, setMembers] = useState(
     [
@@ -93,7 +98,18 @@ function GroupPage() {
   }
 
   // hook for handling friendsList modal
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const {
+    isOpen: isOpenFriendsList,
+    onOpen: onOpenFriendsList,
+    onClose: onCloseFriendsList,
+  } = useDisclosure();
+
+  const {
+    isOpen: isOpenAdminControl,
+    onOpen: onOpenAdminControl,
+    onClose: onCloseAdminControl,
+  } = useDisclosure();
+
 
   return (
     <Flex h="100vh" w="100%" justifyContent="space-between" bg="gray">
@@ -118,10 +134,32 @@ function GroupPage() {
         <Flex bottom={0} h="100%" w="100%">
           <HStack h="100%" w="100%">
             <Box h="100%" w="30%" bg="blue" p={1}>
-              <Button variant="ghost" onClick={onOpen}>
-                Invite your friends
-              </Button>
-              <InviteFriends onClose={onClose} isOpen={isOpen} friends={testFriendList} />
+              <Flex justifyContent="space-between">
+                <Button variant="ghost" onClick={onOpenFriendsList}>
+                  Invite your friends
+                </Button>
+                <InviteFriends
+                  onClose={onCloseFriendsList}
+                  isOpen={isOpenFriendsList}
+                  friends={testFriendList}
+                />
+                {
+                  isGroupAdmin
+                  && (
+                    <>
+                      <Button variant="ghost" onClick={onOpenAdminControl}>
+                        Edit member list
+                      </Button>
+                      <AdminEditMembers
+                      onClose={onCloseAdminControl}
+                      isOpen={isOpenAdminControl}
+                      members={members}
+                      />
+                    </>
+                  )
+                }
+
+              </Flex>
               <GroupMemberList members={members} />
             </Box>
             <Box p={1} position="relative" overflow-y="auto" h="100%" w="70%" bg="green">
