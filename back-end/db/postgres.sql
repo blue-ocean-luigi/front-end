@@ -24,7 +24,7 @@ CREATE TABLE group_members (
   id serial PRIMARY KEY,
   group_id int REFERENCES groups(id) ON DELETE CASCADE,
   user_id int REFERENCES users(id) ON DELETE CASCADE,
-  admin boolean
+  admin boolean DEFAULT false
 );
 
 CREATE TABLE group_requests (
