@@ -6,14 +6,11 @@ import HomePage from './HomePage/HomePage.jsx';
 import ProfilePage from "./ProfilePage/ProfilePage.jsx";
 
 function PageControl({ userID, page, setPage }) {
-  console.log(page);
   return (
     <div>
       <div>
         {(() => {
           switch (page) {
-            case 'home':
-              return <HomePage setPage={setPage} userID={userID} />;
             case 'home':
               return <HomePage setPage={setPage} userID={userID} />;
             case 'group':
