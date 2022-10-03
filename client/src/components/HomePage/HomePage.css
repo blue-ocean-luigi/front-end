@@ -43,6 +43,7 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  height: fit-content;
 }
 
 .hp_profile_img_container {
@@ -94,4 +95,5 @@
 .hp_home_feed {
   width: 70%;
   background: rgba(200, 0, 200, 0.5);
+  overflow-y: auto;
 }

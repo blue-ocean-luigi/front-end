@@ -1,1 +1,29 @@
 /* make this match whatever the other pages dimensions were */
+
+.pp_banner_container {
+  width: 100%;
+  height: 20vh;
+  position: relative;
+}
+
+.pp_profile_pic {
+  width: 10vw;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  position: absolute;
+  left: 10%;
+}
+
+.pp_profile_banner {
+  width: 80%;
+  height: 80%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.pp_bio_container {}
+
+.pp_friend_group_container {}

@@ -3,9 +3,10 @@
 import React, { useState } from 'react';
 import GroupPage from './GroupPage';
 import HomePage from './HomePage/HomePage.jsx';
+import ProfilePage from "./ProfilePage/ProfilePage.jsx";
 
 function PageControl({ userID }) {
-  const [page, setPage] = useState('group');
+  const [page, setPage] = useState('profile');
   return (
     <div>
       <div>
@@ -19,6 +20,8 @@ function PageControl({ userID }) {
               return <GroupPage setPage={setPage} userID={userID} />; // set display for logout fx.
             // case 'profile':
             //   return <ProfilePage setPage={setPage} userID={userID} />;
+            case 'profile':
+              return <ProfilePage setPage={setPage} userID={userID} />
             default:
               // return <GroupPage setPage={setPage} userID={userID} />;
               return <HomePage setPage={setPage} userID={userID} />;
