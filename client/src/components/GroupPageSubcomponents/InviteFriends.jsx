@@ -13,7 +13,7 @@ import FriendsList from '../FriendsListSubcomponents/FriendsList';
 
 // TODO: add invite button to either FriendsList as a conditionally rendered button
 // OR map each individual friend to a new friends list with invite buttons
-function InviteFriends({onClose, isOpen, friends}) {
+function InviteFriends({onClose, isOpen, friends, page}) {
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered scrollBehavior="inside" size="lg">
       <ModalOverlay />
@@ -21,7 +21,7 @@ function InviteFriends({onClose, isOpen, friends}) {
         <ModalHeader>Invite friends to this group</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <FriendsList friends={friends} />
+          <FriendsList friends={friends} page={page} />
         </ModalBody>
         <ModalFooter>
           <Button onClick={onClose}>Close</Button>

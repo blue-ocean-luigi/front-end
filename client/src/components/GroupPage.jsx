@@ -25,7 +25,7 @@ import SearchGroup from './GroupPageSubcomponents/SearchGroup';
 import InviteFriends from './GroupPageSubcomponents/InviteFriends';
 import AdminEditMembers from './GroupPageSubcomponents/AdminEditMembers';
 
-function GroupPage() {
+function GroupPage({ page }) {
 
   // TODO: replace the isAdmin hook w data from auth
   const [isGroupAdmin, setGroupAdmin] = useState(true);
@@ -110,7 +110,6 @@ function GroupPage() {
     onClose: onCloseAdminControl,
   } = useDisclosure();
 
-
   return (
     <Flex h="100vh" w="100%" justifyContent="space-between" bg="gray">
       <VStack p={2} h="100vh" w="100%">
@@ -142,25 +141,26 @@ function GroupPage() {
                   onClose={onCloseFriendsList}
                   isOpen={isOpenFriendsList}
                   friends={testFriendList}
+                  page={page}
                 />
                 {
                   isGroupAdmin
                   && (
                     <>
                       <Button variant="ghost" onClick={onOpenAdminControl}>
-                        Edit member list
+                        Members
                       </Button>
                       <AdminEditMembers
-                      onClose={onCloseAdminControl}
-                      isOpen={isOpenAdminControl}
-                      members={members}
+                        onClose={onCloseAdminControl}
+                        isOpen={isOpenAdminControl}
+                        members={members}
+                        page={page}
                       />
                     </>
                   )
                 }
-
               </Flex>
-              <GroupMemberList members={members} />
+              <GroupMemberList members={members} page={page} />
             </Box>
             <Box p={1} position="relative" overflow-y="auto" h="100%" w="70%" bg="green">
               <GroupFeed />
