@@ -4,6 +4,5 @@ export default {
   projectId: '',
   storageBucket: '',
   messagingSenderId: '',
-  appId: ''
+  appId: '',
 };
-
