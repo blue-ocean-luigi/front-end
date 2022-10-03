@@ -7,6 +7,7 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  Divider,
 } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/react';
 import GroupMemberList from '../GroupPageSubcomponents/GroupMemberList';
@@ -22,6 +23,7 @@ function AdminEditMembers({onClose, isOpen, members, memberRequests, page, editi
         <ModalCloseButton />
         <ModalBody>
           <IncomingGroupRequests memberRequests={memberRequests} page={page} editing={editing} />
+          <Divider mt={8} mb={4} />
           <GroupMemberList members={members} page={page} editing={editing} />
         </ModalBody>
         <ModalFooter>
