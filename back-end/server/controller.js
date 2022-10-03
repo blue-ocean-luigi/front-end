@@ -1,6 +1,125 @@
 const model = require('./model.js');
 
 module.exports = {
+  getUserPosts: async(req, res) => {
+    const user_id = req.query.user_id;
+    try {
+      const posts = await model.getUserPosts(user_id);
+      res.status(200).send(posts);
+    } catch (err) {
+      console.log(err)
+      res.sendStatus(404)
+    }
+  },
+
+  getGroupPosts: async(req, res) => {
+    const group_id = req.query.group_id
+    try {
+      const posts = await model.getGroupPosts(group_id);
+      res.status(200).send(posts);
+    } catch (err) {
+      console.log(err)
+      res.sendStatus(404)
+    }
+  },
+
+  getRsvp: async(req, res) => {
+    const post_id = req.query.post_id
+    try {
+      const rsvp = await model.getRsvp(post_id)
+      res.status(200).send(rsvp)
+    } catch (error) {
+      console.log(err)
+      res.sendStatus(404)
+    }
+  },
+
+  createPost: async(req, res) => {
+    try {
+      const post_id = await model.createPost(req.body);
+      res.sendStatus(201);
+    } catch (err) {
+      console.log(err)
+      res.sendStatus(404)
+    }
+  },
+
+  createComment: async(req, res) => {
+    try {
+      const comment_id = await model.createComment(req.body);
+      res.sendStatus(201);
+    } catch (error) {
+      console.log(err);
+      res.sendStatus(404);
+    }
+  },
+
+  createPostLike: async(req, res) => {
+    try {
+      const like_id = await model.createPostLike(req.body);
+      res.sendStatus(201)
+    } catch (err) {
+      console.log(err)
+      res.sendStatus(404)
+    }
+
+  },
+
+  createCommentLikes: async(req, res) => {
+    try {
+      const like_id = await model.createCommentLike(req.body)
+      res.sendStatus(201)
+    } catch (err) {
+      console.log(err)
+      res.sendStatus(404)
+    }
+
+  },
+
+  createRsvp: async(req, res) => {
+    try {
+      const rsvp_id = await model.createRsvp(req.body)
+      res.sendStatus(201);
+    } catch (err) {
+      console.log(err)
+      res.sendStatus(404)
+    }
+  },
+
+  deletePost: async(req, res) => {
+    const post_id = req.params.post_id;
+    try {
+      await model.deletePost(post_id);
+      res.send(200);
+    } catch (error) {
+      console.log(err);
+      res.sendStatus(404);
+    }
+  },
+
+  deleteComment: async(req, res) => {
+    const comment_id = req.params.comment_id;
+    try {
+      await model.deleteComment(comment_id)
+      res.send(200);
+    } catch (err) {
+      console.log(err)
+      res.sendStatus(404)
+    }
+  },
+
+  deleteRsvp: async(req, res) => {
+    const post_id = req.params.post_id
+    const user_id = req.params.user_id
+    try {
+      await model.deleteRsvp(post_id, user_id)
+      res.send(200)
+    } catch (err) {
+      console.log(err)
+      res.sendStatus(404)
+    }
+  },
+
   getUser: async (req,res) => {
     const email = req.query.email
     try {
@@ -11,6 +130,7 @@ module.exports = {
       res.sendStatus(400)
     }
   },
+
   addUser: async (req,res) => {
     try {
       await model.addUser(req.body)
@@ -20,6 +140,7 @@ module.exports = {
       res.sendStatus(400)
     }
   },
+
   updateUser: async (req, res) => {
     try {
       await model.updateUser(req.body)

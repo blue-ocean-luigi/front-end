@@ -105,25 +105,25 @@ CREATE TABLE comment_likes (
 
 
 COPY users
-FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/users.csv' DELIMITER ',' CSV HEADER;
+FROM '/Users/brianpham/Desktop/Documents/back-end/back-end/db/dummydata/users.csv' DELIMITER ',' CSV HEADER;
 COPY groups
-FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/groups.csv' DELIMITER ',' CSV HEADER;
+FROM '/Users/brianpham/Desktop/Documents/back-end/back-end/db/dummydata/groups.csv' DELIMITER ',' CSV HEADER;
 COPY group_members
-FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/group_members.csv' DELIMITER ',' CSV HEADER;
+FROM '/Users/brianpham/Desktop/Documents/back-end/back-end/db/dummydata/group_members.csv' DELIMITER ',' CSV HEADER;
 COPY group_requests
-FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/groups_request.csv' DELIMITER ',' CSV HEADER;
+FROM '/Users/brianpham/Desktop/Documents/back-end/back-end/db/dummydata/groups_request.csv' DELIMITER ',' CSV HEADER;
 COPY friends
-FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/friends.csv' DELIMITER ',' CSV HEADER;
+FROM '/Users/brianpham/Desktop/Documents/back-end/back-end/db/dummydata/friends.csv' DELIMITER ',' CSV HEADER;
 COPY messages
-FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/messages.csv' DELIMITER ',' CSV HEADER;
+FROM '/Users/brianpham/Desktop/Documents/back-end/back-end/db/dummydata/messages.csv' DELIMITER ',' CSV HEADER;
 COPY posts
-FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/posts.csv' DELIMITER ',' CSV HEADER;
+FROM '/Users/brianpham/Desktop/Documents/back-end/back-end/db/dummydata/posts.csv' DELIMITER ',' CSV HEADER;
 COPY post_photos
-FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/post_photos.csv' DELIMITER ',' CSV HEADER;
+FROM '/Users/brianpham/Desktop/Documents/back-end/back-end/db/dummydata/post_photos.csv' DELIMITER ',' CSV HEADER;
 COPY comments
-FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/comments.csv' DELIMITER ',' CSV HEADER;
+FROM '/Users/brianpham/Desktop/Documents/back-end/back-end/db/dummydata/comments.csv' DELIMITER ',' CSV HEADER;
 COPY rsvp
-FROM '/Users/kevinpho/Desktop/JS/Immersive/blue-ocean/back-end/back-end/db/dummydata/rsvp.csv' DELIMITER ',' CSV HEADER;
+FROM '/Users/brianpham/Desktop/Documents/back-end/back-end/db/dummydata/rsvp.csv' DELIMITER ',' CSV HEADER;
 
 SELECT setval('comments_id_seq', COALESCE((SELECT MAX(id)+1 FROM comments), 1), false);
 SELECT setval('friends_id_seq', COALESCE((SELECT MAX(id)+1 FROM friends), 1), false);
@@ -135,6 +135,3 @@ SELECT setval('post_photos_id_seq', COALESCE((SELECT MAX(id)+1 FROM post_photos)
 SELECT setval('posts_id_seq', COALESCE((SELECT MAX(id)+1 FROM posts), 1), false);
 SELECT setval('rsvp_id_seq', COALESCE((SELECT MAX(id)+1 FROM rsvp), 1), false);
 SELECT setval('users_id_seq', COALESCE((SELECT MAX(id)+1 FROM users), 1), false);
-
-
-
