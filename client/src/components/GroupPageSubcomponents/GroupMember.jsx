@@ -1,12 +1,41 @@
 import React from 'react';
 import {
   Box,
+  Text,
+  Flex,
+  Image,
+  Badge,
 } from '@chakra-ui/react';
 
-function GroupMember() {
+// TODO: Sort group member list such that admins show up at the top of the member list
+
+function GroupMember({ member }) {
   return (
-    <Box>
-      This is GroupMember
+    <Box bg="brown">
+      <Flex justifyContent="left">
+        <Image
+          borderRadius="full"
+          boxSize="15%"
+          src={ member.profilePicture }
+          alt={ member.name }
+          p={1}
+        />
+        <Box p={1} align="left">
+          <Text>
+            { member.name }
+          </Text>
+          {
+            member.isAdmin
+            && (
+            <Badge colorScheme="red">
+              Admin
+            </Badge>
+            )
+          }
+        </Box>
+
+      </Flex>
+
     </Box>
   );
 }

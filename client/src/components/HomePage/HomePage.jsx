@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import GroupPage from "../GroupPage.jsx";
-import FriendsList from "../FriendsList.jsx";
+import FriendsList from "../FriendsListSubcomponents/FriendsList";
 import HomeFeedPost from "./post/HomeFeedPost.jsx";
 import './HomePage.css';
 
@@ -16,7 +16,20 @@ function HomePage() {
     { groupName: 'cat owners', description: 'we are a group of people who own cats, not just cat, but cats... lots of cats. its not an addiction, its not a problem, its okay this is fine.' },
   ];
 
-  const testfriendlist = ['apple', 'orange', 'banana', 'space shuttle'];
+  const testFriendList = [
+    {
+      name: 'apple', profilePicture: "https://bit.ly/dan-abramov"
+    },
+    {
+      name: 'orange', profilePicture: "https://bit.ly/dan-abramov"
+    },
+    {
+      name: 'banana', profilePicture: "https://bit.ly/dan-abramov"
+    },
+    {
+      name: 'space shuttle', profilePicture: "https://bit.ly/dan-abramov"
+    },
+  ];
 
   const [newUser, setNewUser] = useState(false);
   const [posts, setPosts] = useState(testobjpost);
@@ -51,9 +64,10 @@ function HomePage() {
               onClick={()=>console.log('clicked', group.groupName)}>{group.groupName}</span>
             )) }
           </div>
-          <div className="hp_friends_list_container">
+          {/* <div className="hp_friends_list_container">
               {testfriendlist.map((friend, i) => (<span key={i}className="hp_friend_name" onClick={()=>console.log('clicked: ', friend)}>{friend}</span>))}
-          </div>
+          </div> */}
+          <FriendsList friends={testFriendList} />
         </div>
         {newUser ? (
           <div className="hp_home_feed">

@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import GroupPage from './GroupPage';
 import HomePage from './HomePage/HomePage.jsx';
 
-function PageControl({ setMainDisplay, userID }) {
-  const [page, setPage] = useState('home');
+function PageControl({ userID }) {
+  const [page, setPage] = useState('group');
   return (
     <div>
       <div>
