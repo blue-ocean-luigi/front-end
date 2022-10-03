@@ -32,8 +32,8 @@ function GroupMember({ member, page, editing, isGroupRequest}) {
             <Text>
               { member.name }
             </Text>
-            {
-              member.isAdmin
+            { !isGroupRequest
+              && member.isAdmin
               && (
               <Badge colorScheme="red">
                 Admin
