@@ -20,7 +20,7 @@ function Friend({ friend, page }) {
         <Flex justifyContent="left">
           <Image
             borderRadius="full"
-            boxSize="15%"
+            boxSize="80px"
             src={ friend.profilePicture }
             alt={ friend.name }
             p={1}
