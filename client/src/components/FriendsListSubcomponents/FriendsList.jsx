@@ -5,10 +5,12 @@ import {
 } from '@chakra-ui/react';
 import Friend from './Friend';
 
-function FriendsList({ friends }) {
+// TODO: edit the hook to work for page control????
+
+function FriendsList({ friends, page }) {
   return (
-    <Box ml={1} align="center">
-      {friends.map((f) => <Friend key={f.name} friend={f} />)}
+    <Box align="center">
+      {friends.map((f) => <Friend key={f.name} friend={f} page={page} />)}
     </Box>
   );
 }

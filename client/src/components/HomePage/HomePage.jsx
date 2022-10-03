@@ -56,7 +56,8 @@ function HomePage() {
       <div className="hp_body_container">
         <div className="hp_sidebar">
           <div className="hp_profile_img_container">
-            <img src="https://i.pinimg.com/originals/42/90/35/429035c30c3e0aa7169168a93fdbe551.jpg" alt="alt" className="hp_profile_img" />
+            <img src="https://i.pinimg.com/originals/42/90/35/429035c30c3e0aa7169168a93fdbe551.jpg" alt="alt" className="hp_profile_img"
+            onClick={()=>console.log("clicked profile image")} />
           </div>
           <div className="hp_group_list_container">
             {testobjgroup.map((group, i) => (
