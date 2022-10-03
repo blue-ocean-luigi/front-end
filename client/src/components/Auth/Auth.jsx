@@ -22,7 +22,7 @@ import {
   where,
   addDoc,
 } from 'firebase/firestore';
-import firebaseConfig from '../../firebase.js';
+import firebaseConfig from '../../../firebase.js';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
