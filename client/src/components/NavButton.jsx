@@ -13,7 +13,7 @@ export default function NavButton({setMainDisplay}) {
   return (
 
     <Menu>
-      <MenuButton  position="fixed" top="0" left="0"as={Button}>Menu</MenuButton>
+      <MenuButton position="fixed" top="0" left="0"as={Button}>Menu</MenuButton>
       <MenuList>
         <MenuItem onClick={() => setMainDisplay('pages')}>Home</MenuItem>
         <MenuItem onClick={() => logout().then(() => setMainDisplay('login'))}>Log Out</MenuItem>
