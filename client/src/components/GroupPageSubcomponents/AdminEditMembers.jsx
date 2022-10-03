@@ -10,17 +10,18 @@ import {
 } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/react';
 import GroupMemberList from '../GroupPageSubcomponents/GroupMemberList';
+import IncomingGroupRequests from '../GroupPageSubcomponents/IncomingGroupRequests';
 
-// TODO: add invite button to either FriendsList as a conditionally rendered button
-// OR map each individual friend to a new friends list with invite buttons
-function AdminEditMembers({onClose, isOpen, members, page, editing}) {
+// TODO: connect to GET requests
+function AdminEditMembers({onClose, isOpen, members, memberRequests, page, editing}) {
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered scrollBehavior="inside" size="lg">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Edit members</ModalHeader>
+        <ModalHeader />
         <ModalCloseButton />
         <ModalBody>
+          <IncomingGroupRequests memberRequests={memberRequests} page={page} editing={editing} />
           <GroupMemberList members={members} page={page} editing={editing} />
         </ModalBody>
         <ModalFooter>
@@ -28,7 +29,7 @@ function AdminEditMembers({onClose, isOpen, members, page, editing}) {
         </ModalFooter>
       </ModalContent>
     </Modal>
-  )
+  );
 }
 
 export default AdminEditMembers;

@@ -37,7 +37,12 @@ function GroupPage({ page }) {
       { name: 'Brian', isAdmin: false, profilePicture: "https://bit.ly/dan-abramov" },
       { name: 'James', isAdmin: false, profilePicture: "https://bit.ly/dan-abramov" },
       { name: 'Jessie', isAdmin: false, profilePicture: "https://bit.ly/dan-abramov" },
-      { name: 'Kevin', isAdmin: false, profilePicture: "https://bit.ly/dan-abramov" },
+    ],
+  );
+
+  const [memberRequests, setMemberRequests] = useState(
+    [
+      { name: 'Kevin', isAdmin: true, profilePicture: "https://bit.ly/dan-abramov" },
       { name: 'Matt', isAdmin: false, profilePicture: "https://bit.ly/dan-abramov" },
     ],
   );
@@ -111,7 +116,7 @@ function GroupPage({ page }) {
   } = useDisclosure();
 
   // hook for handling whether the admin is editing the members
-  const [editing, setEditing]= useState(false);
+  const [editing, setEditing] = useState(false);
 
   return (
     <Flex h="100vh" w="100%" justifyContent="space-between" bg="gray">
@@ -137,7 +142,11 @@ function GroupPage({ page }) {
           <HStack h="100%" w="100%">
             <Box h="100%" w="30%" bg="blue" p={1}>
               <Flex justifyContent="space-between">
-                <Button variant="ghost" onClick={onOpenFriendsList}>
+                <Button
+                  variant="ghost"
+                  size="xs"
+                  onClick={onOpenFriendsList}
+                >
                   Invite your friends
                 </Button>
                 <InviteFriends
@@ -150,13 +159,18 @@ function GroupPage({ page }) {
                   isGroupAdmin
                   && (
                     <>
-                      <Button variant="ghost" onClick={()=> {setEditing(true); onOpenAdminControl()}}>
+                      <Button
+                        variant="ghost"
+                        size="xs"
+                        onClick={() => { setEditing(true); onOpenAdminControl(); }}
+                      >
                         Edit Members
                       </Button>
                       <AdminEditMembers
                         onClose={onCloseAdminControl}
                         isOpen={isOpenAdminControl}
                         members={members}
+                        memberRequests={memberRequests}
                         page={page}
                         editing={editing}
                       />
