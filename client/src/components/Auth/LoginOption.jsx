@@ -27,7 +27,7 @@ import {
 } from './Auth';
 
 
-function Signup({setExistingUser, setMainDisplay}) {
+function Signup({setExistingUser, setMainPage}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -39,17 +39,17 @@ function Signup({setExistingUser, setMainDisplay}) {
   };
   useEffect(() => {
     if (loading) return;
-    if (user) setMainDisplay('page');
+    if (user) setMainPage('welcome');
   }, [user, loading]);
 
   return (
-      <Center minH="500px" maxH="800px">
-        <Flex flexDirection="column" h="100%">
+      <Center>
+        <Flex flexDirection="column" h="calc(100vh)">
           <Center>
             <Heading>Sign Up</Heading>
           </Center>
           <Spacer />
-          <Box minH="300px" minW="400px" maxH="600px" maxW="600px">
+          <Box >
             <FormControl>
               <Flex flexDirection="column">
                   <Box>
@@ -100,7 +100,7 @@ function Signup({setExistingUser, setMainDisplay}) {
   );
 }
 
-function Login({user, loading, error, setExistingUser, setMainDisplay}) {
+function Login({user, loading, error, setExistingUser, setMainPage}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   //const [user, loading, error] = useAuthState(auth);
@@ -109,7 +109,7 @@ function Login({user, loading, error, setExistingUser, setMainDisplay}) {
       // trigger loading screen?
       return;
     }
-    if (user) setMainDisplay('page');
+    if (user) setMainPage('page');
   }, [user, loading]);
   return (
       <Center minH="500px" maxH="800px">
@@ -170,17 +170,17 @@ function Login({user, loading, error, setExistingUser, setMainDisplay}) {
   )
 }
 
-export default function LoginOption({ user, loading, error, setMainDisplay, setUserID }) {
+export default function LoginOption({ user, loading, error, setMainPage, setUserID }) {
   const [existingUser, setExistingUser] = useState(true);
   if (existingUser) {
     return <Login
-              setMainDisplay={setMainDisplay}
+              setMainPage={setMainPage}
               setExistingUser={setExistingUser}
               user={user}
               loading={loading}
               error={error}
             />
   } else {
-    return <Signup setExistingUser={setExistingUser} setMainDisplay={setMainDisplay}/>
+    return <Signup setExistingUser={setExistingUser} setMainPage={setMainPage}/>
   }
 }

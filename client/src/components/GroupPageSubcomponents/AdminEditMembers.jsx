@@ -10,8 +10,8 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/react';
+import IncomingGroupRequests from './IncomingGroupRequests';
 import GroupMemberList from '../GroupPageSubcomponents/GroupMemberList';
-import IncomingGroupRequests from '../GroupPageSubcomponents/IncomingGroupRequests';
 
 // TODO: connect to GET requests
 function AdminEditMembers({onClose, isOpen, members, memberRequests, page, editing}) {
