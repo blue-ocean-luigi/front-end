@@ -18,8 +18,8 @@ const func = () => {
   // .catch((err) => console.log(err))
 
   please.getFriendsOfUser(2)
-  .then((results) => console.log(results.data))
-  .catch((err) => console.log(err));
+    .then((results) => console.log(results.data))
+    .catch((err) => console.log(err));
 
   // please.getGroupsOfUser(4)
   // .then((results) => console.log(results.data))
@@ -68,7 +68,6 @@ const func = () => {
   // please.postMessage(sender_id, receiver_id, message)
   // .then((results) => console.log(results.data))
   // .catch((err) => console.log(err))
-}
+};
 
-
-func()
+func();
