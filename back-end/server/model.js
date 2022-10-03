@@ -135,15 +135,21 @@ module.exports = {
     return (results.rows)
   },
   createGroup: (info) => {
-    const {name, about, state, city, zip} = info
+    const values = [
+      info.name,
+      info.about,
+      info.state,
+      info.city,
+      info.zip
+    ]
 
     const query = `
       INSERT INTO groups
         (name, about, state, city, zip)
       VALUES
-        ('${name}', '${about}', '${state}', '${city}', '${zip}')`
+        ($1, $2, $3, $4, $5)`
 
-    return pool.query(query)
+    return pool.query(query, values)
   },
   getMessages: async (info) => {
     const {user_id, friend_id} = info
@@ -167,7 +173,6 @@ module.exports = {
       OR
         receiver_id = '${friend_id}'
       `
-
     let results = await pool.query(query);
     return (results.rows)
   },
@@ -175,7 +180,7 @@ module.exports = {
     const {sender_id, receiver_id, message} = info
 
     const query = `
-      INSERT INTO groups
+      INSERT INTO messages
         (sender_id, receiver_id, message)
       VALUES
         ('${sender_id}', '${receiver_id}', '${message}')`

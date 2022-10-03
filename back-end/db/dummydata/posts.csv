@@ -1,6 +1,6 @@
-id,user_id,group_id,content,createdAt,isEvent,name,state,city,zip,startTime,startDate,endTime,endDate
-1,1,1,Hi group,6/22/16 19:10,FALSE,,,,,,,,
-2,2,2,Hi group,6/22/16 19:10,FALSE,,,,,,,,
-3,3,3,Hi group,6/22/16 19:10,TRUE,blue ocean,ca,san francisco,96574,1200,2022/10/01,1500,2022/10/01
-4,4,5,Hi group,6/22/16 19:10,FALSE,,,,,,,,
-5,5,2,Hi group,6/22/16 19:10,FALSE,,,,,,,,
+id,user_id,group_id,content,createdAt,isEvent,name,state,city,zip,startTime,startDate,endTime,endDate,payment_amt
+1,1,1,Hi group,6/22/16 19:10,FALSE,,,,,,,,,
+2,2,2,Hi group,6/22/16 19:10,FALSE,,,,,,,,,
+3,3,3,Hi group,6/22/16 19:10,TRUE,blue ocean,ca,san francisco,96574,1200,2022/10/01,1500,2022/10/01,10
+4,4,5,Hi group,6/22/16 19:10,FALSE,,,,,,,,,
+5,5,2,Hi group,6/22/16 19:10,FALSE,,,,,,,,,

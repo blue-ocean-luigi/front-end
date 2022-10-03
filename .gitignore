@@ -7,5 +7,5 @@ client/dist/bundle.js*
 
 .DS_store
 
-back-end/.env
-
+.env
+/backend/.env
