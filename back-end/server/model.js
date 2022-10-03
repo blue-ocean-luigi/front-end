@@ -6,14 +6,14 @@ module.exports = {
     const query =
     `WITH gigachad as (
       SELECT p.id as post_id,
-            g.id as group_id,
+            p.group_id as group_id,
             g.name as groupname,
-            p.user_id as author,
+            p.user_id as author_id,
             u.firstName as firstName,
             u.lastName as lastName,
             picture,
-            p.content as content,
-            p.createdAt as date,
+            content,
+            createdAt as date,
             isEvent,
             p.name as eventName,
             p.state as state,
@@ -22,7 +22,8 @@ module.exports = {
             startTime,
             startDate,
             endTime,
-            endDate
+            endDate,
+            payment_amt
     FROM groups g INNER JOIN group_members gm
     ON g.id = gm.group_id
     INNER JOIN posts p ON p.group_id = g.id
@@ -32,7 +33,7 @@ module.exports = {
 SELECT post_id,
     group_id,
     groupname,
-    author as author_id,
+    author_id,
     firstName,
     lastName,
     picture,
@@ -47,6 +48,7 @@ SELECT post_id,
     startDate,
     endTime,
     endDate,
+    payment_amt,
 
     COALESCE(
   (SELECT json_agg(json_build_object('photo_id', id, 'url', url))
@@ -56,7 +58,16 @@ SELECT post_id,
       FROM post_photos pp
       WHERE pp.post_id = gigachad.post_id) pictures), '[]'::json) AS photos,
       COALESCE(
-  (SELECT json_agg(json_build_object('comment_id', id, 'author_id', user_id, 'firstName', firstName, 'lastName', lastName, 'picture', picture, 'message', message, 'date', createdAt))
+  (SELECT json_agg(json_build_object('id', user_id, 'firstName', firstName, 'lastName', lastName))
+  FROM
+      (SELECT l.user_id,
+        firstName,
+        lastName
+      FROM users INNER JOIN post_likes l
+      ON users.id = l.user_id) likes), '[]'::json) AS postLikes,
+      COALESCE(
+  (SELECT json_agg(json_build_object('comment_id', id, 'author_id', user_id, 'firstName', firstName, 'lastName', lastName, 'picture', picture, 'message', message, 'date', createdAt,
+  'likes', clikes))
   FROM
       (SELECT c.id,
         c.user_id,
@@ -64,7 +75,18 @@ SELECT post_id,
         lastName,
         picture,
         message,
-        createdAt
+        createdAt,
+        (SELECT json_agg(json_build_object(
+          'id', user_id,
+          'firstName', firstName,
+          'lastName', lastName
+        )) clikes
+      FROM
+          (SELECT cl.user_id,
+            firstName,
+            lastName
+          FROM users INNER JOIN comment_likes cl
+          ON cl.user_id = users.id) comms)
       FROM comments c INNER JOIN users u
       ON c.user_id = u.id
       WHERE c.post_id = gigachad.post_id
@@ -81,32 +103,30 @@ SELECT post_id,
     const query =
     `WITH gigachad as (
       SELECT p.id as post_id,
-            g.id as group_id,
-            g.name as groupname,
-            p.user_id as author,
+            p.group_id as group_id,
+            p.user_id as author_id,
             u.firstName as firstName,
             u.lastName as lastName,
             picture,
-            p.content as content,
-            p.createdAt as date,
+            content,
+            createdAt as date,
             isEvent,
             p.name as eventName,
-            p.state as state,
-            p.city as city,
-            p.zip as zip,
+            state,
+            city,
+            zip,
             startTime,
             startDate,
             endTime,
-            endDate
-      FROM posts p INNER JOIN groups g
-      ON p.group_id = g.id
-      INNER JOIN users u ON p.user_id = u.id
+            endDate,
+            payment_amt
+      FROM posts p INNER JOIN
+      users u ON p.user_id = u.id
       WHERE p.group_id = ${group_id})
 
   SELECT post_id,
         group_id,
-        groupname,
-        author as author_id,
+        author_id,
         firstName,
         lastName,
         picture,
@@ -121,6 +141,7 @@ SELECT post_id,
         startDate,
         endTime,
         endDate,
+        payment_amt,
 
         COALESCE(
       (SELECT json_agg(json_build_object('photo_id', id, 'url', url))
@@ -129,6 +150,14 @@ SELECT post_id,
             url
           FROM post_photos pp
           WHERE pp.post_id = gigachad.post_id) pictures), '[]'::json) AS photos,
+        COALESCE(
+      (SELECT json_agg(json_build_object('id', user_id, 'firstName', firstName, 'lastName', lastName))
+      FROM
+          (SELECT l.user_id,
+            firstName,
+            lastName
+          FROM users INNER JOIN post_likes l
+          ON users.id = l.user_id) likes), '[]'::json) AS postLikes,
         COALESCE(
       (SELECT json_agg(json_build_object('comment_id', id, 'author_id', user_id, 'firstName', firstname, 'lastName', lastName, 'picture', picture, 'message', message, 'date', createdAt))
       FROM
@@ -233,8 +262,7 @@ SELECT post_id,
 
     await pool.query(query)
     return
-  }
-}
+  },
 
   getUser: async (email) => {
     const query = `
@@ -248,6 +276,7 @@ SELECT post_id,
     let results = await pool.query(query);
     return (results.rows)
   },
+
   addUser: (info) => {
     const { firstname, lastname, email, aboutme, picture } = info
 

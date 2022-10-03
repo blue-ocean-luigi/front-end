@@ -21,7 +21,6 @@ module.exports = {
       console.log(err)
       res.sendStatus(404)
     }
-
   },
 
   createPost: async(req, res) => {
@@ -42,7 +41,6 @@ module.exports = {
       console.log(err);
       res.sendStatus(404);
     }
-
   },
 
   deletePost: async(req, res) => {
@@ -54,7 +52,7 @@ module.exports = {
       console.log(err);
       res.sendStatus(404);
     }
-
+  },
 
   getUser: async (req,res) => {
     const email = req.query.email
@@ -66,6 +64,7 @@ module.exports = {
       res.sendStatus(400)
     }
   },
+
   addUser: async (req,res) => {
     try {
       await model.addUser(req.body)
@@ -75,6 +74,7 @@ module.exports = {
       res.sendStatus(400)
     }
   },
+
   updateUser: async (req, res) => {
     try {
       await model.updateUser(req.body)

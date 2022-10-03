@@ -135,6 +135,3 @@ SELECT setval('post_photos_id_seq', COALESCE((SELECT MAX(id)+1 FROM post_photos)
 SELECT setval('posts_id_seq', COALESCE((SELECT MAX(id)+1 FROM posts), 1), false);
 SELECT setval('rsvp_id_seq', COALESCE((SELECT MAX(id)+1 FROM rsvp), 1), false);
 SELECT setval('users_id_seq', COALESCE((SELECT MAX(id)+1 FROM users), 1), false);
-
-
-
