@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import GroupPage from "../GroupPage.jsx";
 import FriendsList from "../FriendsListSubcomponents/FriendsList";
 import HomeFeedPost from "./post/HomeFeedPost.jsx";
-import NewEvent from '../Modals/NewEvent';
 import './HomePage.css';
 
 //  props should be user info, if user is new

@@ -6,6 +6,8 @@ import {
 
 } from '@chakra-ui/react';
 import FeedItem from './FeedItem';
+import NewEvent from '../Modals/NewEvent';
+import NewPost from '../Modals/NewPost';
 
 function GroupFeed() {
   // TODO Replace hardcoded data with axios call
@@ -45,12 +47,8 @@ function GroupFeed() {
         </Box>
       </Box>
       <Flex position="absolute" bottom={0} w="100%" justifyContent="flex-end" bg="magenta">
-        <Button variant="ghost" onClick={onClick}>
-          New Event
-        </Button>
-        <Button variant="ghost" onClick={onClick}>
-          New Post
-        </Button>
+        <NewPost />
+        <NewEvent />
       </Flex>
     </Box>
   );

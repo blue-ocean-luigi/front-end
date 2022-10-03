@@ -73,7 +73,6 @@ function NewEvent({ userID, groupID }) {
       group_id: groupID,
       content,
       eventPhoto,
-      createdAt: Date.now(),
       isEvent: true,
       name,
       state,
