@@ -110,6 +110,9 @@ function GroupPage({ page }) {
     onClose: onCloseAdminControl,
   } = useDisclosure();
 
+  // hook for handling whether the admin is editing the members
+  const [editing, setEditing]= useState(false);
+
   return (
     <Flex h="100vh" w="100%" justifyContent="space-between" bg="gray">
       <VStack p={2} h="100vh" w="100%">
@@ -147,14 +150,15 @@ function GroupPage({ page }) {
                   isGroupAdmin
                   && (
                     <>
-                      <Button variant="ghost" onClick={onOpenAdminControl}>
-                        Members
+                      <Button variant="ghost" onClick={()=> {setEditing(true); onOpenAdminControl()}}>
+                        Edit Members
                       </Button>
                       <AdminEditMembers
                         onClose={onCloseAdminControl}
                         isOpen={isOpenAdminControl}
                         members={members}
                         page={page}
+                        editing={editing}
                       />
                     </>
                   )

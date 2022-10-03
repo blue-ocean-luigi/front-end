@@ -9,11 +9,11 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/react';
-import FriendsList from '../GroupPageSubcomponents/GroupMemberList';
+import GroupMemberList from '../GroupPageSubcomponents/GroupMemberList';
 
 // TODO: add invite button to either FriendsList as a conditionally rendered button
 // OR map each individual friend to a new friends list with invite buttons
-function AdminEditMembers({onClose, isOpen, members}) {
+function AdminEditMembers({onClose, isOpen, members, page, editing}) {
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered scrollBehavior="inside" size="lg">
       <ModalOverlay />
@@ -21,7 +21,7 @@ function AdminEditMembers({onClose, isOpen, members}) {
         <ModalHeader>Edit members</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <FriendsList members={members} />
+          <GroupMemberList members={members} page={page} editing={editing} />
         </ModalBody>
         <ModalFooter>
           <Button onClick={onClose}>Close</Button>
