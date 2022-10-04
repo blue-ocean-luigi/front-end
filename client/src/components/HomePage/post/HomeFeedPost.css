@@ -1,0 +1,37 @@
+.hp_post {
+  /* background: rgba(50,250,50,0.5); */
+  margin: 1em;
+  padding: 1em;
+  position: relative;
+  min-height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hp_post_name {
+  font-weight: 900;
+  position: absolute;
+  left: 10%;
+  top: 10%;
+}
+
+.hp_post_image {
+  width: 80px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.hp_post_content {
+  text-align: left;
+  width: 80%;
+}
+
+.hp_post_date {
+  position: absolute;
+  right: 0;
+  top: 0;
+}

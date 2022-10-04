@@ -1,26 +1,27 @@
+/* eslint-disable import/extensions */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+import GroupPage from './GroupPage';
+import HomePage from './HomePage/HomePage.jsx';
+import ProfilePage from "./ProfilePage/ProfilePage.jsx";
 
-function PageControl({ userID }) {
-  const [page, setPage] = useState('home');
+function PageControl({ userID, page, setPage }) {
   return (
     <div>
-      <nav> Nave bar goes here </nav>
       <div>
         {(() => {
           switch (page) {
             case 'home':
-              return <HomePage setPage={setPage} userID={userID} />; // James
+              return <HomePage setPage={setPage} userID={userID} />;
             case 'group':
-              return <GroupPage setPage={setPage} userID={userID} />; // set display for logout fx.
+              return <GroupPage setPage={setPage} userID={userID} page={page} />;
             case 'profile':
-              return <ProfilePage setPage={setPage} userID={userID} />; // James
+              return <ProfilePage setPage={setPage} userID={userID} />;
             default:
               return <HomePage setPage={setPage} userID={userID} />;
           }
         })()}
       </div>
-      <nav> Chat bar goes here </nav>
     </div>
   );
 }
