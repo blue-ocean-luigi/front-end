@@ -1,10 +1,17 @@
 import { createServer } from 'miragejs';
-createServer({
+const makeServer = () => {
+  createServer({
     routes() {
-      this.namespace='api';
-      this.bypass;
+      this.urlPrefix = 'http://localhost:3007';
+      //this.namespace='api';
+      this.get('/messages', () => {
+        return { text: 'hello', to: 1, from: 2, date: new Date() }
+      });
+      this.passthrough();
     }
-});
+  });
+}
+export default makeServer;
 /* fake server */
   
     //this.urlPrefix = 'http://localhost:3001';
