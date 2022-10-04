@@ -25,6 +25,7 @@ import {
   signInWithGoogle,
   registerWithEmailAndPassword,
 } from './Auth';
+import request from '../../request';
 
 
 function Signup({setExistingUser, setMainPage}) {
@@ -39,7 +40,11 @@ function Signup({setExistingUser, setMainPage}) {
   };
   useEffect(() => {
     if (loading) return;
-    if (user) setMainPage('welcome');
+    if (user) {
+      console.log('signup: email:', email);
+      //request.getUserByEmail(email).then(res => console.log(res));
+      setMainPage('welcome');
+    }
   }, [user, loading]);
 
   return (
@@ -109,7 +114,11 @@ function Login({user, loading, error, setExistingUser, setMainPage}) {
       // trigger loading screen?
       return;
     }
-    if (user) setMainPage('page');
+    if (user) {
+      console.log('email:', email);
+      //request.getUserByEmail(email).then(res => console.log(res));
+      setMainPage('page');
+    }
   }, [user, loading]);
   return (
       <Center minH="500px" maxH="800px">

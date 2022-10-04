@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
-const axios = require('axios');
+import axios from 'axios';
 
 const basePath = 'http://localHost:3001/crossing';
 
-module.exports = {
+export default {
   // get user info/friends/groups by email after authorization
   getUserByEmail: async (email) =>
     axios({

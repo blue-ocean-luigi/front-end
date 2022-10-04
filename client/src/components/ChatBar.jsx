@@ -38,13 +38,14 @@ export default function ChatBar() {
     socket.emit('message', sendData);
     chatInput.current.value = '';
   }
+  
   return (
     <Box marginBottom="8px" bgColor='primary' position="fixed" bottom="0" left="0" width="100%">
       <Center>
         <Flex w="100%">
           <Center w="100%">
             <FormControl>
-              <form onSubmit={sendChat}>
+              <form onSubmit={() => {}/*sendChat*/}>
                 <Input
                   ref={chatInput}
                   ml="4px"
