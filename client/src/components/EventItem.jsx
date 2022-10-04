@@ -1,21 +1,104 @@
 import React, { useState } from 'react';
-import { Button, ButtonGroup, Text } from '@chakra-ui/react';
+import { BiHomeSmile, BiMessageAdd } from 'react-icons/bi';
+import {
+  Box,
+  Text,
+  HStack,
+  Flex,
+  Image,
+  Button,
+  Stack,
+  Icon,
+  Textarea,
+} from '@chakra-ui/react';
 import EventView from './Modals/EventView';
+import CommentList from './Comments/CommentList';
 
-function EventItem({event}) {
-  const [eventView, setEventView] = useState(false);
-  return (
-    // eslint-disable-next-line max-len
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
-    <div onClick={() => setEventView(true)}>
-      {/* <img> Event image, if any go here</img> */}
-      <Text fontSize="3xl">Event Title Here</Text>
-      <Text fontSize="xl"> Date and Time go here</Text>
-      <Text fontSize="2xl"> Group Name will go here</Text>
-      <Text fontSize="lg"> Event description will go here as you can see :P </Text>
-      {eventView && <EventView setEventView={setEventView} eventView={eventView} />}
-    </div>
-  );
+class EventItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleLike = this.handleLike.bind(this);
+    this.sendComment = this.sendComment.bind(this);
+    this.state = {
+      comment: '',
+      likeCount: 0,
+    };
+  }
+
+  handleLike() {
+    const { likeCount } = this.state;
+    if (likeCount < 1) {
+      console.log('send a like, then increase likeCOunt');
+      this.setState({
+        likeCount: 1,
+      });
+    }
+  }
+
+  sendComment(comment) {
+    console.log('send comment: ', comment);
+    this.setState({
+      comment: '',
+    });
+  }
+
+  render() {
+    const { event } = this.props;
+    const { comment } = this.state;
+    return (
+      // eslint-disable-next-line max-len
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
+      <Box
+        boxShadow="md"
+        rounded="lg"
+        mb={4}
+        borderWidth="1px"
+      >
+        <HStack justifyContent="space-between" p={1}>
+          <Flex justifyContent="left">
+            <Image
+              borderRadius="full"
+              boxSize="80px"
+              src={event.picture}
+              // alt={ event.eventName }
+              p={1}
+            />
+            <Box p={1} align="left">
+              <Text fontSize="2xl">
+                {event.eventName}
+              </Text>
+              <Text>
+                {event.time}
+              </Text>
+            </Box>
+          </Flex>
+          {/* { page === 'group'
+            && (
+            <Flex p={1}>
+              <Button size="xs" onClick={() => onInvite(event)}> Invite </Button>
+            </Flex>
+            ) } */}
+          <Stack shouldWrapChildren direction="row">
+            <Text> *no.Likes* </Text>
+            <Icon as={BiHomeSmile} w={6} h={6} onClick={() => { this.handleLike(); }} />
+            <Text> *no.comments</Text>
+            <Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} />
+          </Stack>
+        </HStack>
+        <EventView eventInfo={event} handleLike={this.handleLike} sendComment={this.sendComment} />
+        <Box>
+          <CommentList comments={event.comments} />
+        </Box>
+        <Textarea
+          value={comment}
+          onChange={(e) => this.setState({ comment: e.target.value })}
+          placeholder="...your comment here"
+          size="sm"
+        />
+        <Button colorScheme="blue" onClick={() => this.sendComment(comment)}> Post </Button>
+      </Box>
+    );
+  }
 }
 
 export default EventItem;

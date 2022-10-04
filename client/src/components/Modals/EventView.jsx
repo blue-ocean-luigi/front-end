@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BiHomeSmile, BiMessageAdd } from "react-icons/bi";
 import {
   Modal,
@@ -12,51 +12,67 @@ import {
   Stack,
   useDisclosure,
   Text,
+  Textarea,
   Icon,
+  Image,
 } from '@chakra-ui/react';
+import CommentList from '../Comments/CommentList';
 
-function EventView({ eventInfo }) {
+function EventView({ eventInfo, handleLike, sendComment }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [comment, setComment] = useState('');
-  const [likeCount, setLikeCount] = useState(0);
 
-  // function sendRSVP() {
-  //   if
-  // }
+  function sendRSVP() {
+    console.log('send RSVP');
+  }
 
-  function sendComment() {
-    console.log('handle comment');
+  function handleInvite() {
+    console.log('handle invite');
+  }
+
+  function handleComment() {
+    sendComment(comment);
     setComment('');
   }
 
-  function handleLike() {
-    if (likeCount < 1) {
-      console.log('send a like, then increase likeCOunt');
-    }
-  }
   return (
     <div>
       <Button onClick={onOpen}>Event Details</Button>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal size="xl" isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Event Name</ModalHeader>
+          <ModalHeader>{eventInfo.eventName}</ModalHeader>
           <ModalCloseButton />
+          <Image
+            borderRadius='full'
+            boxSize='150px'
+            src={eventInfo.picture}
+            alt='Event Pic'
+          />
           <Text>Posted by *username* in *group name*</Text>
-          <Text>Date and Time Here</Text>
+          <Text>{eventInfo.time}</Text>
           <ModalBody>
-            About the event
+            {eventInfo.description}
           </ModalBody>
           <Stack shouldWrapChildren direction="row">
             <Text> *no.Likes* </Text>
-            <Icon as={BiHomeSmile} w={6} h={6} onClick={() => { handleLike(); }} />
+            <Icon as={BiHomeSmile} w={6} h={6} onClick={() => handleLike()} />
             <Text> *no.comments</Text>
-            <Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} />
+            <Icon as={BiMessageAdd} w={6} h={6} onClick={() => console.log('scroll to comment?')} />
           </Stack>
           <ModalFooter>
-            <Botton colorScheme="blue" onClick={() => sendRSVP()}>RSVP</Botton>
+            <Button colorScheme="blue" onClick={() => sendRSVP()}> RSVP </Button>
+            <Button colorScheme="ghost" onClick={() => handleInvite()}> Invite </Button>
           </ModalFooter>
+          <CommentList comments={eventInfo.comments} />
+          <Textarea
+            value={comment}
+            onChange={(e) => { setComment(e.target.value); }}
+            placeholder="...your comment here"
+            size="sm"
+          />
+          <Button colorScheme="blue" onClick={() => handleComment(comment)}> Post </Button>
         </ModalContent>
       </Modal>
     </div>
