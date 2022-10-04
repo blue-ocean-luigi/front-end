@@ -2,9 +2,7 @@ const pool = require('../db/postgres.js')
 
 module.exports = {
   getUserPosts: async (user_id) => {
-
-    const query =
-    `WITH gigachad as (
+    const query = `WITH gigachad as (
       SELECT p.id as post_id,
             p.group_id as group_id,
             g.name as groupname,
@@ -58,11 +56,12 @@ SELECT post_id,
       FROM post_photos pp
       WHERE pp.post_id = gigachad.post_id) pictures), '[]'::json) AS photos,
       COALESCE(
-  (SELECT json_agg(json_build_object('id', user_id, 'firstName', firstName, 'lastName', lastName))
+  (SELECT json_agg(json_build_object('id', user_id, 'firstName', firstName, 'lastName', lastName, 'picture', picture))
   FROM
       (SELECT l.user_id,
         firstName,
-        lastName
+        lastName,
+        picture
       FROM users INNER JOIN post_likes l
       ON users.id = l.user_id
       WHERE l.post_id = gigachad.post_id) likes), '[]'::json) AS postLikes,
@@ -80,12 +79,14 @@ SELECT post_id,
         COALESCE((SELECT json_agg(json_build_object(
           'id', user_id,
           'firstName', firstName,
-          'lastName', lastName
+          'lastName', lastName,
+          'picture', picture
         )) cnames
       FROM
           (SELECT cl.user_id,
             firstName,
-            lastName
+            lastName,
+            picture
           FROM users INNER JOIN comment_likes cl
           ON cl.user_id = users.id
           WHERE cl.comment_id = c.id) comms), '[]'::json) clikes
@@ -96,14 +97,12 @@ SELECT post_id,
       FROM gigachad
       ORDER BY date DESC`;
 
-
-    const select = await pool.query(query)
+    const select = await pool.query(query);
     return select.rows;
   },
 
-  getGroupPosts: async(group_id) => {
-    const query =
-    `WITH gigachad as (
+  getGroupPosts: async (group_id) => {
+    const query = `WITH gigachad as (
       SELECT p.id as post_id,
             p.group_id as group_id,
             p.user_id as author_id,
@@ -153,11 +152,12 @@ SELECT post_id,
           FROM post_photos pp
           WHERE pp.post_id = gigachad.post_id) pictures), '[]'::json) AS photos,
         COALESCE(
-      (SELECT json_agg(json_build_object('id', user_id, 'firstName', firstName, 'lastName', lastName))
+      (SELECT json_agg(json_build_object('id', user_id, 'firstName', firstName, 'lastName', lastName, 'picture', picture))
       FROM
           (SELECT l.user_id,
             firstName,
-            lastName
+            lastName,
+            picture
           FROM users INNER JOIN post_likes l
           ON users.id = l.user_id
           WHERE l.post_id = gigachad.post_id) likes), '[]'::json) AS postLikes,
@@ -174,12 +174,14 @@ SELECT post_id,
             COALESCE((SELECT json_agg(json_build_object(
                 'id', user_id,
                 'firstName', firstName,
-                'lastName', lastName
+                'lastName', lastName,
+                'picture', picture
               )) cnames
             FROM
               (SELECT cl.user_id,
                     firstName,
-                    lastName
+                    lastName,
+                    picture
               FROM users INNER JOIN comment_likes cl ON cl.user_id = users.id
               WHERE cl.comment_id = c.id) comms), '[]'::json) clikes
           FROM comments c INNER JOIN users u
@@ -191,46 +193,18 @@ SELECT post_id,
 
     const select = await pool.query(query);
     return select.rows;
-
   },
 
-  getRsvp: async(post_id) => {
-    const query =
-    `WITH guestlist as (
-      SELECT r.user_id as user_id,
-            firstName,
-            lastName
-      FROM rsvp r INNER JOIN users
-      ON r.user_id = users.id
-      WHERE post_id = ${post_id})
-
-    SELECT user_id,
-    firstName,
-    lastName
-    FROM guestlist`
-    const rsvp = await pool.query(query);
-    return rsvp.rows[0];
-  },
-
-  createPost: async(body) => {
+  createPost: async (body) => {
     let values, query;
 
     if (body.isEvent === false) {
-      values = [
-        body.user_id,
-        body.group_id,
-        body.content,
-        body.isEvent
-      ]
-
-      query =
-      `INSERT INTO posts (user_id, group_id, content, isEvent)
+      values = [body.user_id, body.group_id, body.content, body.isEvent];
+      query = `INSERT INTO posts (user_id, group_id, content, isEvent)
       VALUES ($1, $2, $3, $4)
       RETURNING id
-      `
-
+      `;
     } else {
-
       values = [
         body.user_id,
         body.group_id,
@@ -244,121 +218,145 @@ SELECT post_id,
         body.startDate,
         body.endTime,
         body.endDate,
-        body.payment_amt
-      ]
+        body.payment_amt,
+      ];
 
-      query =
-      `INSERT INTO posts (user_id, group_id, content, isEvent, name,
+      query = `INSERT INTO posts (user_id, group_id, content, isEvent, name,
         state, city, zip, startTime, startDate, endTime, endDate, payment_amt)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
       RETURNING id
-      `
+      `;
     }
 
     let post_id = await pool.query(query, values);
-    post_id = post_id.rows[0].id
+    post_id = post_id.rows[0].id;
 
     if (body.photos && body.photos.length > 0) {
-      const photoQuery =
-      `INSERT INTO post_photos (post_id, url)
+      const photoQuery = `INSERT INTO post_photos (post_id, url)
         SELECT $1, unnest($2::text[])
-      `
+      `;
 
-      await pool.query(photoQuery, [post_id, body.photos])
+      await pool.query(photoQuery, [post_id, body.photos]);
     }
-    return
-
-  },
-
-  createComment: async (body) => {
-    const values = [
-      body.post_id,
-      body.user_id,
-      body.message
-    ]
-
-    const query =
-    `INSERT INTO comments (post_id, user_id, message)
-    VALUES ($1, $2, $3)
-    `
-
-    await pool.query(query, values)
-    return
-  },
-
-  createPostLike: async(body) => {
-    const values = [
-      body.post_id,
-      body.user_id
-    ]
-
-    const query =
-    `INSERT INTO post_likes (post_id, user_id)
-    VALUES ($1, $2)`
-
-    await pool.query(query, values)
-    return
-  },
-
-  createCommentLike: async(body) => {
-    const values = [
-      body.comment_id,
-      body.user_id
-    ]
-
-    const query =
-    `INSERT INTO comment_likes (comment_id, user_id)
-    VALUES ($1, $2)`
-
-    await pool.query(query, values)
-    return
-
-  },
-
-  createRsvp: async(body) => {
-    const values = [
-      body.post_id,
-      body.user_id,
-      body.paid
-    ]
-
-    const query =
-    `INSERT INTO rsvp (post_id, user_id, paid)
-    VALUES ($1, $2, $3)
-    `
-
-    await pool.query(query, values)
-    return
-
+    return;
   },
 
   deletePost: async (post_id) => {
-    const query =
-    `DELETE FROM posts
-    WHERE id = ${post_id}`
-
-    await pool.query(query)
-    return
-  },
-
-  deleteComment: async(comment_id) => {
-    const query =
-    `DELETE FROM comments
-    WHERE id = ${comment_id}`
+    const query = `DELETE FROM posts
+    WHERE id = ${post_id}`;
 
     await pool.query(query);
-    return
+    return;
   },
 
-  deleteRsvp: async(post_id, user_id) => {
-    const query =
-    `DELETE FROM rsvp
+  createComment: async (body) => {
+    const values = [body.post_id, body.user_id, body.message];
+
+    const query = `INSERT INTO comments (post_id, user_id, message)
+    VALUES ($1, $2, $3)
+    `;
+
+    await pool.query(query, values);
+    return;
+  },
+
+  deleteComment: async (comment_id) => {
+    const query = `DELETE FROM comments
+    WHERE id = ${comment_id}`;
+
+    await pool.query(query);
+    return;
+  },
+
+  createPostLike: async (body) => {
+    const values = [body.post_id, body.user_id];
+
+    const query = `INSERT INTO post_likes (post_id, user_id)
+    VALUES ($1, $2)`;
+
+    await pool.query(query, values);
+    return;
+  },
+
+  createCommentLike: async (body) => {
+    const values = [body.comment_id, body.user_id];
+
+    const query = `INSERT INTO comment_likes (comment_id, user_id)
+    VALUES ($1, $2)`;
+
+    await pool.query(query, values);
+    return;
+  },
+
+  deletePostLike: async (post_id, user_id) => {
+    const query = `DELETE FROM post_likes
     WHERE post_id = ${post_id}
     AND user_id = ${user_id}
-    `
+    `;
 
-    await pool.query(query)
-    return
+    await pool.query(query);
+    return;
+  },
+
+  deleteCommentLike: async (comment_id, user_id) => {
+    const query = `DELETE FROM comment_likes
+    WHERE comment_id = ${comment_id}
+    AND user_id = ${user_id}`;
+
+    await pool.query(query);
+    return;
+  },
+
+  getRsvp: async (post_id) => {
+    const query = `WITH guestlist as (
+      SELECT r.user_id as user_id,
+            firstName,
+            lastName,
+            picture,
+            paid
+      FROM rsvp r INNER JOIN users
+      ON r.user_id = users.id
+      WHERE post_id = ${post_id})
+
+    SELECT user_id,
+    firstName,
+    lastName,
+    picture,
+    paid
+    FROM guestlist`;
+    const rsvp = await pool.query(query);
+    return rsvp.rows;
+  },
+
+  createRsvp: async (body) => {
+    const values = [body.post_id, body.user_id, body.paid];
+
+    const query = `INSERT INTO rsvp (post_id, user_id, paid)
+    VALUES ($1, $2, $3)
+    `;
+
+    await pool.query(query, values);
+    return;
+  },
+
+  updateRsvp: async (post_id, user_id) => {
+    const query = `UPDATE rsvp
+    SET paid = true
+    WHERE post_id = ${post_id}
+    AND user_id = ${user_id}`;
+
+    await pool.query(query);
+    return;
+  },
+
+  deleteRsvp: async (post_id, user_id) => {
+    const query = `DELETE FROM rsvp
+    WHERE post_id = ${post_id}
+    AND user_id = ${user_id}
+    `;
+
+    await pool.query(query);
+    return;
   },
 
   // --------------------------------------
@@ -372,7 +370,7 @@ SELECT post_id,
       WHERE
         email = '${email}'`;
     let results = await pool.query(query);
-    return (results.rows[0]);
+    return results.rows[0];
   },
   getUserByID: async (id) => {
     const query = `
@@ -383,19 +381,18 @@ SELECT post_id,
       WHERE
         id = '${id}'`;
     let results = await pool.query(query);
-    return (results.rows[0]);
+    return results.rows[0];
   },
 
   addUser: (info) => {
-
     const values = [
       info.firstname,
       info.lastname,
       info.email,
       info.aboutme,
-      info.picture
+      info.picture,
     ];
-    console.log(values)
+    console.log(values);
 
     const query = `
       INSERT INTO
@@ -413,7 +410,7 @@ SELECT post_id,
       info.email,
       info.aboutme,
       info.picture,
-      info.user_id
+      info.user_id,
     ];
 
     const query = `
@@ -481,24 +478,22 @@ SELECT post_id,
       WHERE
         f.requestee_id = '${id}'
       ORDER BY
-        u.firstname ASC`
+        u.firstname ASC`;
 
-    console.log(requestList)
+    console.log(requestList);
 
-    const results = await Promise.all([pool.query(friendList), pool.query(requestList)])
-    return ({
+    const results = await Promise.all([
+      pool.query(friendList),
+      pool.query(requestList),
+    ]);
+    return {
       friendlist: results[0].rows,
-      requestlist: results[1].rows
-    });
+      requestlist: results[1].rows,
+    };
   },
-  getFriendRequestForUser: () => {
-
-  },
+  getFriendRequestForUser: () => {},
   removeFriend: async (info) => {
-    const values = [
-      info.user_id,
-      info.friend_id
-    ];
+    const values = [info.user_id, info.friend_id];
 
     const query = `
       DELETE FROM
@@ -515,26 +510,19 @@ SELECT post_id,
     return pool.query(query, values);
   },
   requestToBeFriends: (info) => {
-    const values = [
-      info.requester_id,
-      info.requestee_id
-    ]
+    const values = [info.requester_id, info.requestee_id];
 
     const query = `
       INSERT INTO
         friends
         (requester_id, requestee_id)
       VALUES
-        ($1, $2)`
+        ($1, $2)`;
 
-    return pool.query(query, values)
+    return pool.query(query, values);
   },
   acceptFriendRequest: (info) => {
-    const values = [
-      info.requester_id,
-      info.requestee_id
-    ]
-
+    const values = [info.requester_id, info.requestee_id];
 
     const query = `
       UPDATE
@@ -544,9 +532,9 @@ SELECT post_id,
       WHERE
         requester_id = $1
       AND
-        requestee_id = $2`
+        requestee_id = $2`;
 
-    return pool.query(query, values)
+    return pool.query(query, values);
   },
   getGroupsForUser: async (id) => {
     const query = `
@@ -563,16 +551,11 @@ SELECT post_id,
         g.id = gm.group_id`;
 
     let results = await pool.query(query);
-    return (results.rows);
+    return results.rows;
   },
   requestToJoinGroup: (info) => {
-
-    const values = [
-      info.group_id,
-      info.user_id,
-      info.message
-    ];
-    console.log(values)
+    const values = [info.group_id, info.user_id, info.message];
+    console.log(values);
     const query = `
       INSERT INTO
         group_requests
@@ -583,11 +566,8 @@ SELECT post_id,
     return pool.query(query, values);
   },
   addMemberToGroup: (info) => {
-    const values = [
-      info.group_id,
-      info.user_id
-    ];
-    console.log(values)
+    const values = [info.group_id, info.user_id];
+    console.log(values);
 
     const addMember = `
       INSERT INTO
@@ -604,13 +584,13 @@ SELECT post_id,
       AND
         requester_id = $2`;
 
-    return Promise.all([pool.query(addMember, values), pool.query(removeRequest, values)]);
+    return Promise.all([
+      pool.query(addMember, values),
+      pool.query(removeRequest, values),
+    ]);
   },
   removeGroupMember: async (info) => {
-    const values = [
-      info.group_id,
-      info.user_id
-    ];
+    const values = [info.group_id, info.user_id];
 
     const query = `
       DELETE FROM
@@ -618,7 +598,7 @@ SELECT post_id,
       WHERE
         group_id = $1
       AND
-        user_id = $2`
+        user_id = $2`;
 
     return pool.query(query, values);
   },
@@ -658,7 +638,7 @@ SELECT post_id,
       g.id, g.state, g.name, g.about, g.city, g.zip`;
 
     let results = await pool.query(query);
-    return (results.rows[0]);
+    return results.rows[0];
   },
   getOpenGroupRequest: async (group_id) => {
     const query = `
@@ -678,7 +658,7 @@ SELECT post_id,
         gr.group_id = '${group_id}'`;
 
     let results = await pool.query(query);
-    return (results.rows);
+    return results.rows;
   },
   createGroup: async (info) => {
     const groupValues = [
@@ -686,7 +666,7 @@ SELECT post_id,
       info.about,
       info.state,
       info.city,
-      info.zip
+      info.zip,
     ];
 
     const createGroup = `
@@ -698,12 +678,9 @@ SELECT post_id,
       RETURNING
         id`;
 
-    const group_id = await pool.query(createGroup, groupValues)
+    const group_id = await pool.query(createGroup, groupValues);
 
-    const adminValues = [
-      group_id.rows[0].id,
-      info.user_id
-    ];
+    const adminValues = [group_id.rows[0].id, info.user_id];
 
     const addAdmin = `
       INSERT INTO
@@ -715,10 +692,7 @@ SELECT post_id,
     return pool.query(addAdmin, adminValues);
   },
   makeGroupAdmin: (info) => {
-    const values = [
-      info.group_id,
-      info.user_id
-    ];
+    const values = [info.group_id, info.user_id];
 
     const query = `
       UPDATE
@@ -740,10 +714,7 @@ SELECT post_id,
     return pool.query(query);
   },
   getMessages: async (info) => {
-    const values = [
-      info.user_id,
-      info.friend_id
-     ];
+    const values = [info.user_id, info.friend_id];
 
     const query = `
       SELECT
@@ -764,15 +735,10 @@ SELECT post_id,
       OR
         receiver_id = $2`;
     let results = await pool.query(query, values);
-    return (results.rows);
-
+    return results.rows;
   },
   postMessage: (info) => {
-    const values = [
-      info.sender_id,
-      info.receiver_id,
-      info.message
-    ];
+    const values = [info.sender_id, info.receiver_id, info.message];
 
     const query = `
       INSERT INTO
@@ -782,5 +748,5 @@ SELECT post_id,
         ($1, $2, $3)`;
 
     return pool.query(query, values);
-  }
-}
+  },
+};

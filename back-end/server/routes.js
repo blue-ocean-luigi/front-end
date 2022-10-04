@@ -2,20 +2,23 @@ const router = require('express').Router();
 const controller = require('./controller.js');
 
 //posts
-router.get('/userposts', controller.getUserPosts)
-router.get('/groupposts', controller.getGroupPosts)
+router.get('/userposts/:user_id', controller.getUserPosts)
+router.get('/groupposts/:group_id', controller.getGroupPosts)
 router.post('/posts', controller.createPost)
 router.delete("/posts/:post_id", controller.deletePost);
 //comments
 router.post('/comment', controller.createComment)
-router.delete('comment/:comment_id')
+router.delete('/comment/:comment_id', controller.deleteComment)
 //likes
 router.post('/likes/posts', controller.createPostLike)
-router.post('/likes/comments', controller.createCommentLikes)
+router.post('/likes/comments', controller.createCommentLike)
+router.delete('/likes/posts/:post_id&:user_id', controller.deletePostLike)
+router.delete('/likes/comments/:comment_id&:user_id', controller.deleteCommentLike)
 
 //rsvp
-router.get('/rsvp', controller.getRsvp)
+router.get('/rsvp/:post_id', controller.getRsvp)
 router.post('/rsvp', controller.createRsvp)
+router.put('/rsvp/:post_id&:user_id', controller.updateRsvp)
 router.delete('/rsvp/:post_id&:user_id', controller.deleteRsvp)
 
 
@@ -47,94 +50,3 @@ router.get('/messages/user', controller.getMessages)
 router.post('/messages/all', controller.postMessage)
 
 module.exports = router
-
-//     const query = `WITH gigachad as (
-//       SELECT p.id as post_id,
-//             p.group_id as group_id,
-//             g.name as groupname,
-//             p.user_id as author_id,
-//             u.firstName as firstName,
-//             u.lastName as lastName,
-//             picture,
-//             content,
-//             createdAt as date,
-//             isEvent,
-//             p.name as eventName,
-//             p.state as state,
-//             p.city as city,
-//             p.zip as zip,
-//             startTime,
-//             startDate,
-//             endTime,
-//             endDate,
-//             payment_amt
-//     FROM groups g INNER JOIN group_members gm
-//     ON g.id = gm.group_id
-//     INNER JOIN posts p ON p.group_id = g.id
-//     INNER JOIN users u ON p.user_id = u.id
-//     WHERE gm.user_id = ${user_id})
-
-// SELECT post_id,
-//     group_id,
-//     groupname,
-//     author_id,
-//     firstName,
-//     lastName,
-//     picture,
-//     content,
-//     date,
-//     isEvent,
-//     eventName,
-//     state,
-//     city,
-//     zip,
-//     startTime,
-//     startDate,
-//     endTime,
-//     endDate,
-//     payment_amt,
-
-//     COALESCE(
-//   (SELECT json_agg(json_build_object('photo_id', id, 'url', url))
-//   FROM
-//       (SELECT pp.id,
-//         url
-//       FROM post_photos pp
-//       WHERE pp.post_id = gigachad.post_id) pictures), '[]'::json) AS photos,
-//       COALESCE(
-//   (SELECT json_agg(json_build_object('id', user_id, 'firstName', firstName, 'lastName', lastName))
-//   FROM
-//       (SELECT l.user_id,
-//         firstName,
-//         lastName
-//       FROM users INNER JOIN post_likes l
-//       ON users.id = l.user_id
-//       WHERE l.post_id = gigachad.post_id) likes), '[]'::json) AS postLikes,
-//       COALESCE(
-//   (SELECT json_agg(json_build_object('comment_id', id, 'author_id', user_id, 'firstName', firstName, 'lastName', lastName, 'picture', picture, 'message', message, 'date', createdAt,
-//   'likes', clikes))
-//   FROM
-//       (SELECT c.id,
-//         c.user_id,
-//         firstName,
-//         lastName,
-//         picture,
-//         message,
-//         createdAt,
-//         COALESCE((SELECT json_agg(json_build_object(
-//           'id', user_id,
-//           'firstName', firstName,
-//           'lastName', lastName
-//         )) cnames
-//       FROM
-//           (SELECT cl.user_id,
-//             firstName,
-//             lastName
-//           FROM users INNER JOIN comment_likes cl
-//           ON cl.user_id = users.id) comms), '[]'::json) clikes
-//       FROM comments c INNER JOIN users u
-//       ON c.user_id = u.id
-//       WHERE c.post_id = gigachad.post_id
-//       ORDER BY createdAt ASC) comment), '[]'::json) AS comments
-//       FROM gigachad
-//       ORDER BY date DESC`;
