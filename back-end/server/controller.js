@@ -155,8 +155,8 @@ module.exports = {
   addUser: async (req,res) => {
     console.log('path to addUser')
     try {
-      await model.addUser(req.body);
-      res.sendStatus(202);
+      let id = await model.addUser(req.body);
+      res.status(200).send(id.rows[0]);
     } catch(err) {
       console.log(err);
       res.sendStatus(400);
@@ -206,6 +206,16 @@ module.exports = {
     try {
       await model.acceptFriendRequest(req.body)
       res.sendStatus(200)
+    } catch(err) {
+      console.log(err)
+      res.sendStatus(400)
+    }
+  },
+  checkIfFriends: async (req,res) => {
+    try {
+      const results = await model.checkIfFriends(req.query)
+      console.log(results)
+      res.status(200).send(results)
     } catch(err) {
       console.log(err)
       res.sendStatus(400)

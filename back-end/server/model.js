@@ -402,7 +402,8 @@ SELECT post_id,
         users
         (firstname, lastname, email, aboutme, picture)
       VALUES
-        ($1, $2, $3, $4, $5)`;
+        ($1, $2, $3, $4, $5)
+      RETURNING id`;
 
     return pool.query(query, values);
   },
@@ -491,9 +492,6 @@ SELECT post_id,
       requestlist: results[1].rows
     });
   },
-  getFriendRequestForUser: () => {
-
-  },
   removeFriend: async (info) => {
     const values = [
       info.user_id,
@@ -547,6 +545,33 @@ SELECT post_id,
         requestee_id = $2`
 
     return pool.query(query, values)
+  },
+  checkIfFriends: (info) => {
+    const values = [
+      info.user_id,
+      info.other_id,
+    ];
+    console.log(values)
+
+    const query = `
+      SELECT
+        requester_id,
+        requestee_id,
+        status
+      FROM
+        friends
+      WHERE
+        requester_id = $1
+      AND
+        requestee_id = $2
+      OR
+        requester_id = $2
+      AND
+        requestee_id = $1`;
+
+    console.log(query)
+
+    return pool.query(query, values);
   },
   getGroupsForUser: async (id) => {
     const query = `
