@@ -25,10 +25,11 @@ import GroupMemberList from './GroupPageSubcomponents/GroupMemberList';
 import SearchGroup from './GroupPageSubcomponents/SearchGroup';
 import InviteFriends from './GroupPageSubcomponents/InviteFriends';
 import AdminEditMembers from './GroupPageSubcomponents/AdminEditMembers';
-import please from '../request';
+import { please } from '../request';
 
 function GroupPage({ page }) {
   console.log('this is page in group page: ', page)
+
   // TODO: replace the isAdmin hook w data from auth
   const [isGroupAdmin, setGroupAdmin] = useState(true);
 
