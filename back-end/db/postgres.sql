@@ -24,7 +24,7 @@ CREATE TABLE group_members (
   id serial PRIMARY KEY,
   group_id int REFERENCES groups(id) ON DELETE CASCADE,
   user_id int REFERENCES users(id) ON DELETE CASCADE,
-  admin boolean
+  admin boolean DEFAULT false
 );
 
 CREATE TABLE group_requests (
@@ -37,8 +37,8 @@ CREATE TABLE group_requests (
 
 CREATE TABLE friends (
   id serial PRIMARY KEY,
-  friend1 int NOT NULL,
-  friend2 int NOT NULL,
+  requester_id int NOT NULL,
+  requestee_id int NOT NULL,
   status boolean DEFAULT false
 );
 -- 2 queries
@@ -67,7 +67,7 @@ CREATE TABLE posts (
   startDate date,
   endTime int,
   endDate date,
-  payment_amt numeric(4, 2) DEFAULT 0
+  payment_amt numeric(6, 2) DEFAULT 0
 );
 
 CREATE TABLE comments (
@@ -85,10 +85,10 @@ CREATE TABLE post_photos (
 );
 
 CREATE TABLE rsvp (
-  id serial PRIMARY KEY,
   post_id int REFERENCES posts(id) ON DELETE CASCADE,
   user_id int REFERENCES users(id) ON DELETE CASCADE,
-  paid boolean DEFAULT false
+  paid boolean DEFAULT false,
+  PRIMARY KEY (post_id, user_id)
 );
 
 CREATE TABLE post_likes (
@@ -133,8 +133,4 @@ SELECT setval('groups_id_seq', COALESCE((SELECT MAX(id)+1 FROM groups), 1), fals
 SELECT setval('messages_id_seq', COALESCE((SELECT MAX(id)+1 FROM messages), 1), false);
 SELECT setval('post_photos_id_seq', COALESCE((SELECT MAX(id)+1 FROM post_photos), 1), false);
 SELECT setval('posts_id_seq', COALESCE((SELECT MAX(id)+1 FROM posts), 1), false);
-SELECT setval('rsvp_id_seq', COALESCE((SELECT MAX(id)+1 FROM rsvp), 1), false);
 SELECT setval('users_id_seq', COALESCE((SELECT MAX(id)+1 FROM users), 1), false);
-
-
-

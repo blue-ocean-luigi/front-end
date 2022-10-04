@@ -12,3 +12,5 @@ client/firebase.js
 
 .env
 /backend/.env
+
+/client/src/components/test
