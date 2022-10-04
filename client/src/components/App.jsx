@@ -7,6 +7,7 @@ import {
   Box,
   Text,
   Heading,
+  Image,
 } from '@chakra-ui/react';
 import LoginOption from './Auth/LoginOption';
 import ColorModeSwitcher from './ColorModeSwitcher';
@@ -42,12 +43,22 @@ export default function App() {
         <ColorModeSwitcher />
       </Flex>
       <Center>
-        <Flex>
-          <Box>
-            <Heading>Community Crossing</Heading>
-            <Text>An online community just for communities</Text>
+        <Box className="site_banner_container">
+          <Box
+            className="site_banner_background"
+            style={{backgroundImage: 'url(../static/suburb2.png)' }}
+          />
+          <Box className="site_banner_img">
+            <Image
+              h="auto"
+              w="auto"
+              objectFit="fill"
+              src="../static/logo2.png"
+              alt="Community Crossing"
+              marginBottom="1em"
+            />
           </Box>
-        </Flex>
+        </Box>
       </Center>
       <div>
         {(() => {
