@@ -37,7 +37,7 @@ export default function App() {
       <Flex justifyContent="right">
         <ColorModeSwitcher />
       </Flex>
-      <Center>
+      <Center zIndex={-9999}>
         <Box className="site_banner_container">
           <Box
             className="site_banner_background"
@@ -86,7 +86,7 @@ export default function App() {
           }
         })()}
       </div>
-      { user ? <NavButton setMainPage={setMainPage} setPage={setPage} /> : null }
+      { user ? <NavButton zIndex={9999} setMainPage={setMainPage} setPage={setPage} /> : null }
       { user ? <ChatBar /> : null }
     </ChakraProvider>
   );
