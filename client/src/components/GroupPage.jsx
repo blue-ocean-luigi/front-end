@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Box,
   VStack,
@@ -27,21 +27,71 @@ import InviteFriends from './GroupPageSubcomponents/InviteFriends';
 import AdminEditMembers from './GroupPageSubcomponents/AdminEditMembers';
 import { please } from '../request';
 
-function GroupPage({ page }) {
-  console.log('this is page in group page: ', page)
+function GroupPage({ page, userID, groupID }) {
+  // state to store all group info for group page
+  const [groupInfo, setGroupInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({});
+  const[members, setMembers] = useState([]);
+  const [isGroupAdmin, setGroupAdmin] = useState(false);
+  const [inGroup, setInGroup] = useState(false);
 
-  // TODO: replace the isAdmin hook w data from auth
-  const [isGroupAdmin, setGroupAdmin] = useState(true);
+  // on load of group, get all group page info
+  useEffect(() => {
+    please.getGroupInfo(1)
+    .then((res) => {
+      setGroupInfo(res.data);
+      setMembers(res.data.members);
+    })
+    .catch((err) => console.log(err))
+  }, [groupID])
 
-  // TODO: remove members/setMembers from this page and replace with axios call later
-  const [members, setMembers] = useState(
-    [
-      { name: 'Amberly', isAdmin: true, profilePicture: "https://bit.ly/dan-abramov" },
-      { name: 'Brian', isAdmin: false, profilePicture: "https://bit.ly/dan-abramov" },
-      { name: 'James', isAdmin: false, profilePicture: "https://bit.ly/dan-abramov" },
-      { name: 'Jessie', isAdmin: false, profilePicture: "https://bit.ly/dan-abramov" },
-    ],
-  );
+  console.log('this is group info: ', groupInfo)
+
+  // on load of group, check if the current user gets admin control
+
+  // useEffect((groupInfo) => {
+  //   console.log('this is groupInfo: ', groupInfo)
+  //   please.getUserByID(1)
+  //   .then((res) => {
+  //     // check if user is in the group AND if they are an admin
+  //     // if admin, show admin panel
+  //     // if not admin but in group, show normal view
+  //     // if not admin and not in group, WHAT DO I SHOW???
+  //       // SHOW ERROR PAGE in feed and members and add a button that directs them to request
+  //     const pos = res.data.groups.map(g => g.name).indexOf(groupInfo.name);
+  //     console.log('this is group name: ', groupInfo.name)
+  //     console.log('this is pos: ', res.data.groups.map(g => g.name))
+  //     if (
+  //       // admin and in group
+  //       res.data.groups.filter(g => g.name === groupInfo.name).length > 0
+  //       &&
+  //       res.data.groups[pos]['admin']
+  //       ) {
+  //       setInGroup(true);
+  //       setGroupAdmin(true);
+  //       setUserInfo(res.data);
+  //     }
+  //     else if (
+  //       // not admin but in group
+  //       res.data.groups.filter(g => g.name === groupInfo.name).length > 0
+  //       &&
+  //       !res.data.groups[pos]['admin']
+  //       ) {
+  //         setInGroup(true);
+  //         setUserInfo(res.data);
+  //         // setGroupAdmin(false); //don't think i need this bc redundant
+  //       }
+  //     else {
+  //       // not admin and not in group
+  //       setInGroup(false);
+  //       setUserInfo(res.data);
+  //     }
+  //   })
+  //   .catch((err) => console.log(err))
+  // }, [userID])
+
+
+
 
   const [memberRequests, setMemberRequests] = useState(
     [
@@ -130,16 +180,10 @@ function GroupPage({ page }) {
           <Box p={2} w="100%">
             <SearchGroup />
             <Heading mt={4} mb={1}>
-              Plant Loverz
+              {groupInfo.name}
             </Heading>
             <Text fontSize="xl">
-              A safe space for all planty talk
-              A safe space for all planty talk
-              A safe space for all planty talk
-              A safe space for all planty talk
-              A safe space for all planty talk
-              A safe space for all planty talk
-              A safe space for all planty talk
+              {groupInfo.about}
             </Text>
           </Box>
         </Flex>
