@@ -10,6 +10,7 @@ import NewEvent from '../Modals/NewEvent';
 import NewPost from '../Modals/NewPost';
 import PostItem from '../PostItem';
 import EventItem from '../EventItem';
+// const please = require('../../request');
 
 function GroupFeed() {
   // TODO Replace hardcoded data with axios call

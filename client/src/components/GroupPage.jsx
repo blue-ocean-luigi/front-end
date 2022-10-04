@@ -25,6 +25,7 @@ import GroupMemberList from './GroupPageSubcomponents/GroupMemberList';
 import SearchGroup from './GroupPageSubcomponents/SearchGroup';
 import InviteFriends from './GroupPageSubcomponents/InviteFriends';
 import AdminEditMembers from './GroupPageSubcomponents/AdminEditMembers';
+import please from '../request';
 
 function GroupPage({ page }) {
   console.log('this is page in group page: ', page)

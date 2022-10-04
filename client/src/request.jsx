@@ -3,7 +3,7 @@ const axios = require('axios');
 
 const basePath = 'http://localHost:3001/crossing';
 
-module.exports = {
+export const please = {
   // get user info/friends/groups by email after authorization
   getUserByEmail: async (email) =>
     axios({
@@ -306,3 +306,4 @@ module.exports = {
       baseURL: basePath,
     }),
 };
+
