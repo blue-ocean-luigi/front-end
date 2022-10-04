@@ -136,6 +136,7 @@ module.exports = {
       res.sendStatus(400);
     };
   },
+
   getUserByID: async (req,res) => {
     const id = req.query.user_id;
     try {
@@ -171,8 +172,10 @@ module.exports = {
       res.sendStatus(400);
     };
   },
+
   getFriendsOfUser: async (req, res) => {
     const id = req.query.user_id;
+    console.log({id})
     try {
       const friends = await model.getFriendsOfUser(id);
       res.status(200).send(friends);
@@ -190,6 +193,24 @@ module.exports = {
       res.sendStatus(400)
     }
   },
+  requestToBeFriends: async (req, res) => {
+    try {
+      await model.requestToBeFriends(req.body)
+      res.sendStatus(200)
+    } catch(err) {
+      console.log(err)
+      res.sendStatus(400)
+    }
+  },
+  acceptFriendRequest: async (req,res) => {
+    try {
+      await model.acceptFriendRequest(req.body)
+      res.sendStatus(200)
+    } catch(err) {
+      console.log(err)
+      res.sendStatus(400)
+    }
+  },
   getGroupsForUser: async (req, res) => {
     const id = req.query.user_id
     try {
@@ -201,6 +222,7 @@ module.exports = {
     }
   },
   requestToJoinGroup: async (req, res) => {
+    console.log(req.body)
     try {
       await model.requestToJoinGroup(req.body)
       res.sendStatus(200)
@@ -210,6 +232,7 @@ module.exports = {
     }
   },
   addMemberToGroup: async (req, res) => {
+    console.log('addmembertogroup')
     try {
       await model.addMemberToGroup(req.body)
       res.sendStatus(200)
@@ -219,6 +242,7 @@ module.exports = {
     }
   },
   removeGroupMember: async (req, res) => {
+    console.log('remove')
     try {
       await model.removeGroupMember(req.params)
       res.sendStatus(200)
@@ -257,6 +281,7 @@ module.exports = {
     }
   },
   makeGroupAdmin: async (req, res) => {
+    console.log('admin')
     try {
       await model.makeGroupAdmin(req.body)
       res.sendStatus(200)

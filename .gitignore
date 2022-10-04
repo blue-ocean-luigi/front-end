@@ -9,3 +9,5 @@ client/dist/bundle.js*
 
 .env
 /backend/.env
+
+/client/src/components/test
