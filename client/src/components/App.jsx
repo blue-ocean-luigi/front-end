@@ -18,11 +18,17 @@ import NavButton from './NavButton';
 import { UseContextAll } from './ContextAll';
 import Welcome from './Welcome';
 
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from 'react-router-dom';
+
 import styles from '../style.css';
 
 export default function App() {
   const [userID, setUserID] = useState('');
   const [user, loading, error] = useAuthState(auth);
+  const [page, setPage] = useState('home');
   const {
     mainPage,
     setMainPage,
@@ -57,16 +63,24 @@ export default function App() {
                 />
               );
             case 'pages':
-              return <PageControl setMainDisplay={setMainPage} user={userInfo} />;
+              return <PageControl
+                user={userInfo}
+                page={page}
+                setPage={setPage}
+                />;
             case 'welcome':
               return <Welcome />;
             default:
-              return <PageControl setMainDisplay={setMainPage} user={userInfo} />;
+              return <PageControl
+                user={userInfo}
+                page={page}
+                setPage={setPage}
+                />;
               // return <Logo/>; //  or som kind of load screen. This for option loading page
           }
         })()}
       </div>
-      { user ? <NavButton setMainDisplay={setMainPage} /> : null }
+      { user ? <NavButton setMainPage={setMainPage} setPage={setPage} /> : null }
       { user ? <ChatBar /> : null }
     </ChakraProvider>
   );

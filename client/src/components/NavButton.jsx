@@ -9,14 +9,16 @@ import {
 } from '@chakra-ui/react';
 import { logout } from './Auth/Auth';
 
-export default function NavButton({setMainDisplay}) {
+export default function NavButton({setMainPage, setPage}) {
   return (
 
     <Menu>
       <MenuButton  variant="ghost" mt="4px" ml="4px" position="fixed" top="0" left="0"as={Button}>Menu</MenuButton>
       <MenuList>
-        <MenuItem onClick={() => setMainDisplay('pages')}>Home</MenuItem>
-        <MenuItem onClick={() => logout().then(() => setMainDisplay('login'))}>Log Out</MenuItem>
+        <MenuItem onClick={() => setPage('home')}>Home</MenuItem>
+        <MenuItem onClick={() => setPage('profile')}>Profile</MenuItem>
+        <MenuItem onClick={() => setPage('group')}>Your Groups</MenuItem>
+        <MenuItem onClick={() => logout().then(() => setMainPage('login'))}>Log Out</MenuItem>
       </MenuList>
     </Menu>
   );
