@@ -15,12 +15,17 @@ function onInvite(e) {
 function Friend({ friend, page }) {
   console.log('this is page: ', page)
   return (
-    <Box bg="brown">
+    <Box
+      boxShadow="sm"
+      rounded="lg"
+      mb={1}
+      borderWidth="1px"
+    >
       <HStack justifyContent="space-between" p={1}>
         <Flex justifyContent="left">
           <Image
             borderRadius="full"
-            boxSize="15%"
+            boxSize="80px"
             src={ friend.profilePicture }
             alt={ friend.name }
             p={1}

@@ -7,6 +7,7 @@ import {
   Text,
   Heading,
   Button,
+  Divider,
 } from '@chakra-ui/react';
 import {
   Modal,
@@ -26,7 +27,7 @@ import InviteFriends from './GroupPageSubcomponents/InviteFriends';
 import AdminEditMembers from './GroupPageSubcomponents/AdminEditMembers';
 
 function GroupPage({ page }) {
-
+  console.log('this is page in group page: ', page)
   // TODO: replace the isAdmin hook w data from auth
   const [isGroupAdmin, setGroupAdmin] = useState(true);
 
@@ -119,12 +120,14 @@ function GroupPage({ page }) {
   const [editing, setEditing] = useState(false);
 
   return (
-    <Flex h="100vh" w="100%" justifyContent="space-between" bg="gray">
-      <VStack p={2} h="100vh" w="100%">
-        <Flex h="fit-content" w="100%" bg="lightpink">
+    <Flex h="100vh" w="100%" justifyContent="space-between">
+    {/* <Flex h="100vh" w="100%" justifyContent="space-between" bg="gray"></Flex> */}
+      <VStack p={2} h="100vh" w="100%" gap={2}>
+        <Flex h="fit-content" w="100%">
+        {/* <Flex h="fit-content" w="100%" bg="lightpink"></Flex> */}
           <Box p={2} w="100%">
             <SearchGroup />
-            <Heading mt={1} mb={1}>
+            <Heading mt={4} mb={1}>
               Plant Loverz
             </Heading>
             <Text fontSize="xl">
@@ -138,12 +141,18 @@ function GroupPage({ page }) {
             </Text>
           </Box>
         </Flex>
+        <Divider />
         <Flex bottom={0} h="100%" w="100%">
           <HStack h="100%" w="100%">
-            <Box h="100%" w="30%" bg="blue" p={1}>
-              <Flex justifyContent="space-between">
+            {/* <Box h="100%" w="30%" bg="blue" p={1}> */}
+            <Box
+              h="100%"
+              w="30%"
+              rounded="lg"
+              p={1}
+            >
+              <Flex mb={1} justifyContent="space-between">
                 <Button
-                  variant="ghost"
                   size="xs"
                   onClick={onOpenFriendsList}
                 >
@@ -160,7 +169,6 @@ function GroupPage({ page }) {
                   && (
                     <>
                       <Button
-                        variant="ghost"
                         size="xs"
                         onClick={() => { setEditing(true); onOpenAdminControl(); }}
                       >
@@ -180,7 +188,9 @@ function GroupPage({ page }) {
               </Flex>
               <GroupMemberList members={members} page={page} />
             </Box>
-            <Box p={1} position="relative" overflow-y="auto" h="100%" w="70%" bg="green">
+            <Divider orientation="vertical" />
+            <Box p={1} position="relative" overflow-y="auto" h="100%" w="70%">
+            {/* <Box p={1} position="relative" overflow-y="auto" h="100%" w="70%" bg="green"></Box> */}
               <GroupFeed />
             </Box>
           </HStack>
