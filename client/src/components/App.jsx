@@ -19,7 +19,7 @@ import NavButton from './NavButton';
 import { UseContextAll } from './ContextAll';
 import Welcome from './Welcome';
 import makeServer from './fakeserver';
-window.server = makeServer();
+//window.server = makeServer();
 
 import styles from '../style.css';
 
