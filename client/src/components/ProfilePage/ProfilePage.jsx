@@ -25,15 +25,26 @@ function ProfilePage() {
 
 //goin to need user info (pic, banner pic, bio) as well as group list and friend list
 
+const [bio, setBio] = useState('');
+const [friends, setFriends] = useState([]);
+const [groups, setGroups] = useState([]);
+const [pic, setPic] = useState('');
+const [banner, setBanner] = useState('');
+
+
 let user = 5;
 
 useEffect(() => {
-  please.getUserByID(user).then((data) => console.log(data)).catch((err)=>console.log(err))
+  // please.getUserByID(user).then((data) => {
+  //   setBio()
+  //   console.log(data)})
+  //   .catch((err)=>console.log(err))
+
 }, [])
 
   return (
     <div className="profile_page_container">
-      <div
+      {/* <div
         className="pp_banner_container"
         style={{ backgroundImage: `url(${backgroundImage})`,
           backgroundPosition: 'center',
@@ -42,24 +53,24 @@ useEffect(() => {
         alt="profile banner"
       >
         <img className="pp_profile_pic" src="https://i.pinimg.com/736x/50/d8/03/50d803bda6ba43aaa776d0e243f03e7b.jpg" alt="profile icon" />
-      </div>
+      </div> */}
       <div className="pp_bio_container">
         <h3 className="pp_bio_title">bio: </h3>
-        <p className="pp_bio_text">{`${userbio}`}</p>
+        <p className="pp_bio_text">INSERT USER BIO</p>
       </div>
       <div className="pp_friend_group_container">
         <div className="pp_friends_container">
-          <FriendsList friends={friends} />
+          {/* <FriendsList friends={friends} /> */}
         </div>
         <div className="pp_groups_container">
-          {testobjgroup.map((group, i) => (
+          {/* {testobjgroup.map((group, i) => (
             <span
               key={i}
               className="pp_group_name"
               onClick={()=>console.log('clicked', group.groupName)}>
               {group.groupName}
             </span>
-            )) }
+            )) } */}
         </div>
       </div>
     </div>
