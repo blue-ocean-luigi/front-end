@@ -8,6 +8,8 @@ import {
 import FeedItem from './FeedItem';
 import NewEvent from '../Modals/NewEvent';
 import NewPost from '../Modals/NewPost';
+import PostItem from '../PostItem';
+import EventItem from '../EventItem';
 
 function GroupFeed() {
   // TODO Replace hardcoded data with axios call
@@ -45,6 +47,8 @@ function GroupFeed() {
         <Box>
           {events.map(e => <FeedItem key={e.id} event={e} />)}
         </Box>
+        <PostItem />
+        <EventItem />
       </Box>
       <Flex position="absolute" bottom={0} w="100%" justifyContent="flex-end" bg="magenta">
         <NewPost />
