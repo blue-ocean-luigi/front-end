@@ -12,3 +12,48 @@ html body {
   padding: 0;
   box-sizing: border-box;
 }
+
+.site_banner_container {
+  width: 100%;
+  position: relative;
+  height: 30vh;
+}
+
+.site_banner_background {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  background-color: beige;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0% 75%;
+  filter: blur(3px);
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.site_banner_img {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  /* background-image: url('../static/suburb1.png'); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+}
+
+/* .site_banner_img::before {
+  content: '';
+  filter: blur(3px);
+  background-image: url("https://cdn.elearningindustry.com/wp-content/uploads/2016/05/top-10-books-every-college-student-read-1024x640.jpeg");
+} */

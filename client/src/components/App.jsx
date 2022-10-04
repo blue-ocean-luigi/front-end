@@ -7,6 +7,7 @@ import {
   Box,
   Text,
   Heading,
+  Image,
 } from '@chakra-ui/react';
 import LoginOption from './Auth/LoginOption';
 import ColorModeSwitcher from './ColorModeSwitcher';
@@ -23,6 +24,7 @@ import styles from '../style.css';
 export default function App() {
   const [userID, setUserID] = useState('');
   const [user, loading, error] = useAuthState(auth);
+  const [page, setPage] = useState('home');
   const {
     mainPage,
     setMainPage,
@@ -35,13 +37,23 @@ export default function App() {
       <Flex justifyContent="right">
         <ColorModeSwitcher />
       </Flex>
-      <Center>
-        <Flex>
-          <Box>
-            <Heading>Community Crossing</Heading>
-            <Text>An online community just for communities</Text>
+      <Center zIndex={-9999}>
+        <Box className="site_banner_container">
+          <Box
+            className="site_banner_background"
+            style={{backgroundImage: 'url(../static/suburb2.png)' }}
+          />
+          <Box className="site_banner_img">
+            <Image
+              h="auto"
+              w="auto"
+              objectFit="fill"
+              src="../static/logo2.png"
+              alt="Community Crossing"
+              marginBottom="1em"
+            />
           </Box>
-        </Flex>
+        </Box>
       </Center>
       <div>
         {(() => {
@@ -57,16 +69,24 @@ export default function App() {
                 />
               );
             case 'pages':
-              return <PageControl setMainDisplay={setMainPage} user={userInfo} />;
+              return <PageControl
+                user={userInfo}
+                page={page}
+                setPage={setPage}
+                />;
             case 'welcome':
               return <Welcome />;
             default:
-              return <PageControl setMainDisplay={setMainPage} user={userInfo} />;
+              return <PageControl
+                user={userInfo}
+                page={page}
+                setPage={setPage}
+                />;
               // return <Logo/>; //  or som kind of load screen. This for option loading page
           }
         })()}
       </div>
-      { user ? <NavButton setMainDisplay={setMainPage} /> : null }
+      { user ? <NavButton zIndex={9999} setMainPage={setMainPage} setPage={setPage} /> : null }
       { user ? <ChatBar /> : null }
     </ChakraProvider>
   );

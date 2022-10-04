@@ -5,8 +5,7 @@ import GroupPage from './GroupPage';
 import HomePage from './HomePage/HomePage.jsx';
 import ProfilePage from "./ProfilePage/ProfilePage.jsx";
 
-function PageControl({ userID }) {
-  const [page, setPage] = useState('group');
+function PageControl({ userID, page, setPage }) {
   return (
     <div>
       <div>
@@ -15,11 +14,10 @@ function PageControl({ userID }) {
             case 'home':
               return <HomePage setPage={setPage} userID={userID} />;
             case 'group':
-              return <GroupPage setPage={setPage} userID={userID} page={page} />;
+              return <GroupPage setPage={setPage} userID={userID} />; // set display for logout fx.
             case 'profile':
               return <ProfilePage setPage={setPage} userID={userID} />;
             default:
-              // return <GroupPage setPage={setPage} userID={userID} />;
               return <HomePage setPage={setPage} userID={userID} />;
           }
         })()}
