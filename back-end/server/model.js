@@ -431,43 +431,65 @@ SELECT post_id,
     return pool.query(query, values);
   },
   getFriendsOfUser: async (id) => {
-    const query = `
+    const friendList = `
       (SELECT
         u.firstname,
         u.lastname,
         u.id,
-        u.picture,
-        f.status
+        u.picture
       FROM
         users u
       JOIN
         friends f
       ON
-        f.friend1 = '${id}'
+        f.requester_id = '${id}'
       AND
         f.status= true
-      WHERE f.friend2 = u.id)
+      WHERE f.requestee_id = u.id)
       UNION
       (SELECT
         u.firstname,
         u.lastname,
         u.id,
-        u.picture,
-        f.status
+        u.picture
       FROM
         users u
       JOIN
         friends f
       ON
-        f.friend2 = '${id}'
+        f.requestee_id = '${id}'
       AND
         f.status = true
-      WHERE f.friend1 = u.id)
-    ORDER BY
-      firstname ASC`;
+      WHERE f.requester_id = u.id)
+      ORDER BY
+        firstname ASC`;
 
-    const results = await pool.query(query);
-    return (results.rows);
+    const requestList = `
+      SELECT
+        u.firstname,
+        u.lastname,
+        u.id,
+        u.picture
+      FROM
+        users u
+      JOIN
+        friends f
+      ON
+        f.requester_id = u.id
+      AND
+        f.status = false
+      WHERE
+        f.requestee_id = '${id}'
+      ORDER BY
+        u.firstname ASC`
+
+    console.log(requestList)
+
+    const results = await Promise.all([pool.query(friendList), pool.query(requestList)])
+    return ({
+      friendlist: results[0].rows,
+      requestlist: results[1].rows
+    });
   },
   getFriendRequestForUser: () => {
 
@@ -482,15 +504,49 @@ SELECT post_id,
       DELETE FROM
         friends
       WHERE
-        friend1 = $1
+        requester_id = $1
       AND
-        friend2 = $2
+        requestee_id = $2
       OR
-        friend1 = $2
+        requester_id = $2
       AND
-        friend2 = $1`;
+        requestee_id = $1`;
 
     return pool.query(query, values);
+  },
+  requestToBeFriends: (info) => {
+    const values = [
+      info.requester_id,
+      info.requestee_id
+    ]
+
+    const query = `
+      INSERT INTO
+        friends
+        (requester_id, requestee_id)
+      VALUES
+        ($1, $2)`
+
+    return pool.query(query, values)
+  },
+  acceptFriendRequest: (info) => {
+    const values = [
+      info.requester_id,
+      info.requestee_id
+    ]
+
+
+    const query = `
+      UPDATE
+        friends
+      SET
+        status = true
+      WHERE
+        requester_id = $1
+      AND
+        requestee_id = $2`
+
+    return pool.query(query, values)
   },
   getGroupsForUser: async (id) => {
     const query = `
@@ -510,12 +566,13 @@ SELECT post_id,
     return (results.rows);
   },
   requestToJoinGroup: (info) => {
+
     const values = [
       info.group_id,
       info.user_id,
       info.message
     ];
-
+    console.log(values)
     const query = `
       INSERT INTO
         group_requests
@@ -530,6 +587,7 @@ SELECT post_id,
       info.group_id,
       info.user_id
     ];
+    console.log(values)
 
     const addMember = `
       INSERT INTO
@@ -537,6 +595,7 @@ SELECT post_id,
         (group_id, user_id)
       VALUES
         ($1, $2)`;
+
     const removeRequest = `
       DELETE FROM
         group_requests

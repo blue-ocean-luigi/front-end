@@ -64,6 +64,22 @@ module.exports = {
     baseURL: basePath,
   }),
 
+  // request to be friends
+  requestFriend: (requester_id, requestee_id) => axios({
+    url: '/friends/request',
+    method: 'post',
+    baseURL: basePath,
+    data: { requester_id, requestee_id },
+  }),
+
+  // accept friend request
+  acceptFriend: (requester_id, requestee_id) => axios({
+    url: '/friends/accept',
+    method: 'put',
+    baseURL: basePath,
+    data: { requester_id, requestee_id },
+  }),
+
   // request to join group
   requestToJoinGroup: (group_id, user_id, message) => axios({
     url: '/groups/joinrequest',
@@ -89,28 +105,28 @@ module.exports = {
   }),
 
   // create a new group
-  createNewGroup: (name, about, state, city, zip) => axios({
+  createNewGroup: (user_id, name, about, state, city, zip) => axios({
     url: '/groups/create',
     method: 'post',
     baseURL: basePath,
     data: {
-      name, about, state, city, zip,
+      name, about, state, city, zip, user_id,
     },
   }),
 
   // accept new member group request
   acceptGroupRequest: (group_id, user_id) => axios({
-    url: '/group/accept',
+    url: '/groups/accept',
     method: 'post',
     baseURL: basePath,
     data: { group_id, user_id },
   }),
 
   // make group member and admin
-  makeMemberAdmin: (group_id, user_id) => axios({
+  giveMemberAdminStatus: (group_id, user_id) => axios({
     url: '/groups/admin',
     method: 'put',
-    baseURl: basePath,
+    baseURL: basePath,
     data: { group_id, user_id },
   }),
 
@@ -138,7 +154,7 @@ module.exports = {
 
   // post message
   postMessage: (sender_id, receiver_id, message) => axios({
-    url: '/message/all',
+    url: '/messages/all',
     method: 'post',
     baseURL: basePath,
     data: { sender_id, receiver_id, message },
