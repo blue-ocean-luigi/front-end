@@ -325,8 +325,8 @@ module.exports = {
   },
   createGroup: async (req, res) => {
     try {
-      await model.createGroup(req.body);
-      res.sendStatus(200);
+      let group_info  = await model.createGroup(req.body);
+      res.status(200).send(group_info);
     } catch (err) {
       console.log(err);
       res.sendStatus(400);

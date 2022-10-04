@@ -536,7 +536,7 @@ SELECT post_id,
 
     return pool.query(query, values);
   },
-  checkIfFriends: (info) => {
+  checkIfFriends: async (info) => {
     const values = [
       info.user_id,
       info.other_id,
@@ -559,9 +559,9 @@ SELECT post_id,
       AND
         requestee_id = $1`;
 
-    console.log(query)
+    let results = await pool.query(query, values);
 
-    return pool.query(query, values);
+    return results.rows[0]
   },
   getGroupsForUser: async (id) => {
     const query = `
@@ -716,7 +716,9 @@ SELECT post_id,
       VALUES
         ($1, $2, true)`;
 
-    return pool.query(addAdmin, adminValues);
+    await pool.query(addAdmin, adminValues);
+
+    return group_id.rows[0]
   },
   makeGroupAdmin: (info) => {
     const values = [info.group_id, info.user_id];
