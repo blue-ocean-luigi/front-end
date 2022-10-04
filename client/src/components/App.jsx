@@ -18,11 +18,6 @@ import NavButton from './NavButton';
 import { UseContextAll } from './ContextAll';
 import Welcome from './Welcome';
 
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from 'react-router-dom';
-
 import styles from '../style.css';
 
 export default function App() {
