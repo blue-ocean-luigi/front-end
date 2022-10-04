@@ -41,8 +41,11 @@ function Signup({setExistingUser, setMainPage}) {
   useEffect(() => {
     if (loading) return;
     if (user) {
-      console.log('signup: email:', email);
-      //request.getUserByEmail(email).then(res => console.log(res));
+      console.log('signup:', user);
+      //console.log('signup: email:', email);
+      request.getUserByEmail(user.email)
+        .then(res => console.log(res))
+        .catch(() => setMainPage('welcome')) // user not found in db
       setMainPage('welcome');
     }
   }, [user, loading]);
@@ -115,9 +118,11 @@ function Login({user, loading, error, setExistingUser, setMainPage}) {
       return;
     }
     if (user) {
-      console.log('email:', email);
-      //request.getUserByEmail(email).then(res => console.log(res));
-      setMainPage('page');
+      console.log('signup:', user);
+      //console.log('signup: email:', email);
+      request.getUserByEmail(user.email)
+        .then(res => setMainPage('home'))
+        .catch(() => setMainPage('welcome')) // user not found in db
     }
   }, [user, loading]);
   return (

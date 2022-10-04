@@ -17,14 +17,18 @@ import {
 // const socket = io(/* url goes here, enable CORS if needed */);
 
 export default function ChatBar() {
+  /*
   const socket = io('http://localhost:3002');
   socket.on('message', (data) => {
-    console.log(data);
+    //console.log(data);
   });
   socket.on('messageResponse', (data) => {
-    console.log(data);
+    //console.log(data);
   });
+  */
+
   const chatInput = useRef()
+  /*
   const sendChat = (event) => {
     event.preventDefault();
     const message = chatInput.current.value;
@@ -34,10 +38,11 @@ export default function ChatBar() {
       from: 1, // the senders userId
       at: new Date()
     };
-    console.log(sendData);
+    //console.log(sendData);
     socket.emit('message', sendData);
     chatInput.current.value = '';
   }
+  */
   
   return (
     <Box marginBottom="8px" bgColor='primary' position="fixed" bottom="0" left="0" width="100%">
@@ -45,7 +50,7 @@ export default function ChatBar() {
         <Flex w="100%">
           <Center w="100%">
             <FormControl>
-              <form onSubmit={sendChat}>
+              <form onSubmit={() => {} /*sendChat*/}>
                 <Input
                   ref={chatInput}
                   ml="4px"
