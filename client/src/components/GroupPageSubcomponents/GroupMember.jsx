@@ -18,7 +18,13 @@ function onEdit(e) {
 
 function GroupMember({ member, page, editing, isGroupRequest}) {
   return (
-    <Box bg="brown">
+    <Box
+      boxShadow="sm"
+      rounded="lg"
+      mb={1}
+      borderWidth="1px"
+    >
+    {/* <Box bg="brown"></Box> */}
       <HStack justifyContent="space-between" p={1}>
         <Flex justifyContent="left">
           <Image
@@ -32,8 +38,8 @@ function GroupMember({ member, page, editing, isGroupRequest}) {
             <Text>
               { member.name }
             </Text>
-            {
-              member.isAdmin
+            { !isGroupRequest
+              && member.isAdmin
               && (
               <Badge colorScheme="red">
                 Admin

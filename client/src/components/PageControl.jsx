@@ -14,7 +14,7 @@ function PageControl({ userID, page, setPage }) {
             case 'home':
               return <HomePage setPage={setPage} userID={userID} />;
             case 'group':
-              return <GroupPage setPage={setPage} userID={userID} />; // set display for logout fx.
+              return <GroupPage setPage={setPage} userID={userID} page={page} />;
             case 'profile':
               return <ProfilePage setPage={setPage} userID={userID} />;
             default:
