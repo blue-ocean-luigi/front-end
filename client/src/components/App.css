@@ -1,3 +1,25 @@
+/*
+all caps, playful, good for titles?
+font-family: 'Amatic SC', cursive;
+
+natural handwriting
+font-family: 'Caveat', cursive;
+
+clean and simple
+font-family: 'Comfortaa', cursive;
+
+clean and simple
+font-family: 'Montserrat', sans-serif;
+
+widely used, widely liked
+font-family: 'Poppins', sans-serif;
+
+clean, more modern
+font-family: 'Quicksand', sans-serif;
+*/
+
+
+
 html body {
   font-size: 16px;
   margin: 0px;
@@ -5,6 +27,28 @@ html body {
   overflow-x: hidden;
   font-family: "Poppins", sans-serif;
   background: var(--gradient-body);
+
+  /* SOME FONTS TO TRY, DEFAULT FONT-WEIGHT IS 400, ALL FONTS BELOW HAVE AT LEAST 2 FONT-WEIGHT OPTIONS */
+
+  /* all caps, playful, good for titles? */
+  /* font-family: 'Amatic SC', cursive; */
+
+  /* natural handwriting */
+  /* font-family: 'Caveat', cursive; */
+
+  /* clean and simple */
+  /* font-family: 'Comfortaa', cursive; */
+
+  /* clean and simple */
+  /* font-family: 'Montserrat', sans-serif; */
+
+  /* widely used, widely liked, simple */
+  /* font-family: 'Poppins', sans-serif; */
+
+  /* clean, more modern */
+  /* font-family: 'Quicksand', sans-serif; */
+
+  font-weight: 400;
 }
 
 * {
