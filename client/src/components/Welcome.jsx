@@ -6,13 +6,28 @@ import {
   Input,
   Textarea,
 } from '@chakra-ui/react';
+import { UseContextAll } from './ContextAll';
+import request from '../request';
+
 
 function Welcome() {
-  const firstName = useRef();
-  const lastName = useRef();
+  const { setUserInfo, userInfo, setUserId, setUserGroups, setUserFriends } = UseContextAll();
+  const firstname = useRef();
+  const lastname = useRef();
   const photoURL = useRef();
-  const bio = useRef();
-  const handleSubmit = () => {
+  const aboutme = useRef();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      firstname: firstname.current.value,
+      lastname: lastname.current.value,
+      picture: '', // need to tie this in with photobb
+      aboutme: aboutme.current.value,
+      email: userInfo.email
+    };
+    console.log(data);
+    request.addUser(firstname.current.value, lastname.current.value, userInfo.email, '').then(d => setUserInfo({...userInfo, id: d.data.id})).then(() => setMainDisplay('home'));
   }
   return (
     <div>
@@ -20,15 +35,16 @@ function Welcome() {
       <form onSubmit={handleSubmit}>
         <FormControl>
           <FormLabel>First Name</FormLabel>
-          <Input reftype="text" />
+          <Input ref={firstname} type="text" />
           <FormLabel>Last Name</FormLabel>
-          <Input type="text" />
+          <Input ref={lastname} type="text" />
           <FormLabel>Upload a profile photo</FormLabel>
-          <Input type="file" />
+          <Input ref={photoURL} type="file" />
           <FormHelperText> Accepted file forms: jpeg, png</FormHelperText>
           <FormLabel>Tell your community a little bit about yourself</FormLabel>
-          <Textarea />
+          <Textarea ref={aboutme} />
         </FormControl>
+        <Input type="submit" value="Finish account setup!" />
       </form>
     </div>
   );

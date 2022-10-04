@@ -26,9 +26,11 @@ import {
   registerWithEmailAndPassword,
 } from './Auth';
 import request from '../../request';
+import { UseContextAll } from '../ContextAll';
 
 
-function Signup({setExistingUser, setMainPage}) {
+function Signup({setExistingUser, setMainPage }) {
+  //const { setUserInfo, setUserId, setUserGroups, setUserFriends } = UseContextAll();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -42,10 +44,12 @@ function Signup({setExistingUser, setMainPage}) {
     if (loading) return;
     if (user) {
       console.log('signup:', user);
-      //console.log('signup: email:', email);
       request.getUserByEmail(user.email)
         .then(res => console.log(res))
-        .catch(() => setMainPage('welcome')) // user not found in db
+        .catch(() => {
+          setUserInfo({email: user.email});
+          setMainPage('welcome')
+      }) // user not found in db
       setMainPage('welcome');
     }
   }, [user, loading]);
@@ -108,7 +112,8 @@ function Signup({setExistingUser, setMainPage}) {
   );
 }
 
-function Login({user, loading, error, setExistingUser, setMainPage}) {
+function Login({user, loading, error, setExistingUser, setMainPage }) {
+  const { setUserInfo, setUserId, setUserGroups, setUserFriends } = UseContextAll();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   //const [user, loading, error] = useAuthState(auth);
@@ -121,8 +126,20 @@ function Login({user, loading, error, setExistingUser, setMainPage}) {
       console.log('signup:', user);
       //console.log('signup: email:', email);
       request.getUserByEmail(user.email)
-        .then(res => setMainPage('home'))
-        .catch(() => setMainPage('welcome')) // user not found in db
+        .then(res => {
+          //console.log(res.data); // {id:, firstname, lastname, email, aboutme
+          //console.log(res.data.info); // {id:, firstname, lastname, email, aboutme
+          setUserInfo(res.data.info);
+          setUserGroups(res.data.groups);
+          setUserFriends(res.data.friends);
+          setMainPage('home')
+        })
+        .catch((err) => {
+          console.error(err);
+          console.log('setting email and forwarding to welcome page');
+          setUserInfo({email: user.email});
+          setMainPage('welcome')
+        }) // user not found in db
     }
   }, [user, loading]);
   return (
@@ -184,7 +201,7 @@ function Login({user, loading, error, setExistingUser, setMainPage}) {
   )
 }
 
-export default function LoginOption({ user, loading, error, setMainPage, setUserID }) {
+export default function LoginOption({ user, loading, error, setMainPage, setUserID}) {
   const [existingUser, setExistingUser] = useState(true);
   if (existingUser) {
     return <Login
@@ -195,6 +212,9 @@ export default function LoginOption({ user, loading, error, setMainPage, setUser
               error={error}
             />
   } else {
-    return <Signup setExistingUser={setExistingUser} setMainPage={setMainPage}/>
+    return <Signup
+              setExistingUser={setExistingUser}
+              setMainPage={setMainPage}
+            />
   }
 }

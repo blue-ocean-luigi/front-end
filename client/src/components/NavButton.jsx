@@ -8,8 +8,10 @@ import {
   MenuItem
 } from '@chakra-ui/react';
 import { logout } from './Auth/Auth';
+import { UseContextAll } from './ContextAll';
 
 export default function NavButton({setMainPage, setPage}) {
+
   return (
 
     <Menu zIndex={9999}>
@@ -18,7 +20,7 @@ export default function NavButton({setMainPage, setPage}) {
         <MenuItem zIndex={9999} onClick={() => setPage('home')}>Home</MenuItem>
         <MenuItem zIndex={9999} onClick={() => setPage('profile')}>Profile</MenuItem>
         <MenuItem zIndex={9999} onClick={() => setPage('group')}>Your Groups</MenuItem>
-        <MenuItem zIndex={9999} onClick={() => logout().then(() => setMainPage('login'))}>Log Out</MenuItem>
+        <MenuItem zIndex={9999} onClick={() => logout().then(() => { setMainPage('login'); setUserInfo({}); })}>Log Out</MenuItem>
       </MenuList>
     </Menu>
   );

@@ -65,6 +65,7 @@ export default function App() {
                 <LoginOption
                   setMainPage={setMainPage}
                   setUserID={setUserID}
+                  setUserInfo={setUserInfo}
                   user={user}
                   loading={loading}
                   error={error}
