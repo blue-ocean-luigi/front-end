@@ -17,7 +17,7 @@
 
 .hp_search_bar_container {
   width: 100%;
-  background: rgba(200, 200, 0, 0.8);
+  /* background: rgba(200, 200, 0, 0.8); */
   display: flex;
   justify-content: center;
 }
@@ -32,12 +32,12 @@
   width: 8vw;
   padding: 5px;
   border-radius: 10px;
-  background-color: rgba(80,80,190,0.8);
+  /* background-color: rgba(80,80,190,0.8); */
 }
 
 .hp_sidebar {
   width: 30%;
-  background: rgba(200, 20, 20, 0.5);
+  /* background: rgba(200, 20, 20, 0.5); */
   padding: 1em;
   display: flex;
   flex-direction: column;
@@ -70,7 +70,7 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  background: rgba(200,200,200,0.5);
+  /* background: rgba(200,200,200,0.5); */
 }
 
 .hp_group_name {
@@ -84,7 +84,7 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  background: rgba(200,200,200,0.5);
+  /* background: rgba(200,200,200,0.5); */
   margin-top: 1em;
 }
 
@@ -94,6 +94,6 @@
 
 .hp_home_feed {
   width: 70%;
-  background: rgba(200, 0, 200, 0.5);
+  /* background: rgba(200, 0, 200, 0.5); */
   overflow-y: auto;
 }
