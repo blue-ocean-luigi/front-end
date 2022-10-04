@@ -17,7 +17,7 @@ import {
 // const socket = io(/* url goes here, enable CORS if needed */);
 
 export default function ChatBar() {
-  const socket = io('http://localhost:3001');
+  const socket = io('http://localhost:3002');
   socket.on('message', (data) => {
     console.log(data);
   });
@@ -45,7 +45,7 @@ export default function ChatBar() {
         <Flex w="100%">
           <Center w="100%">
             <FormControl>
-              <form onSubmit={() => {}/*sendChat*/}>
+              <form onSubmit={sendChat}>
                 <Input
                   ref={chatInput}
                   ml="4px"
