@@ -10,7 +10,7 @@
   height: 40vh;
   min-height: 20vw;
   position: relative;
-  background: rgba(200,20,20,0.4)
+  /* background: rgba(200,20,20,0.4) */
 }
 
 .pp_profile_pic {
@@ -20,7 +20,7 @@
   position: absolute;
   left: 5%;
   /*  100% of parent height, 15 is pic height, / 2 */
-  top: calc((100% - 15vw) / 2);
+  /* top: calc((100% - 15vw) / 2); */
   z-index: 2;
 }
 
@@ -33,7 +33,7 @@
 
 
 .pp_bio_container {
-  background: rgba(20,200,20,0.3);
+  /* background: rgba(20,200,20,0.3); */
   width: 80%;
   height: 30vh;
   padding: 1em;
@@ -59,7 +59,7 @@
 }
 
 .pp_friend_group_container {
-  background: rgba(200,20,200, 0.3);
+  /* background: rgba(200,20,200, 0.3); */
   width: 80%;
   display: flex;
   flex-direction: row;
@@ -68,12 +68,12 @@
 
 .pp_friends_container {
   width: 50%;
-  background: rgba(200,200,20,0.5);
+  /* background: rgba(200,200,20,0.5); */
 }
 
 .pp_groups_container {
   width: 50%;
-  background-color: rgba(20,20,180,0.5);
+  /* background-color: rgba(20,20,180,0.5); */
   overflow-y: auto;
   display: flex;
   flex-direction: column;
