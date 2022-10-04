@@ -57,9 +57,9 @@ const func = () => {
   //   .then((results) => console.log(results.data))
   //   .catch((err) => console.log(err));
 
-  please.giveMemberAdminStatus(1, 2)
-    .then((results) => console.log(results.data))
-    .catch((err) => console.log(err));
+  // please.giveMemberAdminStatus(1, 2)
+  //   .then((results) => console.log(results.data))
+  //   .catch((err) => console.log(err));
 
   // please.removeGroupMember(7, 2)
   //   .then((results) => console.log(results.data))
