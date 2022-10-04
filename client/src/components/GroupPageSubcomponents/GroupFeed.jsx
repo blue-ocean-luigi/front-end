@@ -45,12 +45,13 @@ function GroupFeed() {
   }
   return (
     <Box>
-      <Box position="absolute" w="100%" align="center" bg="orange">
-        <Box>
+      <Box position="absolute" w="100%" align="center">
+        <Box mr={4}>
           {events.map(e => <FeedItem key={e.id} event={e} />)}
         </Box>
       </Box>
-      <Flex position="absolute" bottom={0} w="100%" justifyContent="flex-end" bg="magenta">
+      <Flex position="absolute" bottom={0} w="100%" justifyContent="flex-end">
+      {/* <Flex position="absolute" bottom={0} w="100%" justifyContent="flex-end" bg="magenta"></Flex> */}
         <Button variant="ghost" onClick={handleClick}>
           New Event
         </Button>

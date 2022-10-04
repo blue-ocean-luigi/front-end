@@ -14,7 +14,14 @@ function FeedItem({ event }) {
   }
 
   return (
-    <Box bg="lightgreen" onClick={() => handleEventClick(event)}>
+    <Box
+      onClick={() => handleEventClick(event)}
+      boxShadow="md"
+      rounded="lg"
+      mb={4}
+      borderWidth="1px"
+    >
+    {/* <Box bg="lightgreen" onClick={() => handleEventClick(event)}></Box> */}
       <HStack justifyContent="space-between" p={1}>
         <Flex justifyContent="left">
           <Image
