@@ -25,12 +25,18 @@ import GroupMemberList from './GroupPageSubcomponents/GroupMemberList';
 import SearchGroup from './GroupPageSubcomponents/SearchGroup';
 import InviteFriends from './GroupPageSubcomponents/InviteFriends';
 import AdminEditMembers from './GroupPageSubcomponents/AdminEditMembers';
+import RequestToJoinGroup from './GroupPageSubcomponents/requestToJoinGroup';
 import { please } from '../request';
 
 function GroupPage({ page, userID, groupID }) {
+
+  const { userGroups, userInfo, userFriends } = UseContextAll();
+
   // state to store all group info for group page
-  const [groupInfo, setGroupInfo] = useState({});
-  const [userInfo, setUserInfo] = useState({});
+  const [groupInfo, setGroupInfo] = useState({}); // can delete once context is working
+
+  // edit these once verify on context
+  // const [userInfo, setUserInfo] = useState({});
   const[members, setMembers] = useState([]);
   const [isGroupAdmin, setGroupAdmin] = useState(false);
   const [inGroup, setInGroup] = useState(false);
@@ -45,50 +51,50 @@ function GroupPage({ page, userID, groupID }) {
     .catch((err) => console.log(err))
   }, [groupID])
 
-  console.log('this is group info: ', groupInfo)
+  // console.log('this is group info: ', groupInfo)
 
   // on load of group, check if the current user gets admin control
 
-  // useEffect((groupInfo) => {
-  //   console.log('this is groupInfo: ', groupInfo)
-  //   please.getUserByID(1)
-  //   .then((res) => {
-  //     // check if user is in the group AND if they are an admin
-  //     // if admin, show admin panel
-  //     // if not admin but in group, show normal view
-  //     // if not admin and not in group, WHAT DO I SHOW???
-  //       // SHOW ERROR PAGE in feed and members and add a button that directs them to request
-  //     const pos = res.data.groups.map(g => g.name).indexOf(groupInfo.name);
-  //     console.log('this is group name: ', groupInfo.name)
-  //     console.log('this is pos: ', res.data.groups.map(g => g.name))
-  //     if (
-  //       // admin and in group
-  //       res.data.groups.filter(g => g.name === groupInfo.name).length > 0
-  //       &&
-  //       res.data.groups[pos]['admin']
-  //       ) {
-  //       setInGroup(true);
-  //       setGroupAdmin(true);
-  //       setUserInfo(res.data);
-  //     }
-  //     else if (
-  //       // not admin but in group
-  //       res.data.groups.filter(g => g.name === groupInfo.name).length > 0
-  //       &&
-  //       !res.data.groups[pos]['admin']
-  //       ) {
-  //         setInGroup(true);
-  //         setUserInfo(res.data);
-  //         // setGroupAdmin(false); //don't think i need this bc redundant
-  //       }
-  //     else {
-  //       // not admin and not in group
-  //       setInGroup(false);
-  //       setUserInfo(res.data);
-  //     }
-  //   })
-  //   .catch((err) => console.log(err))
-  // }, [userID])
+  useEffect((groupInfo) => {
+    console.log('this is groupInfo: ', groupInfo)
+    please.getUserByID(1)
+    .then((res) => {
+      // check if user is in the group AND if they are an admin
+      // if admin, show admin panel
+      // if not admin but in group, show normal view
+      // if not admin and not in group, WHAT DO I SHOW???
+        // SHOW ERROR PAGE in feed and members and add a button that directs them to request
+      const pos = res.data.groups.map(g => g.name).indexOf(groupInfo.name);
+      console.log('this is group name: ', groupInfo.name)
+      console.log('this is pos: ', res.data.groups.map(g => g.name))
+      if (
+        // admin and in group
+        res.data.groups.filter(g => g.name === groupInfo.name).length > 0
+        &&
+        res.data.groups[pos]['admin']
+        ) {
+        setInGroup(true);
+        setGroupAdmin(true);
+        setUserInfo(res.data);
+      }
+      else if (
+        // not admin but in group
+        res.data.groups.filter(g => g.name === groupInfo.name).length > 0
+        &&
+        !res.data.groups[pos]['admin']
+        ) {
+          setInGroup(true);
+          setUserInfo(res.data);
+          // setGroupAdmin(false); //don't think i need this bc redundant
+        }
+      else {
+        // not admin and not in group
+        setInGroup(false);
+        setUserInfo(res.data);
+      }
+    })
+    .catch((err) => console.log(err))
+  }, [userID])
 
 
 
@@ -168,6 +174,12 @@ function GroupPage({ page, userID, groupID }) {
     onClose: onCloseAdminControl,
   } = useDisclosure();
 
+  const {
+    isOpen: isOpenGroupRequest,
+    onOpen: onOpenGroupRequest,
+    onClose: onCloseGroupRequest,
+  } = useDisclosure();
+
   // hook for handling whether the admin is editing the members
   const [editing, setEditing] = useState(false);
 
@@ -232,12 +244,51 @@ function GroupPage({ page, userID, groupID }) {
                   )
                 }
               </Flex>
-              <GroupMemberList members={members} page={page} />
+              {
+                inGroup &&
+                <GroupMemberList members={members} page={page} />
+              }
+              {
+                !inGroup &&
+                <Box ml={1} align="center">
+                  <Heading mb={1} fontSize="xl">
+                    Members
+                  </Heading>
+                  Sorry, member lists are only viewable to members of the group
+                </Box>
+              }
+
             </Box>
             <Divider orientation="vertical" />
             <Box p={1} position="relative" overflow-y="auto" h="100%" w="70%">
             {/* <Box p={1} position="relative" overflow-y="auto" h="100%" w="70%" bg="green"></Box> */}
-              <GroupFeed />
+              {
+                inGroup &&
+                <GroupFeed />
+              }
+              {
+                !inGroup &&
+                <Box>
+                  <Box position="absolute" w="100%" align="center">
+                    <Box mr={4} mb={4}>
+                    Sorry, group feeds are only viewable to members of the group
+                    </Box>
+                    <Button
+                      width="50%"
+                      onClick={onOpenGroupRequest}
+                    >
+                      Join {groupInfo.name}
+                    </Button>
+                    <RequestToJoinGroup
+                      onClose={onCloseGroupRequest}
+                      isOpen={isOpenGroupRequest}
+                      groupInfo={groupInfo}
+                    />
+                  </Box>
+                  <Flex position="absolute" top={0} w="100%" justifyContent="flex-end" bg="magenta">
+                  </Flex>
+                </Box>
+              }
             </Box>
           </HStack>
         </Flex>
