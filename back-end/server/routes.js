@@ -34,6 +34,7 @@ router.get('/user/friends', controller.getFriendsOfUser)
 //friends
 router.post('/friends/request', controller.requestToBeFriends)
 router.put('/friends/accept', controller.acceptFriendRequest)
+router.get('/friends/check', controller.checkIfFriends)
 
 //groups
 router.post('/groups/joinrequest', controller.requestToJoinGroup)

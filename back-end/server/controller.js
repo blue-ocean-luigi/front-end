@@ -197,9 +197,9 @@ module.exports = {
   addUser: async (req, res) => {
     console.log("path to addUser");
     try {
-      await model.addUser(req.body);
-      res.sendStatus(202);
-    } catch (err) {
+      let id = await model.addUser(req.body);
+      res.status(200).send(id.rows[0]);
+    } catch(err) {
       console.log(err);
       res.sendStatus(400);
     }
@@ -251,6 +251,16 @@ module.exports = {
     } catch (err) {
       console.log(err);
       res.sendStatus(400);
+    }
+  },
+  checkIfFriends: async (req,res) => {
+    try {
+      const results = await model.checkIfFriends(req.query)
+      console.log(results)
+      res.status(200).send(results)
+    } catch(err) {
+      console.log(err)
+      res.sendStatus(400)
     }
   },
   getGroupsForUser: async (req, res) => {
@@ -315,8 +325,8 @@ module.exports = {
   },
   createGroup: async (req, res) => {
     try {
-      await model.createGroup(req.body);
-      res.sendStatus(200);
+      let group_info  = await model.createGroup(req.body);
+      res.status(200).send(group_info);
     } catch (err) {
       console.log(err);
       res.sendStatus(400);

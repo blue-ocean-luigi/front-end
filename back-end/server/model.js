@@ -399,7 +399,8 @@ SELECT post_id,
         users
         (firstname, lastname, email, aboutme, picture)
       VALUES
-        ($1, $2, $3, $4, $5)`;
+        ($1, $2, $3, $4, $5)
+      RETURNING id`;
 
     return pool.query(query, values);
   },
@@ -488,10 +489,9 @@ SELECT post_id,
     ]);
     return {
       friendlist: results[0].rows,
-      requestlist: results[1].rows,
+      requestlist: results[1].rows
     };
   },
-  getFriendRequestForUser: () => {},
   removeFriend: async (info) => {
     const values = [info.user_id, info.friend_id];
 
@@ -535,6 +535,33 @@ SELECT post_id,
         requestee_id = $2`;
 
     return pool.query(query, values);
+  },
+  checkIfFriends: async (info) => {
+    const values = [
+      info.user_id,
+      info.other_id,
+    ];
+    console.log(values)
+
+    const query = `
+      SELECT
+        requester_id,
+        requestee_id,
+        status
+      FROM
+        friends
+      WHERE
+        requester_id = $1
+      AND
+        requestee_id = $2
+      OR
+        requester_id = $2
+      AND
+        requestee_id = $1`;
+
+    let results = await pool.query(query, values);
+
+    return results.rows[0]
   },
   getGroupsForUser: async (id) => {
     const query = `
@@ -689,7 +716,9 @@ SELECT post_id,
       VALUES
         ($1, $2, true)`;
 
-    return pool.query(addAdmin, adminValues);
+    await pool.query(addAdmin, adminValues);
+
+    return group_id.rows[0]
   },
   makeGroupAdmin: (info) => {
     const values = [info.group_id, info.user_id];
