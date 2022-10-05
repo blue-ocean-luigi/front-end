@@ -12,15 +12,24 @@ import {
   Image,
 } from '@chakra-ui/react';
 import CommentList from './Comments/CommentList';
+import { UseContextAll } from './ContextAll';
+import { please } from '../request';
 
 function PostItem({ post }) {
   console.log('this is post: ', post)
+  const { userID } = UseContextAll();
   const [comment, setComment] = useState('');
   const [likeCount, setLikeCount] = useState(0);
 
   function sendComment() {
-    console.log('handle comment');
-    setComment('');
+    please.createComment({ post_id: post.post_id, user_id: userID, message: comment })
+      .then((response) => {
+        console.log(response);
+        setComment('');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function handleLike() {
