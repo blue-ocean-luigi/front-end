@@ -1,14 +1,15 @@
 import React from 'react';
+import { Box } from '@chakra-ui/react';
 import HomeFeedPost from './post/HomeFeedPost';
 
 function ReturnUserFeed({ homePosts }) {
   return (
-    <div>
-      <div className="hp_home_feed">
+    <Box>
+      <Box position="absolute" w="60%" align="center">
         <h1>EXISTING USER</h1>
         {homePosts.map((post, i) => <HomeFeedPost key={i} post={post} />)}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 
