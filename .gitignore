@@ -13,4 +13,4 @@ client/firebase.js
 /backend/.env
 /backend/db/postgres.sql
 
-/client/src/components/test
+client/src/components/test
