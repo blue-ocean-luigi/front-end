@@ -28,16 +28,17 @@ import AdminEditMembers from './GroupPageSubcomponents/AdminEditMembers';
 import RequestToJoinGroup from './GroupPageSubcomponents/requestToJoinGroup';
 import { please } from '../request';
 
-function GroupPage({ page, userID, groupID }) {
+function GroupPage({ page, userID, groupID = 1 }) {
+  console.log('here is group page: ', groupID);
 
-  const { userGroups, userInfo, userFriends } = UseContextAll();
+  // const { userGroups, userInfo, userFriends } = UseContextAll();
 
   // state to store all group info for group page
   const [groupInfo, setGroupInfo] = useState({}); // can delete once context is working
 
   // edit these once verify on context
   // const [userInfo, setUserInfo] = useState({});
-  const[members, setMembers] = useState([]);
+  const [members, setMembers] = useState([]);
   const [isGroupAdmin, setGroupAdmin] = useState(true);
   const [inGroup, setInGroup] = useState(true);
 

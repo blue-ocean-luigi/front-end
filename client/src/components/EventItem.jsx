@@ -45,7 +45,8 @@ class EventItem extends React.Component {
   render() {
     const { event } = this.props;
     const { comment } = this.state;
-    console.log(event);
+    console.log('in event item and rendering: ', event)
+
     return (
       // eslint-disable-next-line max-len
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events

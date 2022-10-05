@@ -14,7 +14,7 @@ import EventItem from '../EventItem';
 
 function GroupFeed() {
   // TODO Replace hardcoded data with axios call
-  const [events, setEvents] = useState();
+  const [events, setEvents] = useState([]);
   // [
   //   {
   //     id: 0,
