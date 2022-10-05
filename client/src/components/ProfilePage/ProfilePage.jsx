@@ -8,45 +8,53 @@ import {
   Heading,
   Image,
   Button,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { MdBuild , MdInsertPhoto } from "react-icons/md"
 import { UseContextAll } from '../ContextAll';
 import './ProfilePage.css';
+import FriendRequests from '../Modals/FriendRequests.jsx'
 import FriendsList from "../FriendsListSubcomponents/FriendsList.jsx"
 import { please } from "../../request.jsx"
 
 function ProfilePage() {
-// user will actually come from context hook
+  const defaultBackgroundImage = 'https://news.clas.ufl.edu/wp-content/uploads/sites/4/2020/06/AdobeStock_345118478-copy-1440x961-1-e1613512040649.jpg';
+  const defaultProfilePic = 'https://i.pinimg.com/736x/50/d8/03/50d803bda6ba43aaa776d0e243f03e7b.jpg';
 
-let defaultBackgroundImage = 'https://news.clas.ufl.edu/wp-content/uploads/sites/4/2020/06/AdobeStock_345118478-copy-1440x961-1-e1613512040649.jpg';
+  const { isOpen: isOpenFriendRequests,
+    onOpen: onOpenFriendRequests,
+    onClose: onCloseFriendRequests
+  } = useDisclosure();
 
-let defaultProfilePic = 'https://i.pinimg.com/736x/50/d8/03/50d803bda6ba43aaa776d0e243f03e7b.jpg';
+  const {
+    userInfo,
+    userGroups,
+    userFriends,
+    homePosts,
+  } = UseContextAll();
 
-const [groups, setGroups] = useState([]);
-const [banner, setBanner] = useState('');
+  const [banner, setBanner] = useState('');
 
-useEffect(() => {
+  useEffect(() => {
+    //  set banner to the one in db if it exists, otherwise use def
+    let banner = userInfo.banner ? userInfo.banner : defaultBackgroundImage;
+    setBanner(banner);
+  }, []);
 
-  setBanner()
-},[])
-
-const {
-  userInfo,
-  userGroups,
-  userFriends,
-  homePosts,
-} = UseContextAll();
-
-console.log(userInfo)
-console.log(userFriends);
+  // console.log(userInfo);
+  // console.log(userFriends);
 
   return (
     <Center display="flex" flexDirection="column">
-      <Box backgroundImage={`url(${defaultBackgroundImage})`} backgroundSize="cover" backgroundPosition="center" w="80%" h="40vh" minHeight="20vw" position="relative" m="1em">
-        <Button position="absolute" right="5" top="5%" zIndex="2" cursor="pointer" color="white">
-          Friend Requests:{" "}
-          {userFriends.requestlist.length || 0}
-        </Button>
+      <Box backgroundImage={`url(${banner})`} backgroundSize="cover" backgroundPosition="center" w="80%" h="40vh" minHeight="20vw" position="relative" m="1em">
+        <Box position="absolute" right="5" top="5%" zIndex="2" cursor="pointer">
+          <FriendRequests
+            requests={userFriends.requestlist}
+            isOpen={isOpenFriendRequests}
+            onOpen={onOpenFriendRequests}
+          />
+        </Box>
+        {/* </Button> */}
         <Button rightIcon={<MdInsertPhoto />} position="absolute" right="5" bottom="5%">
           Update banner
         </Button>
