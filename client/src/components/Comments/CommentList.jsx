@@ -5,15 +5,23 @@ import {
   HStack,
   Flex,
   Button,
-  Stack,
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
 } from '@chakra-ui/react';
+import CommentItem from './CommentItem';
 
 function CommentList({ comments }) {
+  const [commentLike, setCommentLike] = useState(0);
+
+  function sendCommentLike() {
+    if (commentLike < 1) {
+      console.log('send comment');
+      setCommentLike(1);
+    }
+  }
   return (
     <Accordion allowToggle>
       <AccordionItem>
@@ -27,14 +35,11 @@ function CommentList({ comments }) {
         </h2>
         <AccordionPanel pb={4}>
           {comments.map((comment, index) =>
-            <Box
+          <CommentItem
+            comment={comment}
+            sendCommentLike={sendCommentLike}
             key={index}
-            boxShadow="md"
-            rounded="lg"
-            mb={4}
-            borderWidth="1px">
-              <Text>{comment.firstName}: {comment.message}</Text>
-            </Box>)}
+          />)}
         </AccordionPanel>
       </AccordionItem>
     </Accordion>

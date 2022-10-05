@@ -46,29 +46,37 @@ function PostItem({ post }) {
             p={1}
           /> */}
           <Box p={1} align="left">
-            <Text>
-              {post.firstname}: {post.content}
+            <Text fontSize="lg" fontWeight="bold">
+              {`${post.firstname}:`}
             </Text>
+            <Text>
+              {post.content}
+            </Text>
+
           </Box>
-          {/* (post.photo && <img></img>) */}
-          <Stack shouldWrapChildren direction="row">
-            <Text> *no.Likes* </Text>
-            <Icon as={BiHomeSmile} w={6} h={6} onClick={() => { handleLike(); }} />
-            <Text> *no.comments</Text>
-            <Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} />
-          </Stack>
-          <Box>
-            <CommentList comments={post.comments} />
-          </Box>
-          <Textarea
-            value={comment}
-            onChange={(e) => { setComment(e.target.value); }}
-            placeholder="...your comment here"
-            size="sm"
-          />
-          <Button colorScheme="blue" onClick={() => { sendComment(); }}> Post </Button>
         </Flex>
+          {/* (post.photo && <img></img>) */}
+        <Stack shouldWrapChildren direction="row">
+          <Text>
+            {post.postlikes.length}
+          </Text>
+          <Icon as={BiHomeSmile} w={6} h={6} onClick={() => { handleLike(); }} />
+          <Text>
+            {post.comments.length}
+          </Text>
+          <Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} />
+        </Stack>
       </HStack>
+      <Box>
+        <CommentList comments={post.comments} />
+      </Box>
+      <Textarea
+        value={comment}
+        onChange={(e) => { setComment(e.target.value); }}
+        placeholder="...your comment here"
+        size="sm"
+      />
+      <Button colorScheme="blue" onClick={() => { sendComment(); }}> Post </Button>
     </Box>
   );
 }

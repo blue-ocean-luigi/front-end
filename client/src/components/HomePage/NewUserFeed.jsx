@@ -1,14 +1,14 @@
 import React from 'react';
+import { Box } from '@chakra-ui/react';
 
 function NewUserFeed() {
   return (
-    <div>THis is new user feed</div>
-    // <div className="hp_home_feed">
-    // <h1>NEW USER</h1>
-    // {groups.map((post, i) => (
-    //   <HomeFeedPost key={i} type="group" post={post} />
-    // ))}
-    // </div>
+    <Box>
+      <Box position="absolute" w="70%" align="center">
+        <h1>NEW USER</h1>
+        List of groups to join here.
+      </Box>
+    </Box>
   );
 }
 

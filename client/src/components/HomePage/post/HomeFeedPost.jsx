@@ -1,11 +1,12 @@
 import React from 'react';
+import { Box } from '@chakra-ui/react';
 import './HomeFeedPost.css';
 import PostItem from '../../PostItem';
 import EventItem from '../../EventItem';
 
 function Post({post}) {
   return (
-    <div className="hp_post">
+    <Box mr={4}>
       {
       post.isevent ? (
         <EventItem event={post} />
@@ -24,7 +25,7 @@ function Post({post}) {
         // </>
       )
       }
-    </div>
+    </Box>
   );
 }
 export default Post;
