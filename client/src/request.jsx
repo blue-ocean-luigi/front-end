@@ -4,7 +4,7 @@
 /* eslint-disable camelcase */
 import axios from 'axios';
 
-const basePath = 'http://localHost:3001/crossing';
+const basePath = 'http://localhost:3001/crossing';
 
 export const please = {
   // get user info/friends/groups by email after authorization
