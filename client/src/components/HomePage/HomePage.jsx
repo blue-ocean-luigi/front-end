@@ -51,7 +51,7 @@ function HomePage() {
           {/* <div className="hp_friends_list_container">
               {testfriendlist.map((friend, i) => (<span key={i}className="hp_friend_name" onClick={()=>console.log('clicked: ', friend)}>{friend}</span>))}
           </div> */}
-          <FriendsList friends={userFriends} />
+          <FriendsList friends={userFriends.friendlist} />
         </div>
         {newUser ? <NewUserFeed /> : <ReturnUserFeed homePosts={homePosts} />}
       </div>
