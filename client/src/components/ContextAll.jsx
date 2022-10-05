@@ -17,16 +17,18 @@ export function ContextAllProvider({ children }) {
   const [userFriends, setUserFriends] = useState([]);
   const [userChats, setUserChats] = useState([]);
   const [homePosts, setHomePosts] = useState([]);
+  const [currentGroup, setCurrentGroup] = useState('');
+  const [currentUserID, setCurrentUserID] = useState('');
 
   useEffect(() => {
-    please.getUserPosts(1) // replace with userID
+    please.getUserPosts(userID) // replace with userID
       .then((response) => {
         setHomePosts(response.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []); //  add userID here
+  }, [userID]); //  add userID here
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const values = {
@@ -44,6 +46,10 @@ export function ContextAllProvider({ children }) {
     setUserChats,
     homePosts,
     setHomePosts,
+    currentGroup,
+    setCurrentGroup,
+    currentUserID,
+    setCurrentUserID,
   };
   return (
     <ContextAll.Provider value={values}>

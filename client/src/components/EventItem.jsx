@@ -13,6 +13,8 @@ import {
 } from '@chakra-ui/react';
 import EventView from './Modals/EventView';
 import CommentList from './Comments/CommentList';
+import { UseContextAll } from './ContextAll';
+import { please } from '../request';
 
 class EventItem extends React.Component {
   constructor(props) {
@@ -36,16 +38,25 @@ class EventItem extends React.Component {
   }
 
   sendComment(comment) {
-    console.log('send comment: ', comment);
-    this.setState({
-      comment: '',
-    });
+    const { event } = this.props;
+    const { userID } = UseContextAll();
+    please.createComment({ post_id: event.post_id, user_id: userID, message: comment })
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          comment: '',
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   render() {
     const { event } = this.props;
     const { comment } = this.state;
-    console.log(event);
+    console.log('in event item and rendering: ', event);
+
     return (
       // eslint-disable-next-line max-len
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
@@ -80,9 +91,9 @@ class EventItem extends React.Component {
             </Flex>
             ) } */}
           <Stack shouldWrapChildren direction="row">
-            <Text> *no.Likes* </Text>
+            <Text>{event.postlikes.length}</Text>
             <Icon as={BiHomeSmile} w={6} h={6} onClick={() => { this.handleLike(); }} />
-            <Text> *no.comments</Text>
+            <Text>{event.comments.length}</Text>
             <Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} />
           </Stack>
         </HStack>

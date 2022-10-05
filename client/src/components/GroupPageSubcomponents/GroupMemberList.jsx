@@ -13,7 +13,7 @@ function GroupMemberList({members, page, editing}) {
       <Heading mb={1} fontSize="xl">
         Members
       </Heading>
-      {members.map((m) => <GroupMember key={m.name} member={m} page={page} editing={editing} />)}
+      {members.map((m) => <GroupMember key={m.id} member={m} page={page} editing={editing} />)}
     </Box>
   );
 }

@@ -29,17 +29,17 @@ function GroupMember({ member, page, editing, isGroupRequest}) {
         <Flex justifyContent="left">
           <Image
             borderRadius="full"
-            boxSize="15%"
-            src={ member.profilePicture }
-            alt={ member.name }
+            boxSize="80px"
+            src={ member.picture }
+            alt={ `${member.id}` }
             p={1}
           />
           <Box p={1} align="left">
             <Text>
-              { member.name }
+              { `${member.firstName} ${member.lastName}` }
             </Text>
             { !isGroupRequest
-              && member.isAdmin
+              && member.admin
               && (
               <Badge colorScheme="red">
                 Admin

@@ -12,14 +12,24 @@ import {
   Image,
 } from '@chakra-ui/react';
 import CommentList from './Comments/CommentList';
+import { UseContextAll } from './ContextAll';
+import { please } from '../request';
 
 function PostItem({ post }) {
+  console.log('this is post: ', post)
+  const { userID } = UseContextAll();
   const [comment, setComment] = useState('');
   const [likeCount, setLikeCount] = useState(0);
 
   function sendComment() {
-    console.log('handle comment');
-    setComment('');
+    please.createComment({ post_id: post.post_id, user_id: userID, message: comment })
+      .then((response) => {
+        console.log(response);
+        setComment('');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function handleLike() {
@@ -37,37 +47,45 @@ function PostItem({ post }) {
     >
       <HStack justifyContent="space-between" p={1}>
         <Flex justifyContent="left">
-          <Image
+          {/* <Image
             borderRadius="full"
             boxSize="80px"
             src={post.picture}
             // alt={ event.eventName }
             p={1}
-          />
+          /> */}
           <Box p={1} align="left">
-            <Text>
-              {post.firstname}: {post.content}
+            <Text fontSize="lg" fontWeight="bold">
+              {`${post.firstname}:`}
             </Text>
+            <Text>
+              {post.content}
+            </Text>
+
           </Box>
-          {/* (post.photo && <img></img>) */}
-          <Stack shouldWrapChildren direction="row">
-            <Text> *no.Likes* </Text>
-            <Icon as={BiHomeSmile} w={6} h={6} onClick={() => { handleLike(); }} />
-            <Text> *no.comments</Text>
-            <Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} />
-          </Stack>
-          <Box>
-            <CommentList comments={post.comments} />
-          </Box>
-          <Textarea
-            value={comment}
-            onChange={(e) => { setComment(e.target.value); }}
-            placeholder="...your comment here"
-            size="sm"
-          />
-          <Button colorScheme="blue" onClick={() => { sendComment(); }}> Post </Button>
         </Flex>
+          {/* (post.photo && <img></img>) */}
+        <Stack shouldWrapChildren direction="row">
+          <Text>
+            {post.postlikes.length}
+          </Text>
+          <Icon as={BiHomeSmile} w={6} h={6} onClick={() => { handleLike(); }} />
+          <Text>
+            {post.comments.length}
+          </Text>
+          <Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} />
+        </Stack>
       </HStack>
+      <Box>
+        <CommentList comments={post.comments} />
+      </Box>
+      <Textarea
+        value={comment}
+        onChange={(e) => { setComment(e.target.value); }}
+        placeholder="...your comment here"
+        size="sm"
+      />
+      <Button colorScheme="blue" onClick={() => { sendComment(); }}> Post </Button>
     </Box>
   );
 }

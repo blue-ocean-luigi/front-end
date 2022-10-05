@@ -1,19 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Box,
   Button,
   Flex,
-
+  Spacer,
 } from '@chakra-ui/react';
 import FeedItem from './FeedItem';
 import NewEvent from '../Modals/NewEvent';
 import NewPost from '../Modals/NewPost';
 import PostItem from '../PostItem';
 import EventItem from '../EventItem';
+import HomeFeedPost from '../HomePage/post/HomeFeedPost'
+import { please } from '../../request';
 
-function GroupFeed() {
+function GroupFeed({groupID = 1}) {
   // TODO Replace hardcoded data with axios call
-  const [events, setEvents] = useState();
+
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    please.getGroupPosts(groupID)
+    .then((res) => setEvents(res.data))
+    .catch((err) => console.log(error))
+  }, [groupID])
+
+  console.log('in group feed here is events: ', events)
   // [
   //   {
   //     id: 0,
@@ -54,11 +65,11 @@ function GroupFeed() {
     <Box>
       <Box position="absolute" w="100%" align="center">
         <Box mr={4}>
-          {events.map(event => <EventItem key={event.id} event={event} />)}
+          {events.map((event) => <HomeFeedPost key={event.id} post={event} />)}
         </Box>
-        <PostItem />
+        {/* <PostItem /> */}
       </Box>
-      <Flex position="absolute" top={0} w="100%" justifyContent="flex-end" bg="magenta">
+      <Flex position="absolute" top={0} w="100%" justifyContent="flex-end">
         <NewPost />
         <NewEvent />
       </Flex>

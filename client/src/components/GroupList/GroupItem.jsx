@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Box,
   Text,
@@ -7,15 +7,9 @@ import {
   Button,
   HStack,
 } from '@chakra-ui/react';
-import { UseContextAll } from '../ContextAll';
 
-function onInvite(e) {
-  console.log('invited friend: ', e);
-}
-
-function Friend({ friend, page }) {
-  console.log(friend);
-
+function GroupItem({ group, page }) {
+  console.log(group);
   return (
     <Box
       boxShadow="sm"
@@ -28,25 +22,19 @@ function Friend({ friend, page }) {
           <Image
             borderRadius="full"
             boxSize="80px"
-            src={friend.picture}
-            alt={friend.firstname}
+            src={group.picture}
+            alt={group.name}
             p={1}
           />
           <Box p={1} align="left">
             <Text>
-              {`${friend.firstname} ${friend.lastname} `}
+              {group.name}
             </Text>
           </Box>
         </Flex>
-        { page === 'group'
-          && (
-          <Flex p={1}>
-            <Button size="xs" onClick={() => onInvite(friend)}> Invite </Button>
-          </Flex>
-          ) }
       </HStack>
     </Box>
   );
 }
 
-export default Friend;
+export default GroupItem;
