@@ -3,19 +3,19 @@ import {
   Box,
   Heading,
 } from '@chakra-ui/react';
-import Friend from './Friend';
+import GroupItem from './GroupItem';
 
 // TODO: edit the hook to work for page control????
 
-function FriendsList({ friends }) {
+function GroupList({ groups, page }) {
   return (
     <Box align="center">
       <Heading mb={1} fontSize="xl">
-        Your Friends
+        Your Groups
       </Heading>
-      {friends.map((friend) => <Friend key={friend.id} friend={friend} />)}
+      {groups.map((group) => <GroupItem key={group.id} group={group} page={page} />)}
     </Box>
   );
 }
 
-export default FriendsList;
+export default GroupList;

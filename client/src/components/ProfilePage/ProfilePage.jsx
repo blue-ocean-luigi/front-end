@@ -4,7 +4,7 @@ import FriendsList from "../FriendsListSubcomponents/FriendsList.jsx"
 
 function ProfilePage() {
 // user will actually come from context hook
-
+//axios to pull info base on currentUserID
 let backgroundImage = 'https://news.clas.ufl.edu/wp-content/uploads/sites/4/2020/06/AdobeStock_345118478-copy-1440x961-1-e1613512040649.jpg';
 
 let userbio = 'This is an example bio that i am using just to fill space, i could use a lorem ipsum but if i did i wouldnt be able to talk about guiena pigs would i?';

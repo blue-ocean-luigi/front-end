@@ -13,6 +13,8 @@ import {
 } from '@chakra-ui/react';
 import EventView from './Modals/EventView';
 import CommentList from './Comments/CommentList';
+import { UseContextAll } from './ContextAll';
+import { please } from '../request';
 
 class EventItem extends React.Component {
   constructor(props) {
@@ -36,16 +38,24 @@ class EventItem extends React.Component {
   }
 
   sendComment(comment) {
-    console.log('send comment: ', comment);
-    this.setState({
-      comment: '',
-    });
+    const { event } = this.props;
+    const { userID } = UseContextAll();
+    please.createComment({ post_id: event.post_id, user_id: userID, message: comment })
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          comment: '',
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   render() {
     const { event } = this.props;
     const { comment } = this.state;
-    console.log('in event item and rendering: ', event)
+    console.log('in event item and rendering: ', event);
 
     return (
       // eslint-disable-next-line max-len
