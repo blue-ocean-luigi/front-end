@@ -20,6 +20,7 @@ import {
   Stack,
   Box,
 } from '@chakra-ui/react';
+import { please } from '../../request';
 
 const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
 

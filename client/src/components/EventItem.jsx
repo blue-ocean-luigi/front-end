@@ -19,11 +19,12 @@ class EventItem extends React.Component {
   constructor(props) {
     super(props);
     this.handleLike = this.handleLike.bind(this);
-    this.sendComment = this.sendComment.bind(this);
     this.state = {
       comment: '',
+      comments: props.event.comments,
       likes: props.event.postlikes.length,
       justLiked: false,
+      sendComment: props.event.sendComment,
     };
   }
 
@@ -57,17 +58,12 @@ class EventItem extends React.Component {
     }
   }
 
-  sendComment(comment) {
-    console.log('send comment: ', comment);
-    this.setState({
-      comment: '',
-    });
-  }
+
 
   render() {
-    const { event } = this.props;
-    const { comment, likes } = this.state;
-    const { userID } = this.props;
+    const { comment, likes, comments } = this.state;
+    const { event, userID, userInfo, sendComment } = this.props;
+
 
     console.log('this is event props: ', event)
 
@@ -109,13 +105,15 @@ class EventItem extends React.Component {
             {/* <Text>{event.postlikes.length}</Text> */}
             <Text>{likes}</Text>
             <Icon as={BiHomeSmile} w={6} h={6} onClick={() => this.handleLike(event, userID)} />
-            <Text>{event.comments.length}</Text>
+            {/* <Text>{event.comments.length}</Text> */}
+            <Text>{comments.length}</Text>
             <Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} />
           </Stack>
         </HStack>
         <EventView eventInfo={event} handleLike={this.handleLike} sendComment={this.sendComment} />
         <Box>
-          <CommentList comments={event.comments} />
+          {/* <CommentList comments={event.comments} /> */}
+          <CommentList comments={comments} />
         </Box>
         <Textarea
           value={comment}
@@ -123,7 +121,13 @@ class EventItem extends React.Component {
           placeholder="...your comment here"
           size="sm"
         />
-        <Button colorScheme="blue" onClick={() => this.sendComment(comment)}> Post </Button>
+        <Button
+          colorScheme="blue"
+          onClick={() => {console.log('hello')
+          }}
+        >
+          Post
+        </Button>
       </Box>
     );
   }
