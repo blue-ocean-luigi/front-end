@@ -18,10 +18,11 @@ import {
 } from '@chakra-ui/react';
 
 function FriendRequests(requests) {
+  console.log('//////////////', requests.requests);
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
-      <Button onClick={onOpen}>Friend Requests: {requests.length || 0}</Button>
+      <Button onClick={onOpen}>Friend Requests: {requests.requests.length || 0}</Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
