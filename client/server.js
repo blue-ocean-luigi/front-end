@@ -2,9 +2,6 @@ const express = require('express');
 const app = express();
 
 /* socket IO stuff */
-const http = require('http').Server(app);
-const cors = require('cors');
-app.use(cors());
 
 const socketIO = require('socket.io')(http, {
   cors: {
@@ -35,7 +32,7 @@ socketIO.on('connection', (socket) => {
 });
 
 http.listen(3002, () => {
-  console.log('listening on *:3001');
+  console.log('chat is listening on *:3002');
 });
 
 /* end of socket IO stuff */

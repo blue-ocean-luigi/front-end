@@ -1,5 +1,4 @@
-import React, { useRef } from 'react';
-import { io } from 'socket.io-client';
+import React, { useRef, useState } from 'react';
 import {
   Box,
   Flex,
@@ -12,50 +11,57 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  Avatar,
+  Text,
 } from '@chakra-ui/react';
+import socket from './chatclient';
 
-// const socket = io(/* url goes here, enable CORS if needed */);
+import { UseContextAll } from './ContextAll';
+
 
 export default function ChatBar() {
-  /*
-  const socket = io('http://localhost:3002');
-  socket.on('message', (data) => {
-    console.log(data);
-  });
-  socket.on('messageResponse', (data) => {
-    console.log(data);
-  });
-  */
-
+  const { userInfo, userID, userFriends } = UseContextAll();
+  const [chatFocus, setChatFocus] = useState(false);
+  const [friendID, setFriendID] = useState(2)
+  const [friendName, setFriendName] = useState('')
   const chatInput = useRef()
-  /*
+  //console.log(userInfo);
+  //console.log(userFriends);
+  //console.log(userFriends.friendlist);
+
   const sendChat = (event) => {
     event.preventDefault();
     const message = chatInput.current.value;
     const sendData = {
       text: message,
-      to: 2, // the friends userId
-      from: 1, // the senders userId
+      to: friendID, // the friends userId
+      from: userID, // the senders userId
       at: new Date()
     };
     //console.log(sendData);
     socket.emit('message', sendData);
     chatInput.current.value = '';
   }
-  */
   
   return (
     <Box marginBottom="8px" bgColor='primary' position="fixed" bottom="0" left="0" width="100%">
+      { chatFocus ? (
+        <Box>
+          a thing
+        </Box>
+      ) : null }
       <Center>
         <Flex w="100%">
           <Center w="100%">
             <FormControl>
-              <form onSubmit={() => {} /*sendChat*/}>
+              <form onSubmit={sendChat}>
                 <Input
+                  onFocus={() => setChatFocus(true)}
+                  onBlur={() => setChatFocus(false)}
                   ref={chatInput}
                   ml="4px"
                   mr="4px"
-                  placeholder="send a message"
+                  placeholder={`send a message to ${friendName}`}
                   variant='filled'
                 />
               </form>
@@ -64,9 +70,21 @@ export default function ChatBar() {
           <Menu>
             <MenuButton ml="4px" mr="4px" as={Button}>Chat Menu</MenuButton>
             <MenuList>
-              <MenuItem>Friends</MenuItem>
-              <MenuItem>Something Else...</MenuItem>
-              <MenuItem>Lorem Ipsum</MenuItem>
+              { userFriends.friendlist ? userFriends.friendlist.map(friend =>
+              <MenuItem onClick={() => {setFriendID(friend.id); setFriendName(friend.firstname); }}>
+                  <Box w="100%">
+                    <Flex>
+                      <Avatar src={friend.picture} />
+                      <Spacer />
+                      <Flex flexDirection="column">
+                        <Text>{friend.firstname}</Text>
+                        <Text as="i">Last thing said</Text>
+                      </Flex>
+                    </Flex>
+                  </Box>
+                </MenuItem>
+              ) : null}
+              <MenuItem>View all chats</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
