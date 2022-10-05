@@ -19,14 +19,14 @@ export function ContextAllProvider({ children }) {
   const [homePosts, setHomePosts] = useState([]);
 
   useEffect(() => {
-    please.getUserPosts(1) // replace with userID
+    please.getUserPosts(userID) // replace with userID
       .then((response) => {
         setHomePosts(response.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []); //  add userID here
+  }, [userID]); //  add userID here
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const values = {

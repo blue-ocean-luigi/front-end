@@ -43,7 +43,6 @@ function Signup({setExistingUser, setMainPage }) {
   useEffect(() => {
     if (loading) return;
     if (user) {
-      console.log('signup:', user);
       please.getUserByEmail(user.email)
         .then(res => console.log(res))
         .catch(() => {
@@ -113,7 +112,7 @@ function Signup({setExistingUser, setMainPage }) {
 }
 
 function Login({user, loading, error, setExistingUser, setMainPage }) {
-  const { setUserInfo, setUserId, setUserGroups, setUserFriends } = UseContextAll();
+  const { setUserInfo, setUserID, setUserGroups, setUserFriends } = UseContextAll();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   //const [user, loading, error] = useAuthState(auth);
@@ -123,13 +122,13 @@ function Login({user, loading, error, setExistingUser, setMainPage }) {
       return;
     }
     if (user) {
-      console.log('signup:', user);
       //console.log('signup: email:', email);
       please.getUserByEmail(user.email)
         .then(res => {
           //console.log(res.data); // {id:, firstname, lastname, email, aboutme
           //console.log(res.data.info); // {id:, firstname, lastname, email, aboutme
           setUserInfo(res.data.info);
+          setUserID(res.data.info.id);
           setUserGroups(res.data.groups);
           setUserFriends(res.data.friends);
           setMainPage('home')

@@ -1,4 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import {
+  Box,
+  Flex,
+  VStack,
+  Button,
+  Input,
+  Form,
+  Divider,
+  Heading,
+  HStack,
+  Image,
+  Text,
+} from '@chakra-ui/react';
 import GroupPage from '../GroupPage';
 import FriendsList from '../FriendsListSubcomponents/FriendsList';
 import HomeFeedPost from './post/HomeFeedPost';
@@ -29,33 +42,59 @@ function HomePage() {
   }
 
   return (
-    <div className="hp_home_feed_container">
-      <div className="hp_search_bar_container">
-        <form>
-          <input type="text" placeholder="Search" className="hp_search_bar" onChange={(e) => handleChange(e)} value={search} />
-          <button type="submit" className="hp_search_btn" onClick={(e) => handleSubmit(e)}>Search!</button>
-        </form>
-      </div>
-      <div className="hp_body_container">
-        <div className="hp_sidebar">
-          <div className="hp_profile_img_container">
-            <img src="https://i.pinimg.com/originals/42/90/35/429035c30c3e0aa7169168a93fdbe551.jpg" alt="alt" className="hp_profile_img"
-            onClick={()=>console.log('clicked profile image')} />
-          </div>
-          <div className="hp_group_list_container">
-            {userGroups.map((group, i) => (
-              <span key= {i} className="hp_group_name"
-              onClick={()=>console.log('clicked', group.name)}>{group.name}</span>
-            )) }
-          </div>
-          {/* <div className="hp_friends_list_container">
-              {testfriendlist.map((friend, i) => (<span key={i}className="hp_friend_name" onClick={()=>console.log('clicked: ', friend)}>{friend}</span>))}
-          </div> */}
-          <FriendsList friends={userFriends.friendlist} />
-        </div>
-        {newUser ? <NewUserFeed /> : <ReturnUserFeed homePosts={homePosts} />}
-      </div>
-    </div>
+    <Flex h="100vh" w="100%" justifyContent="space-between">
+      <VStack p={2} h="100vh" w="100%" gap={2}>
+        <Flex h="fit-content" w="100%">
+          <Box p={2} w="100%">
+            <Heading mt={4} mb={1}>
+              Home
+            </Heading>
+            <Input variant="filled" placeholder="Search for users and groups" onChange={(e) => handleChange(e)} value={search} />
+            <Button onClick={(e) => handleSubmit(e)}>Search</Button>
+          </Box>
+        </Flex>
+        <Divider />
+        <Flex bottom={0} h="100%" w="100%">
+
+          <Box
+            h="100%"
+            w="30%"
+            rounded="lg"
+            p={1}
+          >
+            <Box w="100%" h="fit-content" p={1} align="center">
+              <Image
+                boxSize="200px"
+                src="https://i.pinimg.com/originals/42/90/35/429035c30c3e0aa7169168a93fdbe551.jpg"
+                alt="User Name"
+                borderRadius="full"
+                onClick={() => console.log('clicked profile image')}
+              />
+            </Box>
+
+            <Box ml={1} align="center">
+              <Heading mb={1} fontSize="xl">
+                Your Groups
+              </Heading>
+              {userGroups.map((group, i) => (
+                <Box
+                  p={1}
+                  align="left"
+                  key= {i}
+                  onClick={()=>console.log('clicked', group.name)}
+                >
+                  <Text>
+                    {group.name}
+                  </Text>
+                </Box>
+              )) }
+            </Box>
+            <FriendsList friends={userFriends.friendlist} />
+          </Box>
+          {newUser ? <NewUserFeed /> : <ReturnUserFeed homePosts={homePosts} />}
+        </Flex>
+      </VStack>
+    </Flex>
   );
 }
 
