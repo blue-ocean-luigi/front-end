@@ -10,13 +10,6 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   useDisclosure,
 } from '@chakra-ui/react';
 import { UseContextAll } from './ContextAll';
@@ -28,13 +21,67 @@ import AdminEditMembers from './GroupPageSubcomponents/AdminEditMembers';
 import RequestToJoinGroup from './GroupPageSubcomponents/RequestToJoinGroup';
 import { please } from '../request';
 
-function GroupPage({ page, userID, groupID = 1 }) {
+function GroupPage({ page, groupID = 1, userID=1 }) {
   console.log('here is group page: ', groupID);
+  console.log('here is userID: ', userID);
 
   // const { userGroups, userInfo, userFriends } = UseContextAll();
+  const userInfo = {
+      "info": {
+          "id": 1,
+          "firstname": "Jessie",
+          "lastname": "Zhao",
+          "email": "email1@gmail.com",
+          "aboutme": "Im awesome",
+          "picture": "https://static.wikia.nocookie.net/powerrangers/images/6/6a/Mighty_Morphin_Yellow_Ranger_Pose.jpeg/revision/latest?cb=20191209142810"
+      },
+      "friends": {
+          "friendlist": [
+              {
+                  "firstname": "Amberly",
+                  "lastname": "Malone",
+                  "id": 2,
+                  "picture": "https://static.wikia.nocookie.net/powerrangers/images/d/d1/Mighty_Morphin_Pink_Ranger_Pose.jpeg/revision/latest?cb=20200504011256"
+              },
+              {
+                  "firstname": "James",
+                  "lastname": "Stolhammer",
+                  "id": 3,
+                  "picture": "https://www.looper.com/img/gallery/whatever-happened-to-the-original-green-power-ranger/intro-1601866752.jpg"
+              },
+              {
+                  "firstname": "Matt",
+                  "lastname": "Waelder",
+                  "id": 5,
+                  "picture": "https://static.wikia.nocookie.net/powerrangers/images/d/dc/Mighty_Morphin_Red_Ranger_Pose.jpeg/revision/latest?cb=20200621085736"
+              }
+          ],
+          "requestlist": []
+      },
+      "groups": [
+          {
+              "id": 1,
+              "name": "DnD",
+              "about": "Dungen and Dragons players come forth",
+              "state": "San Franisco",
+              "city": "CA",
+              "zip": 94105,
+              "admin": true
+          },
+          {
+              "id": 3,
+              "name": "Gardeners",
+              "about": "Green Thumbs unite",
+              "state": "San Franisco",
+              "city": "CA",
+              "zip": 94105,
+              "admin": false
+          }
+      ]
+  }
 
   // state to store all group info for group page
-  const [groupInfo, setGroupInfo] = useState({}); // can delete once context is working
+  const [groupInfo, setGroupInfo] = useState({});
 
   // edit these once verify on context
   // const [userInfo, setUserInfo] = useState({});
@@ -45,14 +92,15 @@ function GroupPage({ page, userID, groupID = 1 }) {
   // on load of group, get all group page info
   useEffect(() => {
     please.getGroupInfo(1)
-    .then((res) => {
-      setGroupInfo(res.data);
-      setMembers(res.data.members);
-    })
-    .catch((err) => console.log(err))
-  }, [groupID])
+      .then((res) => {
+        setGroupInfo(res.data);
+        setMembers(res.data.members);
+      })
+      .catch((err) => console.log(err));
+  }, [groupID]);
 
-  console.log('this is group info: ', groupInfo)
+  console.log('this is group info: ', groupInfo);
+
 
   // on load of group, check if the current user gets admin control
 
@@ -60,6 +108,7 @@ function GroupPage({ page, userID, groupID = 1 }) {
   //   console.log('this is groupInfo: ', groupInfo)
   //   please.getUserByID(1)
   //   .then((res) => {
+  //     console.log('this is user info: ', res.data)
   //     // check if user is in the group AND if they are an admin
   //     // if admin, show admin panel
   //     // if not admin but in group, show normal view
