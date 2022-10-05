@@ -1,9 +1,16 @@
 # node dependecies
 client/node_modules
-server/node_modules
+back-end/node_modules
 
 # transpiled client scripts
 client/dist/bundle.js*
 
 # API keys and configs
 client/firebase.js
+
+.DS_store
+
+.env
+/backend/.env
+
+/client/src/components/test
