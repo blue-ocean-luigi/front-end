@@ -42,18 +42,18 @@ function EventView({ eventInfo, handleLike, sendComment }) {
       <Modal size="xl" isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{eventInfo.eventName}</ModalHeader>
+          <ModalHeader>{eventInfo.eventname}</ModalHeader>
           <ModalCloseButton />
           <Image
             borderRadius='full'
             boxSize='150px'
             src={eventInfo.picture}
-            alt='Event Pic'
+            alt="Event Pic"
           />
           <Text>Posted by *username* in *group name*</Text>
-          <Text>{eventInfo.time}</Text>
+          <Text>{eventInfo.starttime}</Text>
           <ModalBody>
-            {eventInfo.description}
+            {eventInfo.content}
           </ModalBody>
           <Stack shouldWrapChildren direction="row">
             <Text> *no.Likes* </Text>

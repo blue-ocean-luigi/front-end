@@ -45,6 +45,7 @@ class EventItem extends React.Component {
   render() {
     const { event } = this.props;
     const { comment } = this.state;
+    console.log(event);
     return (
       // eslint-disable-next-line max-len
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
@@ -60,15 +61,15 @@ class EventItem extends React.Component {
               borderRadius="full"
               boxSize="80px"
               src={event.picture}
-              // alt={ event.eventName }
+              alt={event.eventname}
               p={1}
             />
             <Box p={1} align="left">
               <Text fontSize="2xl">
-                {event.eventName}
+                {event.eventname}
               </Text>
               <Text>
-                {event.time}
+                {event.starttime}
               </Text>
             </Box>
           </Flex>

@@ -1,9 +1,12 @@
+/* eslint-disable quotes */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable import/prefer-default-export */
 /* eslint-disable camelcase */
 import axios from 'axios';
 
 const basePath = 'http://localHost:3001/crossing';
 
-export default {
+export const please = {
   // get user info/friends/groups by email after authorization
   getUserByEmail: async (email) =>
     axios({
@@ -192,7 +195,7 @@ export default {
       data: { sender_id, receiver_id, message },
     }),
 
-  //get posts for user/group feed
+  // get posts for user/group feed
   getUserPosts: (user_id) =>
     axios({
       url: `/userposts/${user_id}`,
@@ -207,7 +210,7 @@ export default {
       baseURL: basePath,
     }),
 
-  //creating a post
+  // creating a post
   createPost: (info) =>
     axios({
       url: `/posts`,
@@ -216,7 +219,7 @@ export default {
       data: info,
     }),
 
-  //deleting a post
+  // deleting a post
   deletePost: (post_id) =>
     axios({
       url: `/posts/${post_id}`,
@@ -224,7 +227,7 @@ export default {
       baseURL: basePath,
     }),
 
-  //creating a comment
+  // creating a comment
   createComment: (info) =>
     axios({
       url: `/comment`,
@@ -233,7 +236,7 @@ export default {
       data: info,
     }),
 
-  //delete a comment
+  // delete a comment
   deleteComment: (comment_id) =>
     axios({
       url: `/comment/${comment_id}`,
@@ -241,7 +244,7 @@ export default {
       baseURL: basePath,
     }),
 
-  //adding likes to posts/comments
+  // adding likes to posts/comments
   createPostLike: (info) =>
     axios({
       url: `/likes/posts`,
@@ -258,7 +261,7 @@ export default {
       data: info,
     }),
 
-  //delete a like for a post/comment
+  // delete a like for a post/comment
   deletePostLike: (post_id, user_id) =>
     axios({
       url: `/likes/posts/${post_id}&${user_id}`,
@@ -273,7 +276,7 @@ export default {
       baseURL: basePath,
     }),
 
-  //getting rsvp list
+  // getting rsvp list
   getRsvp: (post_id) =>
     axios({
       url: `/rsvp/${post_id}`,
@@ -281,7 +284,7 @@ export default {
       baseURL: basePath,
     }),
 
-  //adding user to rsvp list
+  // adding user to rsvp list
   createRsvp: (info) =>
     axios({
       url: `/rsvp`,
@@ -290,7 +293,7 @@ export default {
       data: info,
     }),
 
-  //update paid column 'true' in rsvp list for a user
+  // update paid column 'true' in rsvp list for a user
   updateRsvp: (post_id, user_id) =>
     axios({
       url: `/rsvp/${post_id}&${user_id}`,
@@ -298,7 +301,7 @@ export default {
       baseURL: basePath,
     }),
 
-  //remove user from an rsvp list
+  // remove user from an rsvp list
   deleteRsvp: (post_id, user_id) =>
     axios({
       url: `/rsvp/${post_id}&${user_id}`,
