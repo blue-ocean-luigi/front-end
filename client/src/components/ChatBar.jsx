@@ -23,7 +23,7 @@ import {
   AlertDescription,
 } from '@chakra-ui/react';
 import socket from './chatclient';
-import { render } from 'timeago.js';
+import { format } from 'timeago.js';
 
 
 import { UseContextAll } from './ContextAll';
@@ -108,7 +108,7 @@ export default function ChatBar() {
                       <Alert borderRadius='md' w="100%" p={4} status={msg.sender_id === userID ? 'success' : 'warning'}>
                         <Flex flexDirection="column">
                           <Text>{msg.message}</Text>
-                          <Text as="i">From: {msg.sender_id === userID ? 'me' /*userInfo.firstname*/ : friendName}, at {(new Date(msg.createdat)).toLocaleString()}</Text>
+                          <Text as="i">{msg.sender_id === userID ? 'me' /*userInfo.firstname*/ : friendName}, {format(msg.createdat)}</Text>
                         </Flex>
                       </Alert>
                     </Center>
@@ -165,3 +165,4 @@ export default function ChatBar() {
     </Box>
   )
 }
+
