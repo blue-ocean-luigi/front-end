@@ -52,7 +52,7 @@ function GroupPage({ page, userID, groupID = 1 }) {
     .catch((err) => console.log(err))
   }, [groupID])
 
-  // console.log('this is group info: ', groupInfo)
+  console.log('this is group info: ', groupInfo)
 
   // on load of group, check if the current user gets admin control
 

@@ -38,13 +38,13 @@ function PostItem({ post }) {
     >
       <HStack justifyContent="space-between" p={1}>
         <Flex justifyContent="left">
-          <Image
+          {/* <Image
             borderRadius="full"
             boxSize="80px"
             src={post.picture}
             // alt={ event.eventName }
             p={1}
-          />
+          /> */}
           <Box p={1} align="left">
             <Text>
               {post.firstname}: {post.content}
