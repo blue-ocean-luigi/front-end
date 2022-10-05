@@ -188,8 +188,9 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
     },
   ];
 
-  function onClick() {
+  function handleEditMembers(groupID) {
     console.log('clicked button');
+
   }
 
   // hook for handling friendsList modal
