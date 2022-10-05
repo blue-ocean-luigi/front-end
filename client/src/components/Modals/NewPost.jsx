@@ -17,6 +17,7 @@ import {
   FormHelperText,
   useDisclosure,
   Button,
+  Box,
 } from '@chakra-ui/react';
 
 const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
@@ -56,7 +57,7 @@ function NewPost({ groupID, userID}) {
   }
 
   return (
-    <div>
+    <Box mr={1}>
       <Button onClick={onOpen}>New Post</Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -81,7 +82,7 @@ function NewPost({ groupID, userID}) {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </div>
+    </Box>
   );
 }
 

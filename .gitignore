@@ -10,7 +10,7 @@ client/firebase.js
 
 .DS_store
 
-.env
 /backend/.env
+/backend/db/postgres.sql
 
 /client/src/components/test

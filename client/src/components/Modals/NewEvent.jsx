@@ -18,6 +18,7 @@ import {
   Button,
   Select,
   Stack,
+  Box,
 } from '@chakra-ui/react';
 
 const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
@@ -89,7 +90,7 @@ function NewEvent({ userID, groupID }) {
   }
 
   return (
-    <div>
+    <Box ml={1} mr={2}>
       <Button onClick={onOpen}>New Event</Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -187,7 +188,7 @@ function NewEvent({ userID, groupID }) {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </div>
+    </Box>
   );
 }
 
