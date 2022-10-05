@@ -10,7 +10,7 @@ import { UseContextAll } from './ContextAll';
 import request from '../request';
 
 
-function Welcome() {
+function Welcome({setMainPage}) {
   const { setUserInfo, userInfo, setUserId, setUserGroups, setUserFriends } = UseContextAll();
   const firstname = useRef();
   const lastname = useRef();
@@ -27,7 +27,7 @@ function Welcome() {
       email: userInfo.email
     };
     console.log(data);
-    request.addUser(firstname.current.value, lastname.current.value, userInfo.email, '').then(d => setUserInfo({...userInfo, id: d.data.id})).then(() => setMainDisplay('home'));
+    request.addUser(firstname.current.value, lastname.current.value, userInfo.email, '').then(d => setUserInfo({...userInfo, id: d.data.id})).then(() => setMainPage('home'));
   }
   return (
     <div>

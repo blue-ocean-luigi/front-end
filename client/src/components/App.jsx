@@ -78,7 +78,7 @@ export default function App() {
                 setPage={setPage}
                 />;
             case 'welcome':
-              return <Welcome />;
+              return <Welcome setMainPage={setMainPage}/>;
             default:
               return <PageControl
                 user={userInfo}
