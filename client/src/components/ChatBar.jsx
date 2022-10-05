@@ -20,10 +20,10 @@ export default function ChatBar() {
   /*
   const socket = io('http://localhost:3002');
   socket.on('message', (data) => {
-    //console.log(data);
+    console.log(data);
   });
   socket.on('messageResponse', (data) => {
-    //console.log(data);
+    console.log(data);
   });
   */
 

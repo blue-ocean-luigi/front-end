@@ -20,14 +20,12 @@ socketIO.on('connection', (socket) => {
   socket.on('message', (data) => {
     console.log(data); // db handling here to save message
     connections[socket.id] = data.from;
-    /*
     socket.emit('message', { // route responses
       text: 'response',
       to: 1,//connections[data.to],
       from : 2,
       at: new Date()
     });
-    */
     socketIO.emit('messageResponse', data);
 
   });

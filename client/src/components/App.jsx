@@ -89,8 +89,8 @@ export default function App() {
           }
         })()}
       </div>
-      { user ? <NavButton zIndex={9999} setMainPage={setMainPage} setPage={setPage} /> : null }
-      { user ? <ChatBar /> : null }
+      { (user && page != 'login') ? <NavButton zIndex={9999} setMainPage={setMainPage} setPage={setPage} /> : null }
+      { (user && page != 'login') ? <ChatBar /> : null }
     </ChakraProvider>
   );
 }
