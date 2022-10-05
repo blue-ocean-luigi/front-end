@@ -7,7 +7,9 @@ import {
   Text,
   Heading,
   Image,
+  Button,
 } from '@chakra-ui/react';
+import { MdBuild , MdInsertPhoto } from "react-icons/md"
 import { UseContextAll } from '../ContextAll';
 import './ProfilePage.css';
 import FriendsList from "../FriendsListSubcomponents/FriendsList.jsx"
@@ -16,12 +18,17 @@ import { please } from "../../request.jsx"
 function ProfilePage() {
 // user will actually come from context hook
 
-let backgroundImage = 'https://news.clas.ufl.edu/wp-content/uploads/sites/4/2020/06/AdobeStock_345118478-copy-1440x961-1-e1613512040649.jpg';
+let defaultBackgroundImage = 'https://news.clas.ufl.edu/wp-content/uploads/sites/4/2020/06/AdobeStock_345118478-copy-1440x961-1-e1613512040649.jpg';
 
 let defaultProfilePic = 'https://i.pinimg.com/736x/50/d8/03/50d803bda6ba43aaa776d0e243f03e7b.jpg';
 
 const [groups, setGroups] = useState([]);
 const [banner, setBanner] = useState('');
+
+useEffect(() => {
+
+  setBanner()
+},[])
 
 const {
   userInfo,
@@ -30,12 +37,19 @@ const {
   homePosts,
 } = UseContextAll();
 
+console.log(userInfo)
 console.log(userFriends);
 
   return (
     <Center display="flex" flexDirection="column">
-      <Box>Friend Requests: 5</Box>
-      <Box backgroundImage={`url(${backgroundImage})`} backgroundSize="cover" backgroundPosition="center" w="80%" h="40vh" minHeight="20vw" position="relative" m="1em">
+      <Box backgroundImage={`url(${defaultBackgroundImage})`} backgroundSize="cover" backgroundPosition="center" w="80%" h="40vh" minHeight="20vw" position="relative" m="1em">
+        <Button position="absolute" right="5" top="5%" zIndex="2" cursor="pointer" color="white">
+          Friend Requests:{" "}
+          {userFriends.requestlist.length || 0}
+        </Button>
+        <Button rightIcon={<MdInsertPhoto />} position="absolute" right="5" bottom="5%">
+          Update banner
+        </Button>
         <Center w="20vw" h="100%" position="relative">
           <Image src={ userInfo.picture || defaultProfilePic} w="15vw" borderRadius="50%" position="absolute" top="calc((100% - 13vw) / 2)" />
           <Text zIndex="2" position="absolute" left="5%" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="white" transform="translate-X(-50%)">{`${userInfo.firstname} ${userInfo.lastname}`}</Text>
@@ -47,7 +61,7 @@ console.log(userFriends);
       </Box>
       <Flex flexDirection="row" w="80%" justifyContent="space-evenly">
         <Box w="50%" h="20vh" overflowY="auto" border="1px solid red" mr="0.5em">
-          {userFriends.length >0 ? <FriendsList friends={userFriends} />
+          {userFriends.length > 0 ? <FriendsList friends={userFriends} />
             : <Text>Add a friend!</Text>}
         </Box>
         <Box w="50%" h="20vh" overflowY="auto" border="1px solid red" ml="0.5em">
@@ -63,3 +77,12 @@ export default ProfilePage;
 
 //color mode switcher
 //color mode script
+
+//need to add friend requests modal when new button clicked
+//need to handle change of profile banner
+
+//need to change from using userid from userinfo to currentuserid from context and do axios requests (cross check for current user id to see if its the current users profile or a friends profile)
+
+//when viewing other profile page, banner buttons should show:
+  //if friends: friends (checkmark)
+  //if not friends: add as friend
