@@ -18,6 +18,9 @@ import ChatBar from './ChatBar';
 import NavButton from './NavButton';
 import { UseContextAll } from './ContextAll';
 import Welcome from './Welcome';
+import GroupPage from './GroupPage';
+import HomePage from './HomePage/HomePage';
+import ProfilePage from './ProfilePage/ProfilePage';
 import makeServer from './fakeserver';
 //window.server = makeServer();
 
@@ -26,7 +29,7 @@ import styles from '../style.css';
 export default function App() {
   const [userID, setUserID] = useState('');
   const [user, loading, error] = useAuthState(auth);
-  const [page, setPage] = useState('home');
+  // const [page, setPage] = useState('home');
   const {
     mainPage,
     setMainPage,
@@ -71,26 +74,31 @@ export default function App() {
                   error={error}
                 />
               );
-            case 'pages':
-              return <PageControl
-                user={userInfo}
-                page={page}
-                setPage={setPage}
-                />;
+            case 'home':
+              return <HomePage />;
+            case 'group':
+              return <GroupPage />;
+            case 'profile':
+              return <ProfilePage />;
             case 'welcome':
-              return <Welcome setMainPage={setMainPage}/>;
+              return <Welcome />;
             default:
-              return <PageControl
-                user={userInfo}
-                page={page}
-                setPage={setPage}
-                />;
+              return (
+                <LoginOption
+                  setMainPage={setMainPage}
+                  setUserID={setUserID}
+                  setUserInfo={setUserInfo}
+                  user={user}
+                  loading={loading}
+                  error={error}
+                />
+              );
               // return <Logo/>; //  or som kind of load screen. This for option loading page
           }
         })()}
       </div>
-      { (user && page != 'login') ? <NavButton zIndex={9999} setMainPage={setMainPage} setPage={setPage} /> : null }
-      { (user && page != 'login') ? <ChatBar /> : null }
+      { (user && mainPage != 'login') ? <NavButton zIndex={9999} /> : null }
+      { (user && mainPage != 'login') ? <ChatBar /> : null }
     </ChakraProvider>
   );
 }
