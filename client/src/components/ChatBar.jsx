@@ -109,7 +109,11 @@ export default function ChatBar() {
                       <Alert borderRadius='md' w="100%" p={4} status={msg.sender_id === userID ? 'success' : 'warning'}>
                         <Flex flexDirection="column">
                           <Text>{msg.message}</Text>
+<<<<<<< HEAD
                           <Text as="i">{msg.sender_id === userID ? 'me' /*userInfo.firstname*/ : friendName}, {format(msg.createdat)}</Text>
+=======
+                          <Text as="i">From: {msg.sender_id === userID ? 'me' /*userInfo.firstname*/ : friendName}, at {(new Date(msg.createdat)).toLocaleString()}</Text>
+>>>>>>> main
                         </Flex>
                       </Alert>
                     </Center>
