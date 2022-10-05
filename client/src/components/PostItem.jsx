@@ -14,7 +14,6 @@ import {
 import CommentList from './Comments/CommentList';
 
 function PostItem({ post }) {
-  console.log('this is post: ', post)
   const [comment, setComment] = useState('');
   const [likeCount, setLikeCount] = useState(0);
 

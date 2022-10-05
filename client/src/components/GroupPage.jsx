@@ -93,7 +93,7 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
 
   // on load of group, get all group page info
   useEffect(() => {
-    please.getGroupInfo(1)
+    please.getGroupInfo(groupID)
       .then((res) => {
         setGroupInfo(res.data);
         setMembers(res.data.members);
@@ -101,7 +101,6 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
       .catch((err) => console.log(err));
   }, [groupID]);
 
-  console.log('this is group info: ', groupInfo);
 
   // on load of group, check if the current user gets admin control
   useEffect((groupID = 1) => {
@@ -190,9 +189,41 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
 
   function handleEditMembers(groupID) {
     console.log('clicked button');
-
+    please.getOpenGroupRequest(1)
+      .then((results) => {
+        console.log('this is requests: ', results.data)
+        setMemberRequests(results.data);
+      })
+      .catch((err) => console.log(err));
   }
 
+  // admin editing of members
+  function handleMemberStatus(e, status, currentGroup = 1) {
+    console.log(e)
+    console.log('this is status: ', status)
+
+    if (status === 'approve') {
+      please.acceptGroupRequest(currentGroup, e.id)
+        .then(() => please.getGroupInfo(currentGroup))
+        .then((res) => setMembers(res.data.members))
+        .catch((err) => console.log(err));
+    } else if (status === 'deny') {
+      please.denyGroupRequest(currentGroup, e.id)
+        .then(() => please.getGroupInfo(currentGroup))
+        .then((res) => setMembers(res.data.members))
+        .catch((err) => console.log(err));
+    } else if (status === 'adminify') {
+      please.giveMemberAdminStatus(currentGroup, e.id)
+        .then(() => please.getGroupInfo(currentGroup))
+        .then((res) => setMembers(res.data.members))
+        .catch((err) => console.log(err));
+    } else {
+      please.removeGroupMember(currentGroup, e.id)
+        .then(() => please.getGroupInfo(currentGroup))
+        .then((res) => setMembers(res.data.members))
+        .catch((err) => console.log(err));
+    }
+  }
   // hook for handling friendsList modal
   const {
     isOpen: isOpenFriendsList,
@@ -257,7 +288,11 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
                     <>
                       <Button
                         size="xs"
-                        onClick={() => { setEditing(true); onOpenAdminControl(); }}
+                        onClick={() => {
+                          setEditing(true);
+                          onOpenAdminControl();
+                          handleEditMembers(groupID);
+                        }}
                       >
                         Edit Members
                       </Button>
@@ -268,6 +303,7 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
                         memberRequests={memberRequests}
                         page={page}
                         editing={editing}
+                        handleMemberStatus={handleMemberStatus}
                       />
                     </>
                   )
