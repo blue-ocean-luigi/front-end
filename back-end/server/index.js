@@ -21,21 +21,13 @@ const socketIO = require('socket.io')(http, {
   }
 });
 
-const connections = {}; // maps socket ids to user ids
-
 socketIO.on('connection', (socket) => {
   console.log('a user connected');
 
   socket.on('message', (data) => {
-    console.log(data); // db handling here to save message
-    connections[socket.id] = data.from;
-    socket.emit('message', { // route responses
-      text: 'response',
-      to: 1,//connections[data.to],
-      from : 2,
-      at: new Date()
-    });
-    socketIO.emit('messageResponse', data);
+    //socketIO.emit('messageResponse', data); // echoes data to all connected clients, clients need to filter and store messages
+    socket.broadcast.emit('messageResponse', data); // echoes data to all connected clients, clients need to filter and store messages
+
 
   });
   socket.on('disconnect', () => {
