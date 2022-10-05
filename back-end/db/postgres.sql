@@ -105,14 +105,13 @@ CREATE TABLE comment_likes (
 
 
 COPY users
-<<<<<<< HEAD
 FROM '/Users/jessiezhao/Desktop/HackReactor/SEI/blue-ocean/front-end/back-end/db/dummydata/users.csv' DELIMITER ',' CSV HEADER;
 COPY groups
 FROM '/Users/jessiezhao/Desktop/HackReactor/SEI/blue-ocean/front-end/back-end/db/dummydata/groups.csv' DELIMITER ',' CSV HEADER;
 COPY group_members
 FROM '/Users/jessiezhao/Desktop/HackReactor/SEI/blue-ocean/front-end/back-end/db/dummydata/group_members.csv' DELIMITER ',' CSV HEADER;
 COPY group_requests
-FROM '/Users/jessiezhao/Desktop/HackReactor/SEI/blue-ocean/front-end/back-end/db/dummydata/groups_request.csv' DELIMITER ',' CSV HEADER;
+FROM '/Users/jessiezhao/Desktop/HackReactor/SEI/blue-ocean/front-end/back-end/db/dummydata/groups_request.csv' DELIMITER ',' CSV
 COPY friends
 FROM '/Users/jessiezhao/Desktop/HackReactor/SEI/blue-ocean/front-end/back-end/db/dummydata/friends.csv' DELIMITER ',' CSV HEADER;
 COPY messages
@@ -125,27 +124,7 @@ COPY comments
 FROM '/Users/jessiezhao/Desktop/HackReactor/SEI/blue-ocean/front-end/back-end/db/dummydata/comments.csv' DELIMITER ',' CSV HEADER;
 COPY rsvp
 FROM '/Users/jessiezhao/Desktop/HackReactor/SEI/blue-ocean/front-end/back-end/db/dummydata/rsvp.csv' DELIMITER ',' CSV HEADER;
-=======
-FROM '/Users/amberly/hackreactorSEI/blue-ocean/front-end/back-end/db/dummydata/users.csv' DELIMITER ',' CSV HEADER;
-COPY groups
-FROM '/Users/amberly/hackreactorSEI/blue-ocean/front-end/back-end/db/dummydata/groups.csv' DELIMITER ',' CSV HEADER;
-COPY group_members
-FROM '/Users/amberly/hackreactorSEI/blue-ocean/front-end/back-end/db/dummydata/group_members.csv' DELIMITER ',' CSV HEADER;
-COPY group_requests
-FROM '/Users/amberly/hackreactorSEI/blue-ocean/front-end/back-end/db/dummydata/groups_request.csv' DELIMITER ',' CSV HEADER;
-COPY friends
-FROM '/Users/amberly/hackreactorSEI/blue-ocean/front-end/back-end/db/dummydata/friends.csv' DELIMITER ',' CSV HEADER;
-COPY messages
-FROM '/Users/amberly/hackreactorSEI/blue-ocean/front-end/back-end/db/dummydata/messages.csv' DELIMITER ',' CSV HEADER;
-COPY posts
-FROM '/Users/amberly/hackreactorSEI/blue-ocean/front-end/back-end/db/dummydata/posts.csv' DELIMITER ',' CSV HEADER;
-COPY post_photos
-FROM '/Users/amberly/hackreactorSEI/blue-ocean/front-end/back-end/db/dummydata/post_photos.csv' DELIMITER ',' CSV HEADER;
-COPY comments
-FROM '/Users/amberly/hackreactorSEI/blue-ocean/front-end/back-end/db/dummydata/comments.csv' DELIMITER ',' CSV HEADER;
-COPY rsvp
-FROM '/Users/amberly/hackreactorSEI/blue-ocean/front-end/back-end/db/dummydata/rsvp.csv' DELIMITER ',' CSV HEADER;
->>>>>>> 608b2cad52e8dd66e2f4ce4ac0b4c0fa7cd20136
+
 
 SELECT setval('comments_id_seq', COALESCE((SELECT MAX(id)+1 FROM comments), 1), false);
 SELECT setval('friends_id_seq', COALESCE((SELECT MAX(id)+1 FROM friends), 1), false);
