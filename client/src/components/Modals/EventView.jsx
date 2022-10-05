@@ -17,6 +17,7 @@ import {
   Image,
 } from '@chakra-ui/react';
 import CommentList from '../Comments/CommentList';
+import Maps from './Maps';
 
 function EventView({ eventInfo, handleLike, sendComment }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -45,8 +46,8 @@ function EventView({ eventInfo, handleLike, sendComment }) {
           <ModalHeader>{eventInfo.eventname}</ModalHeader>
           <ModalCloseButton />
           <Image
-            borderRadius='full'
-            boxSize='150px'
+            borderRadius="full"
+            boxSize="150px"
             src={eventInfo.picture}
             alt="Event Pic"
           />
@@ -61,6 +62,7 @@ function EventView({ eventInfo, handleLike, sendComment }) {
             <Text> *no.comments</Text>
             <Icon as={BiMessageAdd} w={6} h={6} onClick={() => console.log('scroll to comment?')} />
           </Stack>
+          <Maps endLoc={eventInfo.location} />
           <ModalFooter>
             <Button colorScheme="blue" onClick={() => sendRSVP()}> RSVP </Button>
             <Button colorScheme="ghost" onClick={() => handleInvite()}> Invite </Button>

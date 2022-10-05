@@ -20,7 +20,16 @@ import {
   Stack,
   Box,
 } from '@chakra-ui/react';
-
+import {
+  useJsApiLoader,
+  GoogleMap,
+  Marker,
+  Autocomplete,
+  DirectionsRenderer,
+} from '@react-google-maps/api';
+import { GOOGLE_API } from '../../../config';
+import { FaLocationArrow, FaGoogle } from 'react-icons/fa';
+const GEO_API = 'https://maps.googleapis.com/maps/api/geocode/json';
 const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
 
 function NewEvent({ userID, groupID }) {
@@ -28,9 +37,7 @@ function NewEvent({ userID, groupID }) {
   const [name, setEventName] = useState('');
   const [content, setContent] = useState('');
   const [eventPhoto, setEventPhoto] = useState('');
-  const [state, setSate] = useState('');
-  const [city, setCity] = useState('');
-  const [zip, setZip] = useState('');
+  const [location, setLocation] = useState('');
   const [startHour, setStartHour] = useState('12');
   const [startMins, setStartMins] = useState('00');
   const [startMeridiem, setStartMeridiem] = useState('PM');
@@ -39,6 +46,10 @@ function NewEvent({ userID, groupID }) {
   const [endMins, setEndMins] = useState('00');
   const [endMeridiem, setEndMeridiem] = useState('PM');
   const [endDate, setEndDate] = useState('');
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: GOOGLE_API,
+    libraries: ['places'],
+  });
 
   function handleTime(hour, mins, meridiem) {
     let time;
@@ -76,9 +87,7 @@ function NewEvent({ userID, groupID }) {
       eventPhoto,
       isEvent: true,
       name,
-      state,
-      city,
-      zip,
+      location,
       startTime: handleTime(startHour, startMins, startMeridiem),
       startDate,
       endTime: handleTime(endHour, endMins, endMeridiem),
@@ -87,6 +96,10 @@ function NewEvent({ userID, groupID }) {
     };
     console.log(formBody);
     onClose();
+  }
+
+  if (!isLoaded) {
+    return <h1>loading</h1>;
   }
 
   return (
@@ -110,12 +123,9 @@ function NewEvent({ userID, groupID }) {
               <Input type="file" onChange={(e) => { handlePhoto(e); }} />
 
               <FormLabel>Location of Event</FormLabel>
-              <FormHelperText>City</FormHelperText>
-              <Input type="text" onChange={(e) => { setCity(e.target.value); }} />
-              <FormHelperText>State abbreviation</FormHelperText>
-              <Input type="text" maxLength="2" onChange={(e) => { setSate(e.target.value); }} />
-              <FormHelperText>Zip code</FormHelperText>
-              <Input type="number" minLength="7" maxLength="7" onChange={(e) => { setZip(e.target.value); }} />
+              <Autocomplete>
+                <Input type="text" onChange={(e) => setLocation(e.target.value)}></Input>
+              </Autocomplete>
 
               <FormLabel>Date and Time</FormLabel>
               <FormHelperText>Start Date</FormHelperText>
