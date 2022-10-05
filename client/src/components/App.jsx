@@ -26,7 +26,7 @@ import styles from '../style.css';
 export default function App() {
   const [userID, setUserID] = useState('');
   const [user, loading, error] = useAuthState(auth);
-  const [page, setPage] = useState('home');
+  const [page, setPage] = useState('profile');
   const {
     mainPage,
     setMainPage,
