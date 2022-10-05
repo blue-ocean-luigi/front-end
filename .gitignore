@@ -9,8 +9,8 @@ client/dist/bundle.js*
 client/firebase.js
 
 .DS_store
-
+/client/config.js
 /backend/.env
 /backend/db/postgres.sql
 
-/client/src/components/test
+client/src/components/test

@@ -59,7 +59,7 @@ function ProfilePage() {
           Update banner
         </Button>
         <Center w="20vw" h="100%" position="relative">
-          <Image src={ userInfo.picture || defaultProfilePic} w="15vw" borderRadius="50%" position="absolute" top="calc((100% - 13vw) / 2)" />
+          <Image src={ userInfo.picture || defaultProfilePic} boxSize="15vw" borderRadius="full" position="absolute" top="calc((100% - 13vw) / 2)" />
           <Text zIndex="2" position="absolute" left="5%" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="white" transform="translate-X(-50%)">{`${userInfo.firstname} ${userInfo.lastname}`}</Text>
         </Center>
       </Box>
