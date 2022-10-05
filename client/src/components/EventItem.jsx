@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react';
 import EventView from './Modals/EventView';
 import CommentList from './Comments/CommentList';
+import { please } from '../request';
 
 class EventItem extends React.Component {
   constructor(props) {
@@ -21,17 +22,38 @@ class EventItem extends React.Component {
     this.sendComment = this.sendComment.bind(this);
     this.state = {
       comment: '',
-      likeCount: 0,
+      likes: props.event.postlikes.length,
+      justLiked: false,
     };
   }
 
-  handleLike() {
-    const { likeCount } = this.state;
-    if (likeCount < 1) {
-      console.log('send a like, then increase likeCOunt');
-      this.setState({
-        likeCount: 1,
-      });
+  handleLike(event, userID) {
+    // console.log('in handle like here is event: ', event)
+    // console.log('here is userID in handleLike: ', userID)
+    // check if the user has already liked the posts
+    if (event.postlikes.filter(u => u.id === userID).length > 0
+    || this.state.justLiked) {
+      // user already liked, so remove the like
+      please.deletePostLike(event.post_id, userID)
+        .then(() => this.setState(
+          {
+            likes: this.state.likes - 1,
+            justLiked: false,
+          }))
+        .catch((err) => console.log(err))
+    } else {
+      please.createPostLike(
+        {
+          post_id: event.post_id,
+          user_id: userID,
+        },
+      )
+        .then(() => this.setState(
+          {
+            likes: this.state.likes + 1,
+            justLiked: true,
+          }))
+        .catch((err) => console.log(err));
     }
   }
 
@@ -44,7 +66,10 @@ class EventItem extends React.Component {
 
   render() {
     const { event } = this.props;
-    const { comment } = this.state;
+    const { comment, likes } = this.state;
+    const { userID } = this.props;
+
+    console.log('this is event props: ', event)
 
     return (
       // eslint-disable-next-line max-len
@@ -79,9 +104,11 @@ class EventItem extends React.Component {
               <Button size="xs" onClick={() => onInvite(event)}> Invite </Button>
             </Flex>
             ) } */}
+
           <Stack shouldWrapChildren direction="row">
-            <Text>{event.postlikes.length}</Text>
-            <Icon as={BiHomeSmile} w={6} h={6} onClick={() => { this.handleLike(); }} />
+            {/* <Text>{event.postlikes.length}</Text> */}
+            <Text>{likes}</Text>
+            <Icon as={BiHomeSmile} w={6} h={6} onClick={() => this.handleLike(event, userID)} />
             <Text>{event.comments.length}</Text>
             <Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} />
           </Stack>

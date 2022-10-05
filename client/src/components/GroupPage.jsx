@@ -329,7 +329,7 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
             <Box p={1} position="relative" overflow-y="auto" h="100%" w="70%">
               {
                 inGroup
-                && <GroupFeed />
+                && <GroupFeed userID={userID} />
               }
               {
                 !inGroup
