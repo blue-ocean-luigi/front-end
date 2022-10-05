@@ -81,9 +81,9 @@ class EventItem extends React.Component {
             </Flex>
             ) } */}
           <Stack shouldWrapChildren direction="row">
-            <Text> *no.Likes* </Text>
+            <Text>{event.postlikes.length}</Text>
             <Icon as={BiHomeSmile} w={6} h={6} onClick={() => { this.handleLike(); }} />
-            <Text> *no.comments</Text>
+            <Text>{event.comments.length}</Text>
             <Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} />
           </Stack>
         </HStack>
