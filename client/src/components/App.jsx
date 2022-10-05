@@ -18,8 +18,6 @@ import ChatBar from './ChatBar';
 import NavButton from './NavButton';
 import { UseContextAll } from './ContextAll';
 import Welcome from './Welcome';
-import makeServer from './fakeserver';
-//window.server = makeServer();
 
 import styles from '../style.css';
 
