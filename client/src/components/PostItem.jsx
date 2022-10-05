@@ -8,9 +8,12 @@ import {
   Button,
   Box,
   HStack,
+  Flex,
+  Image,
 } from '@chakra-ui/react';
+import CommentList from './Comments/CommentList';
 
-function PostItem({ post, postView, setPostView }) {
+function PostItem({ post }) {
   const [comment, setComment] = useState('');
   const [likeCount, setLikeCount] = useState(0);
 
@@ -33,29 +36,37 @@ function PostItem({ post, postView, setPostView }) {
       borderWidth="1px"
     >
       <HStack justifyContent="space-between" p={1}>
-        <div>
-          {/* <img src={post.profilepic}/> */}
-          <span>*post.username* : *post.content*</span>
+        <Flex justifyContent="left">
+          <Image
+            borderRadius="full"
+            boxSize="80px"
+            src={post.picture}
+            // alt={ event.eventName }
+            p={1}
+          />
+          <Box p={1} align="left">
+            <Text>
+              {post.firstname}: {post.content}
+            </Text>
+          </Box>
           {/* (post.photo && <img></img>) */}
-        </div>
-        <Stack shouldWrapChildren direction="row">
-          <Text> *no.Likes* </Text>
-          <Icon as={BiHomeSmile} w={6} h={6} onClick={() => { handleLike(); }} />
-          <Text> *no.comments</Text>
-          <Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} />
-        </Stack>
-        <Box>
-        {/* {post.comments.map((comment, index) => <CommentItem comment={comment} key={index} />)} */}
-          this is where comments will go.
-        </Box>
-        <Text mb="8px">Leave a comment</Text>
-        <Textarea
-          value={comment}
-          onChange={(e) => { setComment(e.target.value); }}
-          placeholder="...your comment here"
-          size="sm"
-        />
-        <Button colorScheme="blue" onClick={() => { sendComment(); }}> Post </Button>
+          <Stack shouldWrapChildren direction="row">
+            <Text> *no.Likes* </Text>
+            <Icon as={BiHomeSmile} w={6} h={6} onClick={() => { handleLike(); }} />
+            <Text> *no.comments</Text>
+            <Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} />
+          </Stack>
+          <Box>
+            <CommentList comments={post.comments} />
+          </Box>
+          <Textarea
+            value={comment}
+            onChange={(e) => { setComment(e.target.value); }}
+            placeholder="...your comment here"
+            size="sm"
+          />
+          <Button colorScheme="blue" onClick={() => { sendComment(); }}> Post </Button>
+        </Flex>
       </HStack>
     </Box>
   );

@@ -13,7 +13,6 @@ function onInvite(e) {
 }
 
 function Friend({ friend, page }) {
-  console.log('this is page: ', page)
   return (
     <Box
       boxShadow="sm"

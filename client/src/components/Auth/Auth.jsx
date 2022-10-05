@@ -46,7 +46,7 @@ const signInWithGoogle = async() => {
     }
   } catch (err) {
     console.error(err);
-    aler(err.message);
+    alert(err.message);
   }
 };
 
