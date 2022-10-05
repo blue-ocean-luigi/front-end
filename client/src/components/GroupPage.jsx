@@ -26,6 +26,8 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
   console.log('here is userID: ', userID);
 
   // const { userGroups, userInfo, userFriends } = UseContextAll();
+
+  // TO BE REPLACED BY CONTEXT
   const userInfo = {
       "info": {
           "id": 1,
@@ -86,8 +88,8 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
   // edit these once verify on context
   // const [userInfo, setUserInfo] = useState({});
   const [members, setMembers] = useState([]);
-  const [isGroupAdmin, setGroupAdmin] = useState(true);
-  const [inGroup, setInGroup] = useState(true);
+  const [isGroupAdmin, setGroupAdmin] = useState(false);
+  const [inGroup, setInGroup] = useState(false);
 
   // on load of group, get all group page info
   useEffect(() => {
@@ -101,53 +103,32 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
 
   console.log('this is group info: ', groupInfo);
 
-
   // on load of group, check if the current user gets admin control
-
-  // useEffect((groupInfo) => {
-  //   console.log('this is groupInfo: ', groupInfo)
-  //   please.getUserByID(1)
-  //   .then((res) => {
-  //     console.log('this is user info: ', res.data)
-  //     // check if user is in the group AND if they are an admin
-  //     // if admin, show admin panel
-  //     // if not admin but in group, show normal view
-  //     // if not admin and not in group, WHAT DO I SHOW???
-  //       // SHOW ERROR PAGE in feed and members and add a button that directs them to request
-  //     const pos = res.data.groups.map(g => g.name).indexOf(groupInfo.name);
-  //     console.log('this is group name: ', groupInfo.name)
-  //     console.log('this is pos: ', res.data.groups.map(g => g.name))
-  //     if (
-  //       // admin and in group
-  //       res.data.groups.filter(g => g.name === groupInfo.name).length > 0
-  //       &&
-  //       res.data.groups[pos]['admin']
-  //       ) {
-  //       setInGroup(true);
-  //       setGroupAdmin(true);
-  //       setUserInfo(res.data);
-  //     }
-  //     else if (
-  //       // not admin but in group
-  //       res.data.groups.filter(g => g.name === groupInfo.name).length > 0
-  //       &&
-  //       !res.data.groups[pos]['admin']
-  //       ) {
-  //         setInGroup(true);
-  //         setUserInfo(res.data);
-  //         // setGroupAdmin(false); //don't think i need this bc redundant
-  //       }
-  //     else {
-  //       // not admin and not in group
-  //       setInGroup(false);
-  //       setUserInfo(res.data);
-  //     }
-  //   })
-  //   .catch((err) => console.log(err))
-  // }, [userID])
-
-
-
+  useEffect((groupID = 1) => {
+    // check if user is in the group AND if they are an admin
+    // if admin, show admin panel
+    // if not admin but in group, show normal view
+    // if not admin and not in group, WHAT DO I SHOW???
+    // SHOW ERROR PAGE in feed and members and add a button that directs them to request
+    const pos = userInfo.groups.map(g => g.id).indexOf(groupID);
+    if (
+      // in group and admin
+      userInfo.groups.filter((g) => g.id === groupID).length > 0
+      && userInfo.groups[pos].admin
+    ) {
+      setInGroup(true);
+      setGroupAdmin(true);
+    } else if (
+      // not admin but in group
+      userInfo.groups.filter((g) => g.id === groupID).length > 0
+      && !userInfo.groups[pos].admin) {
+      setInGroup(true);
+      // setGroupAdmin(false); //don't think i need this bc redundant
+    } else {
+      // not admin and not in group
+      setInGroup(false);
+    }
+  }, [userInfo]);
 
   const [memberRequests, setMemberRequests] = useState(
     [
@@ -292,8 +273,7 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
                 }
               </Flex>
               {
-                inGroup &&
-                <GroupMemberList members={members} page={page} />
+                inGroup && <GroupMemberList members={members} page={page} />
               }
               {
                 !inGroup
