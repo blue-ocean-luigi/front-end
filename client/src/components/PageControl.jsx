@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import GroupPage from './GroupPage';
 import HomePage from './HomePage/HomePage.jsx';
-import ProfilePage from "./ProfilePage/ProfilePage.jsx";
+import ProfilePage from './ProfilePage/ProfilePage.jsx';
 
 function PageControl({ userID, page, setPage, groupID }) {
   return (

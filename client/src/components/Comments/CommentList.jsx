@@ -33,7 +33,7 @@ function CommentList({ comments }) {
             rounded="lg"
             mb={4}
             borderWidth="1px">
-              <Text>{comment.username}: {comment.comment}</Text>
+              <Text>{comment.firstName}: {comment.message}</Text>
             </Box>)}
         </AccordionPanel>
       </AccordionItem>
