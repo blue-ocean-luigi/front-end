@@ -10,10 +10,7 @@ import Friend from './Friend';
 function FriendsList({ friends }) {
   return (
     <Box align="center">
-      <Heading mb={1} fontSize="xl">
-        Your Friends
-      </Heading>
-      {friends.map((friend) => <Friend key={friend.id} friend={friend} />)}
+      {friends && friends.map((f) => <Friend key={f.name} friend={f} />)}
     </Box>
   );
 }
