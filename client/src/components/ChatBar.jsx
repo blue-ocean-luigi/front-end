@@ -21,6 +21,7 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  ModalOverlay,
 } from '@chakra-ui/react';
 import socket from './chatclient';
 import { format } from 'timeago.js';
@@ -166,3 +167,11 @@ export default function ChatBar() {
   )
 }
 
+function AllMessages () {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [overlay, setOverlay] = React.useState(
+  <Modal isCentered isOpen={isOpen}
+  return (
+    <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px) hue-rotate(90deg)" />
+  );
+}
