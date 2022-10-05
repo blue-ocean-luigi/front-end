@@ -27,7 +27,7 @@ function Welcome({setMainPage}) {
       email: userInfo.email
     };
     console.log(data);
-    request.addUser(firstname.current.value, lastname.current.value, userInfo.email, '').then(d => setUserInfo({...userInfo, id: d.data.id})).then(() => setMainPage('home'));
+    please.addUser(firstname.current.value, lastname.current.value, userInfo.email, '').then(d => setUserInfo({...userInfo, id: d.data.id})).then(() => setMainPage('home'));
   }
   return (
     <div>
