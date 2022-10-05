@@ -12,8 +12,7 @@ function PageControl({ userID, page, setPage, groupID }) {
         {(() => {
           switch (page) {
             case 'home':
-              // return <HomePage setPage={setPage} userID={userID} />;
-              return <GroupPage setPage={setPage} userID={userID} />;
+              return <HomePage setPage={setPage} userID={userID} />;
             case 'group':
               return <GroupPage setPage={setPage} userID={userID} page={page} groupID={groupID} />;
             case 'profile':
