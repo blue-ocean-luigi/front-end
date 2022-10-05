@@ -25,7 +25,7 @@ import GroupMemberList from './GroupPageSubcomponents/GroupMemberList';
 import SearchGroup from './GroupPageSubcomponents/SearchGroup';
 import InviteFriends from './GroupPageSubcomponents/InviteFriends';
 import AdminEditMembers from './GroupPageSubcomponents/AdminEditMembers';
-import RequestToJoinGroup from './GroupPageSubcomponents/requestToJoinGroup';
+import RequestToJoinGroup from './GroupPageSubcomponents/RequestToJoinGroup';
 import { please } from '../request';
 
 function GroupPage({ page, userID, groupID = 1 }) {
@@ -186,10 +186,8 @@ function GroupPage({ page, userID, groupID = 1 }) {
 
   return (
     <Flex h="100vh" w="100%" justifyContent="space-between">
-    {/* <Flex h="100vh" w="100%" justifyContent="space-between" bg="gray"></Flex> */}
       <VStack p={2} h="100vh" w="100%" gap={2}>
         <Flex h="fit-content" w="100%">
-        {/* <Flex h="fit-content" w="100%" bg="lightpink"></Flex> */}
           <Box p={2} w="100%">
             <SearchGroup />
             <Heading mt={4} mb={1}>
@@ -203,7 +201,6 @@ function GroupPage({ page, userID, groupID = 1 }) {
         <Divider />
         <Flex bottom={0} h="100%" w="100%">
           <HStack h="100%" w="100%">
-            {/* <Box h="100%" w="30%" bg="blue" p={1}> */}
             <Box
               h="100%"
               w="30%"
@@ -250,45 +247,47 @@ function GroupPage({ page, userID, groupID = 1 }) {
                 <GroupMemberList members={members} page={page} />
               }
               {
-                !inGroup &&
-                <Box ml={1} align="center">
-                  <Heading mb={1} fontSize="xl">
-                    Members
-                  </Heading>
-                  Sorry, member lists are only viewable to members of the group
-                </Box>
+                !inGroup
+                && (
+                  <Box ml={1} align="center">
+                    <Heading mb={1} fontSize="xl">
+                      Members
+                    </Heading>
+                    Sorry, member lists are only viewable to members of the group
+                  </Box>
+                )
               }
 
             </Box>
             <Divider orientation="vertical" />
             <Box p={1} position="relative" overflow-y="auto" h="100%" w="70%">
-            {/* <Box p={1} position="relative" overflow-y="auto" h="100%" w="70%" bg="green"></Box> */}
               {
-                inGroup &&
-                <GroupFeed />
+                inGroup
+                && <GroupFeed />
               }
               {
-                !inGroup &&
-                <Box>
-                  <Box position="absolute" w="100%" align="center">
-                    <Box mr={4} mb={4}>
-                    Sorry, group feeds are only viewable to members of the group
+                !inGroup
+                && (
+                  <Box>
+                    <Box position="absolute" w="100%" align="center">
+                      <Box mr={4} mb={4}>
+                        Sorry, group feeds are only viewable to members of the group
+                      </Box>
+                      <Button
+                        width="50%"
+                        onClick={onOpenGroupRequest}
+                      >
+                        Join
+                        {groupInfo.name}
+                      </Button>
+                      <RequestToJoinGroup
+                        onClose={onCloseGroupRequest}
+                        isOpen={isOpenGroupRequest}
+                        groupInfo={groupInfo}
+                      />
                     </Box>
-                    <Button
-                      width="50%"
-                      onClick={onOpenGroupRequest}
-                    >
-                      Join {groupInfo.name}
-                    </Button>
-                    <RequestToJoinGroup
-                      onClose={onCloseGroupRequest}
-                      isOpen={isOpenGroupRequest}
-                      groupInfo={groupInfo}
-                    />
                   </Box>
-                  <Flex position="absolute" top={0} w="100%" justifyContent="flex-end" bg="magenta">
-                  </Flex>
-                </Box>
+                )
               }
             </Box>
           </HStack>

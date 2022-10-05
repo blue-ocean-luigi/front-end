@@ -3,7 +3,7 @@ import {
   Box,
   Button,
   Flex,
-
+  Spacer,
 } from '@chakra-ui/react';
 import FeedItem from './FeedItem';
 import NewEvent from '../Modals/NewEvent';
@@ -69,7 +69,7 @@ function GroupFeed({groupID = 1}) {
         </Box>
         {/* <PostItem /> */}
       </Box>
-      <Flex position="absolute" top={0} w="100%" justifyContent="flex-end" bg="magenta">
+      <Flex position="absolute" top={0} w="100%" justifyContent="flex-end">
         <NewPost />
         <NewEvent />
       </Flex>
