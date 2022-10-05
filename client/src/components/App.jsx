@@ -18,6 +18,8 @@ import ChatBar from './ChatBar';
 import NavButton from './NavButton';
 import { UseContextAll } from './ContextAll';
 import Welcome from './Welcome';
+import makeServer from './fakeserver';
+//window.server = makeServer();
 
 import styles from '../style.css';
 
@@ -63,6 +65,7 @@ export default function App() {
                 <LoginOption
                   setMainPage={setMainPage}
                   setUserID={setUserID}
+                  setUserInfo={setUserInfo}
                   user={user}
                   loading={loading}
                   error={error}
@@ -75,7 +78,7 @@ export default function App() {
                 setPage={setPage}
                 />;
             case 'welcome':
-              return <Welcome />;
+              return <Welcome setMainPage={setMainPage}/>;
             default:
               return <PageControl
                 user={userInfo}

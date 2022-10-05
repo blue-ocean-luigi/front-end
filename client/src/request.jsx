@@ -2,7 +2,7 @@
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable camelcase */
-const axios = require('axios');
+import axios from 'axios';
 
 const basePath = 'http://localHost:3001/crossing';
 
