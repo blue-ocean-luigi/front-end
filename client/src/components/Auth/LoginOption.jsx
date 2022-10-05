@@ -25,7 +25,7 @@ import {
   signInWithGoogle,
   registerWithEmailAndPassword,
 } from './Auth';
-import request from '../../request';
+import { please } from '../../request';
 import { UseContextAll } from '../ContextAll';
 
 
@@ -44,7 +44,7 @@ function Signup({setExistingUser, setMainPage }) {
     if (loading) return;
     if (user) {
       console.log('signup:', user);
-      request.getUserByEmail(user.email)
+      please.getUserByEmail(user.email)
         .then(res => console.log(res))
         .catch(() => {
           setUserInfo({email: user.email});
@@ -125,7 +125,7 @@ function Login({user, loading, error, setExistingUser, setMainPage }) {
     if (user) {
       console.log('signup:', user);
       //console.log('signup: email:', email);
-      request.getUserByEmail(user.email)
+      please.getUserByEmail(user.email)
         .then(res => {
           //console.log(res.data); // {id:, firstname, lastname, email, aboutme
           //console.log(res.data.info); // {id:, firstname, lastname, email, aboutme
