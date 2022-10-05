@@ -7,7 +7,7 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 import { UseContextAll } from './ContextAll';
-import request from '../request';
+import { please } from '../request';
 
 
 function Welcome({setMainPage}) {
