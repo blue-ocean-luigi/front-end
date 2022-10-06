@@ -56,7 +56,7 @@ function ProfilePage() {
       .then((response) => {
         console.log(response.data.data.display_url);
         setBanner(response.data.data.display_url);
-        // setPostPhoto(response.data.data.display_url);
+        //make axios request to update user with all the existing user info plus new banner
       })
       .catch((error) => {
         console.log(error);
