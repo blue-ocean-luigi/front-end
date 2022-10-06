@@ -19,9 +19,8 @@ import {
 
 import FriendRequestCard from '../ProfilePage/FriendRequestCard.jsx';
 
+// firstname lastname id picture
 function FriendRequests(requests) {
-  console.log('//////////////', requests.requests);
-  // firstname lastname id picture
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
