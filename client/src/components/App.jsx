@@ -21,8 +21,6 @@ import Welcome from './Welcome';
 import GroupPage from './GroupPage';
 import HomePage from './HomePage/HomePage';
 import ProfilePage from './ProfilePage/ProfilePage';
-import makeServer from './fakeserver';
-//window.server = makeServer();
 
 import styles from '../style.css';
 
