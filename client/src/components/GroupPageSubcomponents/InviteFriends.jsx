@@ -10,10 +10,13 @@ import {
 } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/react';
 import FriendsList from '../FriendsListSubcomponents/FriendsList';
+import { UseContextAll } from '../ContextAll';
 
 // TODO: add invite button to either FriendsList as a conditionally rendered button
 // OR map each individual friend to a new friends list with invite buttons
-function InviteFriends({onClose, isOpen, friends, page}) {
+function InviteFriends({onClose, isOpen }) {
+  const { userFriends } = UseContextAll();
+  console.log(userFriends);
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered scrollBehavior="inside" size="lg">
       <ModalOverlay />
@@ -21,7 +24,7 @@ function InviteFriends({onClose, isOpen, friends, page}) {
         <ModalHeader>Invite friends to this group</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <FriendsList friends={friends} page={page} />
+          <FriendsList friends={userFriends.friendlist} />
         </ModalBody>
         <ModalFooter>
           <Button onClick={onClose}>Close</Button>
