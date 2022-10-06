@@ -22,11 +22,6 @@ function ProfilePage() {
   const defaultBackgroundImage = 'https://news.clas.ufl.edu/wp-content/uploads/sites/4/2020/06/AdobeStock_345118478-copy-1440x961-1-e1613512040649.jpg';
   const defaultProfilePic = 'https://i.pinimg.com/736x/50/d8/03/50d803bda6ba43aaa776d0e243f03e7b.jpg';
 
-  const { isOpen: isOpenFriendRequests,
-    onOpen: onOpenFriendRequests,
-    onClose: onCloseFriendRequests
-  } = useDisclosure();
-
   const {
     userInfo,
     userGroups,
@@ -51,8 +46,6 @@ function ProfilePage() {
         <Box position="absolute" right="5" top="5%" zIndex="2" cursor="pointer">
           <FriendRequests
             requests={userFriends.requestlist}
-            isOpen={isOpenFriendRequests}
-            onOpen={onOpenFriendRequests}
           />
         </Box>
         <Button rightIcon={<MdInsertPhoto />} position="absolute" right="5" bottom="5%">

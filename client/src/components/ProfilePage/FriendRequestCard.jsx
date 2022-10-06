@@ -13,7 +13,7 @@ import { MdDone, MdThumbUp, MdThumbDown } from 'react-icons/md'
 import { UseContextAll } from '../ContextAll';
 import { please } from '../../request.jsx'
 
-function FriendRequestCard({request}) {
+function FriendRequestCard({request, setReqCount}) {
   const {
     userInfo,
     userGroups,
@@ -24,16 +24,14 @@ function FriendRequestCard({request}) {
   let [replied, setReplied] = useState(false);
   let [accepted, setAccepted] = useState(false);
 
-  console.log(request);
-
   function acceptReq(e, id) {
     e.preventDefault();
     console.log("user: ", userInfo.id, "requester: ",id);
-    // please.acceptFriend(requester_id, userid)
     please.acceptFriend(id, userInfo.id)
       .then((data) => {
         setReplied(true);
         setAccepted(true);
+        setReqCount((count) => count - 1);
         console.log(data);
       })
       .catch((err) => console.log(err));
@@ -42,10 +40,10 @@ function FriendRequestCard({request}) {
   function denyReq(e, id) {
     e.preventDefault();
     console.log("user: ", userInfo.id, "requester: ", id);
-    // please.removeFriend(user_id, friend_id)
     please.removeFriend(userInfo.id, id)
       .then((data) => {
         setReplied(true);
+        setReqCount((count) => count - 1);
         console.log(data);
       })
       .catch((err) => console.log(err));
