@@ -27,12 +27,12 @@ const socketIO = require('socket.io')(http, {
   }
 });
 
-
 socketIO.on('connection', (socket) => {
   console.log('a user connected');
 
   socket.on('message', (data) => {
-    socketIO.emit('messageResponse', data);
+    //socketIO.emit('messageResponse', data); // echoes data to all connected clients, clients need to filter and store messages
+    socket.broadcast.emit('messageResponse', data); // echoes data to all connected clients, clients need to filter and store messages
 
   });
   socket.on('disconnect', () => {
