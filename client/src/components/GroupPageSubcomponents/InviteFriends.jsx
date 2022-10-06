@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -14,9 +14,9 @@ import { UseContextAll } from '../ContextAll';
 
 // TODO: add invite button to either FriendsList as a conditionally rendered button
 // OR map each individual friend to a new friends list with invite buttons
-function InviteFriends({onClose, isOpen }) {
-  const { userFriends } = UseContextAll();
-  console.log(userFriends);
+function InviteFriends({onClose, isOpen, members }) {
+  const { userFriends, mainPage } = UseContextAll();
+  const [isGroupInvite, SetGroupInvite] = useState(true);
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered scrollBehavior="inside" size="lg">
       <ModalOverlay />
@@ -24,7 +24,7 @@ function InviteFriends({onClose, isOpen }) {
         <ModalHeader>Invite friends to this group</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <FriendsList friends={userFriends.friendlist} />
+          <FriendsList friends={userFriends.friendlist} isGroupInvite={isGroupInvite} members={members}/>
         </ModalBody>
         <ModalFooter>
           <Button onClick={onClose}>Close</Button>
