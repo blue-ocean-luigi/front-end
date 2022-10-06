@@ -30,6 +30,7 @@ class EventItem extends React.Component {
   }
 
   handleLike(event, userID) {
+    console.log('these are likes: ', event)
     // console.log('in handle like here is event: ', event)
     // console.log('here is userID in handleLike: ', userID)
     // check if the user has already liked the posts

@@ -19,15 +19,15 @@ function GroupFeed({ groupID = 1, userID }) {
       .catch((err) => console.log(err));
   }, [groupID]);
 
-  function sendCommentGroup(comment) {
-    console.log('in send comment here is the big object: ', comment)
-    // send post request
-    please.createComment(comment)
-      // getPostComments will be a new query from Brian
-      .then(() => please.getGroupPosts(groupID))
-      .then((res) => console.log('got group posts'))
-      .catch((err) => console.log(err));
-  }
+  // function sendCommentGroup(comment) {
+  //   console.log('in send comment here is the big object: ', comment)
+  //   // send post request
+  //   please.createComment(comment)
+  //     // getPostComments will be a new query from Brian
+  //     .then(() => please.getGroupPosts(groupID))
+  //     .then((res) => console.log('got group posts'))
+  //     .catch((err) => console.log(err));
+  // }
 
   return (
     <Box>
@@ -38,7 +38,7 @@ function GroupFeed({ groupID = 1, userID }) {
       <Box position="relative" w="100%" align="center" mt={10}>
         <Box mr={4}>
           {events.map((event) =>
-            <HomeFeedPost key={event.name} post={event} userID={userID} sendComment={sendCommentGroup} />)}
+            <HomeFeedPost key={event.name} post={event} userID={userID} />)}
         </Box>
       </Box>
 
