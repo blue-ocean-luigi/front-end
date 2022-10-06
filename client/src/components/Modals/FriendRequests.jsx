@@ -32,9 +32,9 @@ function FriendRequests(requests) {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Active Friend Requests</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody maxHeight="80vh" overflowY="auto">
             {requests.requests && requests.requests.map((req) =>
             <FriendRequestCard request={req}/>)}
           </ModalBody>
@@ -43,7 +43,6 @@ function FriendRequests(requests) {
             <Button colorScheme='blue' mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button variant='ghost'>Secondary Action</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

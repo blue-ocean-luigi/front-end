@@ -60,7 +60,7 @@ function ProfilePage() {
         </Button>
         <Center w="20vw" h="100%" position="relative">
           <Image src={userInfo.picture === undefined ? userInfo.picture : defaultProfilePic} boxSize="15vw" borderRadius="full" position="absolute" top="calc((100% - 13vw) / 2)" />
-          <Text zIndex="2" position="absolute" left="5%" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="white" transform="translate-X(-50%)">{`${userInfo.firstname} ${userInfo.lastname}`}</Text>
+          <Text zIndex="2" position="absolute" left="0" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="white" transform="translateX(20%)" border="1px solid red">{`${userInfo.firstname} ${userInfo.lastname}`}</Text>
         </Center>
       </Box>
       <Box minHeight="20vh" w="80%" border="1px solid gray" mb="1em">
@@ -86,7 +86,6 @@ export default ProfilePage;
 color mode switcher
 color mode script
 
-need to add friend requests modal when new button clicked
 need to handle change of profile banner
 
 need to change from using userid from userinfo to currentuserid from context and do axios requests (cross check for current user id to see if its the current users profile or a friends profile)
@@ -96,6 +95,4 @@ when viewing other profile page, banner buttons should show:
   if not friends: add as friend
 
  update banner should utilize axios request for update user, just pass in all the redundant information, plus the new url
-
-need to recenter user name with image
 */
