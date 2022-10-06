@@ -8,9 +8,9 @@ client/dist/bundle.js*
 # API keys and configs
 client/firebase.js
 
-.DS_store
-/client/config.js
-/backend/.env
-/backend/db/postgres.sql
+*.DS_store
+client/config.js
+back-end/.env
+back-end/db/postgres.sql
 
 client/src/components/test
