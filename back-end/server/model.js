@@ -249,6 +249,49 @@ SELECT post_id,
     return;
   },
 
+  getComment: async (post_id) => {
+    const query = `
+    WITH list as (
+      SELECT c.id as id,
+      c.user_id as user_id,
+      firstName,
+      lastName,
+      picture,
+      message,
+      createdAt as date
+    FROM comments c INNER JOIN users
+    ON c.user_id = users.id
+    WHERE c.post_id = ${post_id})
+
+    SELECT id,
+    user_id as author_id,
+    firstName,
+    lastName,
+    picture,
+    message,
+    date,
+    COALESCE(
+      (SELECT json_agg(json_build_object(
+        'id', user_id,
+        'firstName', firstName,
+        'lastName', lastName,
+        'picture', picture
+      ))
+      FROM
+      (SELECT cl.user_id,
+        firstName,
+        lastName,
+        picture
+        FROM users INNER JOIN comment_likes cl
+        ON cl.user_id = users.id
+        WHERE cl.comment_id = list.id) cmls), '[]'::json) AS clikes
+      FROM list
+      ORDER BY date ASC`
+
+    const comments = await pool.query(query)
+    return comments.rows
+  },
+
   createComment: async (body) => {
     const values = [body.post_id, body.user_id, body.message];
 

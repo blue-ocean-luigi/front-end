@@ -227,6 +227,14 @@ export const please = {
       baseURL: basePath,
     }),
 
+  // get comments for a post
+  getComment: (post_id) =>
+    axios({
+      url: `/comment/${post_id}`,
+      method: "get",
+      baseURL: basePath,
+    }),
+
   // creating a comment
   createComment: (info) =>
     axios({
