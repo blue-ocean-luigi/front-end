@@ -26,7 +26,6 @@ class EventItem extends React.Component {
       comments: props.event.comments,
       likes: props.event.postlikes.length,
       meLikey: props.event.postlikes.filter(u => u.id === props.userID).length > 0,
-      // meLikey:
     };
     this.requestInFlight = false;
   }
@@ -34,9 +33,9 @@ class EventItem extends React.Component {
   handleLike(event, userID) {
     if (this.requestInFlight) {
       // console.log('DEBUG: request in flight');
-      return
+      return;
     }
-    this.requestInFlight = true
+    this.requestInFlight = true;
     // console.log('these are likes: ', event)
     // console.log(`DEBUG: likes: ${this.state.likes}`);
 
