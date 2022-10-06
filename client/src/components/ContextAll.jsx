@@ -17,7 +17,7 @@ export function ContextAllProvider({ children }) {
   const [userFriends, setUserFriends] = useState([]);
   const [userChats, setUserChats] = useState([]);
   const [homePosts, setHomePosts] = useState([]);
-  const [currentGroup, setCurrentGroup] = useState('');
+  const [currentGroupID, setCurrentGroupID] = useState(''); //  expects group ID
   const [currentUserID, setCurrentUserID] = useState('');
 
   useEffect(() => {
@@ -46,8 +46,8 @@ export function ContextAllProvider({ children }) {
     setUserChats,
     homePosts,
     setHomePosts,
-    currentGroup,
-    setCurrentGroup,
+    currentGroupID,
+    setCurrentGroupID,
     currentUserID,
     setCurrentUserID,
   };

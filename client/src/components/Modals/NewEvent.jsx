@@ -24,14 +24,11 @@ import { please } from '../../request';
 
 const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
 
-function NewEvent({ userID, groupID }) {
+function NewEvent({ userID, groupID, updateFeed}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [name, setEventName] = useState('');
   const [content, setContent] = useState('');
   const [eventPhoto, setEventPhoto] = useState('');
-  const [state, setSate] = useState('');
-  const [city, setCity] = useState('');
-  const [zip, setZip] = useState('');
   const [startHour, setStartHour] = useState('12');
   const [startMins, setStartMins] = useState('00');
   const [startMeridiem, setStartMeridiem] = useState('PM');
@@ -73,21 +70,24 @@ function NewEvent({ userID, groupID }) {
     const formBody = {
       user_id: userID,
       group_id: groupID,
+      eventname: name,
       content,
-      eventPhoto,
-      isEvent: true,
-      name,
-      state,
-      city,
-      zip,
-      startTime: handleTime(startHour, startMins, startMeridiem),
-      startDate,
-      endTime: handleTime(endHour, endMins, endMeridiem),
-      endDate,
-
+      photos: [eventPhoto],
+      isevent: true,
+      // location, <= need to add google stuff
+      starttime: handleTime(startHour, startMins, startMeridiem),
+      startdate: startDate,
+      endtime: handleTime(endHour, endMins, endMeridiem),
+      enddate: endDate,
     };
-    console.log(formBody);
-    onClose();
+    please.createPost(formBody)
+      .then(() => {
+        updateFeed();
+        onClose();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
@@ -111,12 +111,6 @@ function NewEvent({ userID, groupID }) {
               <Input type="file" onChange={(e) => { handlePhoto(e); }} />
 
               <FormLabel>Location of Event</FormLabel>
-              <FormHelperText>City</FormHelperText>
-              <Input type="text" onChange={(e) => { setCity(e.target.value); }} />
-              <FormHelperText>State abbreviation</FormHelperText>
-              <Input type="text" maxLength="2" onChange={(e) => { setSate(e.target.value); }} />
-              <FormHelperText>Zip code</FormHelperText>
-              <Input type="number" minLength="7" maxLength="7" onChange={(e) => { setZip(e.target.value); }} />
 
               <FormLabel>Date and Time</FormLabel>
               <FormHelperText>Start Date</FormHelperText>

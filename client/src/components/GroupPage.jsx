@@ -21,67 +21,16 @@ import AdminEditMembers from './GroupPageSubcomponents/AdminEditMembers';
 import RequestToJoinGroup from './GroupPageSubcomponents/RequestToJoinGroup';
 import { please } from '../request';
 
-function GroupPage({ page, groupID = 1, userID=1 }) {
-  console.log('here is group page: ', groupID);
-  console.log('here is userID: ', userID);
-
-  // const { userGroups, userInfo, userFriends } = UseContextAll();
-
-  // TO BE REPLACED BY CONTEXT
-  const userInfo = {
-      "info": {
-          "id": 1,
-          "firstname": "Jessie",
-          "lastname": "Zhao",
-          "email": "email1@gmail.com",
-          "aboutme": "Im awesome",
-          "picture": "https://static.wikia.nocookie.net/powerrangers/images/6/6a/Mighty_Morphin_Yellow_Ranger_Pose.jpeg/revision/latest?cb=20191209142810"
-      },
-      "friends": {
-          "friendlist": [
-              {
-                  "firstname": "Amberly",
-                  "lastname": "Malone",
-                  "id": 2,
-                  "picture": "https://static.wikia.nocookie.net/powerrangers/images/d/d1/Mighty_Morphin_Pink_Ranger_Pose.jpeg/revision/latest?cb=20200504011256"
-              },
-              {
-                  "firstname": "James",
-                  "lastname": "Stolhammer",
-                  "id": 3,
-                  "picture": "https://www.looper.com/img/gallery/whatever-happened-to-the-original-green-power-ranger/intro-1601866752.jpg"
-              },
-              {
-                  "firstname": "Matt",
-                  "lastname": "Waelder",
-                  "id": 5,
-                  "picture": "https://static.wikia.nocookie.net/powerrangers/images/d/dc/Mighty_Morphin_Red_Ranger_Pose.jpeg/revision/latest?cb=20200621085736"
-              }
-          ],
-          "requestlist": []
-      },
-      "groups": [
-          {
-              "id": 1,
-              "name": "DnD",
-              "about": "Dungen and Dragons players come forth",
-              "state": "San Franisco",
-              "city": "CA",
-              "zip": 94105,
-              "admin": true
-          },
-          {
-              "id": 3,
-              "name": "Gardeners",
-              "about": "Green Thumbs unite",
-              "state": "San Franisco",
-              "city": "CA",
-              "zip": 94105,
-              "admin": false
-          }
-      ]
-  }
-
+function GroupPage() {
+  const {
+    userID,
+    userGroups,
+    userInfo,
+    userFriends,
+    setMainPage,
+    currentGroupID,
+  } = UseContextAll();
+  console.log(userInfo);
   // state to store all group info for group page
   const [groupInfo, setGroupInfo] = useState({});
 
@@ -93,41 +42,40 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
 
   // on load of group, get all group page info
   useEffect(() => {
-    please.getGroupInfo(groupID)
+    please.getGroupInfo(currentGroupID)
       .then((res) => {
         setGroupInfo(res.data);
         setMembers(res.data.members);
       })
       .catch((err) => console.log(err));
-  }, [groupID]);
-
+  }, [currentGroupID]);
 
   // on load of group, check if the current user gets admin control
-  useEffect((groupID = 1) => {
+  useEffect(() => {
     // check if user is in the group AND if they are an admin
     // if admin, show admin panel
     // if not admin but in group, show normal view
     // if not admin and not in group, WHAT DO I SHOW???
     // SHOW ERROR PAGE in feed and members and add a button that directs them to request
-    const pos = userInfo.groups.map(g => g.id).indexOf(groupID);
+    const pos = userGroups.map(g => g.id).indexOf(currentGroupID);
     if (
       // in group and admin
-      userInfo.groups.filter((g) => g.id === groupID).length > 0
-      && userInfo.groups[pos].admin
+      userGroups.filter((g) => g.id === currentGroupID).length > 0
+      && userGroups[pos].admin
     ) {
       setInGroup(true);
       setGroupAdmin(true);
     } else if (
       // not admin but in group
-      userInfo.groups.filter((g) => g.id === groupID).length > 0
-      && !userInfo.groups[pos].admin) {
+      userGroups.filter((g) => g.id === currentGroupID).length > 0
+      && !userGroups[pos].admin) {
       setInGroup(true);
       // setGroupAdmin(false); //don't think i need this bc redundant
     } else {
       // not admin and not in group
       setInGroup(false);
     }
-  }, [userInfo]);
+  }, [userGroups, currentGroupID]);
 
   const [memberRequests, setMemberRequests] = useState(
     [
@@ -187,39 +135,39 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
     },
   ];
 
-  function handleEditMembers(groupID) {
+  function handleEditMembers() {
     console.log('clicked button');
-    please.getOpenGroupRequest(1)
+    please.getOpenGroupRequest(currentGroupID)
       .then((results) => {
-        console.log('this is requests: ', results.data)
+        console.log('this is requests: ', results.data);
         setMemberRequests(results.data);
       })
       .catch((err) => console.log(err));
   }
 
   // admin editing of members
-  function handleMemberStatus(e, status, currentGroup = 1) {
-    console.log(e)
-    console.log('this is status: ', status)
+  function handleMemberStatus(e, status) {
+    console.log(e);
+    console.log('this is status: ', status);
 
     if (status === 'approve') {
-      please.acceptGroupRequest(currentGroup, e.id)
-        .then(() => please.getGroupInfo(currentGroup))
+      please.acceptGroupRequest(currentGroupID, e.id)
+        .then(() => please.getGroupInfo(currentGroupID))
         .then((res) => setMembers(res.data.members))
         .catch((err) => console.log(err));
     } else if (status === 'deny') {
-      please.denyGroupRequest(currentGroup, e.id)
-        .then(() => please.getGroupInfo(currentGroup))
+      please.denyGroupRequest(currentGroupID, e.id)
+        .then(() => please.getGroupInfo(currentGroupID))
         .then((res) => setMembers(res.data.members))
         .catch((err) => console.log(err));
     } else if (status === 'adminify') {
-      please.giveMemberAdminStatus(currentGroup, e.id)
-        .then(() => please.getGroupInfo(currentGroup))
+      please.giveMemberAdminStatus(currentGroupID, e.id)
+        .then(() => please.getGroupInfo(currentGroupID))
         .then((res) => setMembers(res.data.members))
         .catch((err) => console.log(err));
     } else {
-      please.removeGroupMember(currentGroup, e.id)
-        .then(() => please.getGroupInfo(currentGroup))
+      please.removeGroupMember(currentGroupID, e.id)
+        .then(() => please.getGroupInfo(currentGroupID))
         .then((res) => setMembers(res.data.members))
         .catch((err) => console.log(err));
     }
@@ -279,8 +227,6 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
                 <InviteFriends
                   onClose={onCloseFriendsList}
                   isOpen={isOpenFriendsList}
-                  friends={testFriendList}
-                  page={page}
                 />
                 {
                   isGroupAdmin
@@ -291,7 +237,7 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
                         onClick={() => {
                           setEditing(true);
                           onOpenAdminControl();
-                          handleEditMembers(groupID);
+                          handleEditMembers(currentGroupID);
                         }}
                       >
                         Edit Members
@@ -301,7 +247,6 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
                         isOpen={isOpenAdminControl}
                         members={members}
                         memberRequests={memberRequests}
-                        page={page}
                         editing={editing}
                         handleMemberStatus={handleMemberStatus}
                       />
@@ -310,7 +255,7 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
                 }
               </Flex>
               {
-                inGroup && <GroupMemberList members={members} page={page} />
+                inGroup && <GroupMemberList members={members} />
               }
               {
                 !inGroup
@@ -329,7 +274,7 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
             <Box p={1} position="relative" overflow-y="auto" h="100%" w="70%">
               {
                 inGroup
-                && <GroupFeed userID={userID} />
+                && <GroupFeed userID={userID} groupID={currentGroupID} />
               }
               {
                 !inGroup
