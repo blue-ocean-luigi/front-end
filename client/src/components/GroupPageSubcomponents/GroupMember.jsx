@@ -33,14 +33,12 @@ function onEdit(e) {
 //   }
 // }
 
-
-
-function GroupMember({ member, page, editing, isGroupRequest, handleMemberStatus}) {
-  const {userInfo, mainPage} = UseContextAll()
-
-  console.log('this is user info in groupMember: ', userInfo)
-
-  // TODO need to get whether or not a user is an admin
+function GroupMember({ member, editing, isGroupRequest, handleMemberStatus}) {
+  const {
+    mainPage,
+    setMainPage,
+    setCurrentUserID
+  } = UseContextAll();
   return (
     <Box
       boxShadow="sm"
@@ -48,7 +46,6 @@ function GroupMember({ member, page, editing, isGroupRequest, handleMemberStatus
       mb={1}
       borderWidth="1px"
     >
-    {/* <Box bg="brown"></Box> */}
       <HStack justifyContent="space-between" p={1}>
         <Flex justifyContent="left">
           <Image

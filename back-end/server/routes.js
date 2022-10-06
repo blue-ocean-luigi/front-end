@@ -7,6 +7,7 @@ router.get('/groupposts/:group_id', controller.getGroupPosts)
 router.post('/posts', controller.createPost)
 router.delete("/posts/:post_id", controller.deletePost);
 //comments
+router.get('/comment/:post_id',controller.getComment)
 router.post('/comment', controller.createComment)
 router.delete('/comment/:comment_id', controller.deleteComment)
 //likes
