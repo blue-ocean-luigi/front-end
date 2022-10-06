@@ -50,7 +50,7 @@ export default function ChatBar() {
   useEffect(() => {
     please.getMessages(userID, friendID).then(res =>setMessageHistory(res.data))
   }, [friendID]);
-  
+
   return (
     <Box marginBottom="8px" bgColor='primary' position="fixed" bottom="0" left="0" width="100%">
       { chatFocus && messageHistory.length ? (

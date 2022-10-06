@@ -10,13 +10,6 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   useDisclosure,
 } from '@chakra-ui/react';
 import { UseContextAll } from './ContextAll';
@@ -28,77 +21,113 @@ import AdminEditMembers from './GroupPageSubcomponents/AdminEditMembers';
 import RequestToJoinGroup from './GroupPageSubcomponents/RequestToJoinGroup';
 import { please } from '../request';
 
-function GroupPage({ page, userID, groupID = 1 }) {
+function GroupPage({ page, groupID = 1, userID=1 }) {
   console.log('here is group page: ', groupID);
+  console.log('here is userID: ', userID);
 
   // const { userGroups, userInfo, userFriends } = UseContextAll();
 
+  // TO BE REPLACED BY CONTEXT
+  const userInfo = {
+      "info": {
+          "id": 1,
+          "firstname": "Jessie",
+          "lastname": "Zhao",
+          "email": "email1@gmail.com",
+          "aboutme": "Im awesome",
+          "picture": "https://static.wikia.nocookie.net/powerrangers/images/6/6a/Mighty_Morphin_Yellow_Ranger_Pose.jpeg/revision/latest?cb=20191209142810"
+      },
+      "friends": {
+          "friendlist": [
+              {
+                  "firstname": "Amberly",
+                  "lastname": "Malone",
+                  "id": 2,
+                  "picture": "https://static.wikia.nocookie.net/powerrangers/images/d/d1/Mighty_Morphin_Pink_Ranger_Pose.jpeg/revision/latest?cb=20200504011256"
+              },
+              {
+                  "firstname": "James",
+                  "lastname": "Stolhammer",
+                  "id": 3,
+                  "picture": "https://www.looper.com/img/gallery/whatever-happened-to-the-original-green-power-ranger/intro-1601866752.jpg"
+              },
+              {
+                  "firstname": "Matt",
+                  "lastname": "Waelder",
+                  "id": 5,
+                  "picture": "https://static.wikia.nocookie.net/powerrangers/images/d/dc/Mighty_Morphin_Red_Ranger_Pose.jpeg/revision/latest?cb=20200621085736"
+              }
+          ],
+          "requestlist": []
+      },
+      "groups": [
+          {
+              "id": 1,
+              "name": "DnD",
+              "about": "Dungen and Dragons players come forth",
+              "state": "San Franisco",
+              "city": "CA",
+              "zip": 94105,
+              "admin": true
+          },
+          {
+              "id": 3,
+              "name": "Gardeners",
+              "about": "Green Thumbs unite",
+              "state": "San Franisco",
+              "city": "CA",
+              "zip": 94105,
+              "admin": false
+          }
+      ]
+  }
+
   // state to store all group info for group page
-  const [groupInfo, setGroupInfo] = useState({}); // can delete once context is working
+  const [groupInfo, setGroupInfo] = useState({});
 
   // edit these once verify on context
   // const [userInfo, setUserInfo] = useState({});
   const [members, setMembers] = useState([]);
-  const [isGroupAdmin, setGroupAdmin] = useState(true);
-  const [inGroup, setInGroup] = useState(true);
+  const [isGroupAdmin, setGroupAdmin] = useState(false);
+  const [inGroup, setInGroup] = useState(false);
 
   // on load of group, get all group page info
   useEffect(() => {
-    please.getGroupInfo(1)
-    .then((res) => {
-      setGroupInfo(res.data);
-      setMembers(res.data.members);
-    })
-    .catch((err) => console.log(err))
-  }, [groupID])
+    please.getGroupInfo(groupID)
+      .then((res) => {
+        setGroupInfo(res.data);
+        setMembers(res.data.members);
+      })
+      .catch((err) => console.log(err));
+  }, [groupID]);
 
-  console.log('this is group info: ', groupInfo)
 
   // on load of group, check if the current user gets admin control
-
-  // useEffect((groupInfo) => {
-  //   console.log('this is groupInfo: ', groupInfo)
-  //   please.getUserByID(1)
-  //   .then((res) => {
-  //     // check if user is in the group AND if they are an admin
-  //     // if admin, show admin panel
-  //     // if not admin but in group, show normal view
-  //     // if not admin and not in group, WHAT DO I SHOW???
-  //       // SHOW ERROR PAGE in feed and members and add a button that directs them to request
-  //     const pos = res.data.groups.map(g => g.name).indexOf(groupInfo.name);
-  //     console.log('this is group name: ', groupInfo.name)
-  //     console.log('this is pos: ', res.data.groups.map(g => g.name))
-  //     if (
-  //       // admin and in group
-  //       res.data.groups.filter(g => g.name === groupInfo.name).length > 0
-  //       &&
-  //       res.data.groups[pos]['admin']
-  //       ) {
-  //       setInGroup(true);
-  //       setGroupAdmin(true);
-  //       setUserInfo(res.data);
-  //     }
-  //     else if (
-  //       // not admin but in group
-  //       res.data.groups.filter(g => g.name === groupInfo.name).length > 0
-  //       &&
-  //       !res.data.groups[pos]['admin']
-  //       ) {
-  //         setInGroup(true);
-  //         setUserInfo(res.data);
-  //         // setGroupAdmin(false); //don't think i need this bc redundant
-  //       }
-  //     else {
-  //       // not admin and not in group
-  //       setInGroup(false);
-  //       setUserInfo(res.data);
-  //     }
-  //   })
-  //   .catch((err) => console.log(err))
-  // }, [userID])
-
-
-
+  useEffect((groupID = 1) => {
+    // check if user is in the group AND if they are an admin
+    // if admin, show admin panel
+    // if not admin but in group, show normal view
+    // if not admin and not in group, WHAT DO I SHOW???
+    // SHOW ERROR PAGE in feed and members and add a button that directs them to request
+    const pos = userInfo.groups.map(g => g.id).indexOf(groupID);
+    if (
+      // in group and admin
+      userInfo.groups.filter((g) => g.id === groupID).length > 0
+      && userInfo.groups[pos].admin
+    ) {
+      setInGroup(true);
+      setGroupAdmin(true);
+    } else if (
+      // not admin but in group
+      userInfo.groups.filter((g) => g.id === groupID).length > 0
+      && !userInfo.groups[pos].admin) {
+      setInGroup(true);
+      // setGroupAdmin(false); //don't think i need this bc redundant
+    } else {
+      // not admin and not in group
+      setInGroup(false);
+    }
+  }, [userInfo]);
 
   const [memberRequests, setMemberRequests] = useState(
     [
@@ -158,10 +187,43 @@ function GroupPage({ page, userID, groupID = 1 }) {
     },
   ];
 
-  function onClick() {
+  function handleEditMembers(groupID) {
     console.log('clicked button');
+    please.getOpenGroupRequest(1)
+      .then((results) => {
+        console.log('this is requests: ', results.data)
+        setMemberRequests(results.data);
+      })
+      .catch((err) => console.log(err));
   }
 
+  // admin editing of members
+  function handleMemberStatus(e, status, currentGroup = 1) {
+    console.log(e)
+    console.log('this is status: ', status)
+
+    if (status === 'approve') {
+      please.acceptGroupRequest(currentGroup, e.id)
+        .then(() => please.getGroupInfo(currentGroup))
+        .then((res) => setMembers(res.data.members))
+        .catch((err) => console.log(err));
+    } else if (status === 'deny') {
+      please.denyGroupRequest(currentGroup, e.id)
+        .then(() => please.getGroupInfo(currentGroup))
+        .then((res) => setMembers(res.data.members))
+        .catch((err) => console.log(err));
+    } else if (status === 'adminify') {
+      please.giveMemberAdminStatus(currentGroup, e.id)
+        .then(() => please.getGroupInfo(currentGroup))
+        .then((res) => setMembers(res.data.members))
+        .catch((err) => console.log(err));
+    } else {
+      please.removeGroupMember(currentGroup, e.id)
+        .then(() => please.getGroupInfo(currentGroup))
+        .then((res) => setMembers(res.data.members))
+        .catch((err) => console.log(err));
+    }
+  }
   // hook for handling friendsList modal
   const {
     isOpen: isOpenFriendsList,
@@ -226,7 +288,11 @@ function GroupPage({ page, userID, groupID = 1 }) {
                     <>
                       <Button
                         size="xs"
-                        onClick={() => { setEditing(true); onOpenAdminControl(); }}
+                        onClick={() => {
+                          setEditing(true);
+                          onOpenAdminControl();
+                          handleEditMembers(groupID);
+                        }}
                       >
                         Edit Members
                       </Button>
@@ -237,14 +303,14 @@ function GroupPage({ page, userID, groupID = 1 }) {
                         memberRequests={memberRequests}
                         page={page}
                         editing={editing}
+                        handleMemberStatus={handleMemberStatus}
                       />
                     </>
                   )
                 }
               </Flex>
               {
-                inGroup &&
-                <GroupMemberList members={members} page={page} />
+                inGroup && <GroupMemberList members={members} page={page} />
               }
               {
                 !inGroup
@@ -263,7 +329,7 @@ function GroupPage({ page, userID, groupID = 1 }) {
             <Box p={1} position="relative" overflow-y="auto" h="100%" w="70%">
               {
                 inGroup
-                && <GroupFeed />
+                && <GroupFeed userID={userID} />
               }
               {
                 !inGroup
