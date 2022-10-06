@@ -26,7 +26,7 @@ export const please = {
     }),
 
   // post new user to db
-  addUser: (firstname, lastname, email, aboutme, picture) =>
+  addUser: (firstname, lastname, email, aboutme, picture, banner) =>
     axios({
       url: "/user/add",
       method: "post",
@@ -37,11 +37,12 @@ export const please = {
         email,
         aboutme,
         picture,
+        banner
       },
     }),
 
   // update user info (need all arguments)
-  updateUser: (firstname, lastname, email, aboutme, picture, user_id) =>
+  updateUser: (firstname, lastname, email, aboutme, picture, user_id, banner) =>
     axios({
       url: "/user/update",
       method: "put",
@@ -53,6 +54,7 @@ export const please = {
         aboutme,
         picture,
         user_id,
+        banner
       },
     }),
 
