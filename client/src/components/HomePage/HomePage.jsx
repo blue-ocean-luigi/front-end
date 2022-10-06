@@ -111,8 +111,3 @@ function HomePage() {
 }
 
 export default HomePage;
-
-// should list
-// search, event feed, groups list & friends list,
-
-// need to set up so that i render a list of fiends and a list of groups in the left column, and on click those utilize the context to re render the page based on
