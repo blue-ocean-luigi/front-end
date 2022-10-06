@@ -21,10 +21,22 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  Modal,
   ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Link,
+  HStack,
+  Tabs,
+  TabList,
+  TabPanels,
+  TabPanel,
 } from '@chakra-ui/react';
-import socket from './chatclient';
 import { format } from 'timeago.js';
+import socket from './chatclient';
 
 
 import { UseContextAll } from './ContextAll';
@@ -42,11 +54,7 @@ export default function ChatBar() {
   const messageRef = useRef([]);
   const messageToast = useToast();
   const toastRef = useRef();
-  //console.log(userInfo);
-  //console.log(userFriends);
-  //console.log(userFriends.friendlist);
-
-
+  const { isOpen: modalIsOpen, onOpen: modalOnOpen, onClose: modalOnClose } = useDisclosure();
   const sendChat = (event) => {
     event.preventDefault();
     const message = chatInput.current.value;
@@ -56,8 +64,6 @@ export default function ChatBar() {
       sender_id: userID, // the senders userId
       createdat: Date.now()
     };
-    console.info(sendData.at);
-      // console.log(data);
     setMessageHistory([...messageHistory, sendData])
     please.postMessage(userID, friendID, message);
     socket.emit('message', sendData);
@@ -67,6 +73,8 @@ export default function ChatBar() {
     messageRef.current = messageHistory;
   });
   useEffect(() => {
+    console.log(' the socket is set once');
+    socket.off('messageResponse');
     socket.on('messageResponse', (data) => {
       console.log(data.message);
       if (data.receiver_id === userID) {
@@ -95,25 +103,29 @@ export default function ChatBar() {
   const lastFive = (list) => [...list].reverse().slice(0, 4).reverse();
 
   return (
-    <Box marginBottom="8px" bgColor='primary' position="fixed" bottom="0" left="0" width="100%">
+    <Box
+      marginBottom="8px"
+      bgColor='primary'
+      position="fixed"
+      bottom="0"
+      left="0"
+      width="100%"
+      onClick={(e) => e.preventDefault()}
+    >
       { chatFocus ? (
         <Fade in={isOpen}>
           <Box bgColor="gray.600" borderRadius="md" ml={4} mr={4}>
           <Alert w="100%" status="info" opacity="1.0" p={4} mb={4} borderRadius='md'>
             <Flex w="100%" flexDirection="column">
-              { messageHistory.length ? lastFive(messageHistory).map(msg => (
-                <Box w="100%" mb={4}>
+              { messageHistory.length ? lastFive(messageHistory).map((msg, i) => (
+                <Box w="100%" mb={4} key={i}>
                   <Flex w="100%" >
                     {msg.sender_id === userID ? <Spacer /> : null}
                     <Center minW="25%" maxW="75%">
                       <Alert borderRadius='md' w="100%" p={4} status={msg.sender_id === userID ? 'success' : 'warning'}>
                         <Flex flexDirection="column">
                           <Text>{msg.message}</Text>
-<<<<<<< HEAD
                           <Text as="i">{msg.sender_id === userID ? 'me' /*userInfo.firstname*/ : friendName}, {format(msg.createdat)}</Text>
-=======
-                          <Text as="i">From: {msg.sender_id === userID ? 'me' /*userInfo.firstname*/ : friendName}, at {(new Date(msg.createdat)).toLocaleString()}</Text>
->>>>>>> main
                         </Flex>
                       </Alert>
                     </Center>
@@ -121,7 +133,7 @@ export default function ChatBar() {
                   </Flex>
                 </Box>
               )) : <Text>You have no saved messages with {friendName}</Text> }
-              <Button>View full chat history</Button>
+              <Text>View your chat history from the chat menu!</Text>
             </Flex>
           </Alert>
           </Box>
@@ -149,7 +161,7 @@ export default function ChatBar() {
             <MenuButton ml="4px" mr="4px" as={Button}>Chat Menu</MenuButton>
             <MenuList>
               { userFriends.friendlist ? userFriends.friendlist.map(friend =>
-              <MenuItem onClick={() => {setFriendID(friend.id); setFriendName(friend.firstname); }}>
+              <MenuItem key={friend.id} onClick={() => {setFriendID(friend.id); setFriendName(friend.firstname); }}>
                   <Box w="100%">
                     <Flex>
                       <Avatar src={friend.picture} />
@@ -162,20 +174,63 @@ export default function ChatBar() {
                   </Box>
                 </MenuItem>
               ) : null}
-              <MenuItem>View all chats</MenuItem>
+              <MenuItem><Link onClick={() => modalOnOpen()}>View chats and message history</Link></MenuItem>
             </MenuList>
           </Menu>
         </Flex>
       </Center>
+      <Modal size='full' isCentered isOpen={modalIsOpen} onClose={modalOnClose}>
+        <ModalContent minH="80%" maxW="80%">
+          <ModalHeader>All Your Messages</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Flex w="100%">
+              {/*
+              <Box flexGrow="1" maxW="20%" maxH="calc(80vh)" overflowY="auto">
+              { userFriends.friendlist ? userFriends.friendlist.map(friend =>
+              <Box key={friend.id} onClick={() => {setFriendID(friend.id); setFriendName(friend.firstname); }}>
+                  <Box w="100%">
+                    <Flex>
+                      <Avatar src={friend.picture} />
+                      <Spacer />
+                      <Flex flexDirection="column">
+                        <Text>{friend.firstname}</Text>
+                        <Text as="i">Last thing said</Text>
+                      </Flex>
+                    </Flex>
+                  </Box>
+                </Box>
+              ) : null}
+              </Box>
+              */}
+              <Spacer flexGrow="0.1"/>
+              <Box flexGrow="1" maxW="80%">
+                <Box  w="100%" maxH="calc(80vh)" overflowY="auto" flexDirection="column">
+                  { messageHistory.length ? messageHistory.map((msg, i) => (
+                    <Box w="100%" mb={4} key={i}>
+                      <Flex w="100%" >
+                        {msg.sender_id === userID ? <Spacer /> : null}
+                        <Center minW="25%" maxW="75%">
+                          <Alert borderRadius='md' w="100%" p={4} status={msg.sender_id === userID ? 'success' : 'warning'}>
+                            <Flex flexDirection="column">
+                              <Text>{msg.message}</Text>
+                              <Text as="i">{msg.sender_id === userID ? 'me' /*userInfo.firstname*/ : friendName}, {format(msg.createdat)}</Text>
+                            </Flex>
+                          </Alert>
+                        </Center>
+                        {msg.sender_id === userID ? null: <Spacer />}
+                      </Flex>
+                    </Box>
+                  )) : <Text>You have no saved messages with {friendName}</Text> }
+                </Box>
+              </Box>
+            </Flex>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Box>
   )
 }
 
 function AllMessages () {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [overlay, setOverlay] = React.useState(
-  <Modal isCentered isOpen={isOpen}
-  return (
-    <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px) hue-rotate(90deg)" />
-  );
 }
