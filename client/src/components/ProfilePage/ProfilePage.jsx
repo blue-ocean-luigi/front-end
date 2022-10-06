@@ -83,6 +83,7 @@ function ProfilePage() {
 export default ProfilePage;
 
 /*
+
 color mode switcher
 color mode script
 
@@ -94,5 +95,8 @@ when viewing other profile page, banner buttons should show:
   if friends: friends (checkmark)
   if not friends: add as friend
 
- update banner should utilize axios request for update user, just pass in all the redundant information, plus the new url
+update banner should utilize axios request for update user, just pass in all the redundant information, plus the new url
+
+need to somehow re render the profile page (maybe call one of the context states?) in order to get the friends list to render updated count
+
 */

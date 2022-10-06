@@ -8,15 +8,6 @@ import {
   Image,
   Button,
   Icon,
-  Avatar,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
 } from '@chakra-ui/react';
 import { MdDone, MdThumbUp, MdThumbDown } from 'react-icons/md'
 import { UseContextAll } from '../ContextAll';

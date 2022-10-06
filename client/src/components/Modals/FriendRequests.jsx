@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Center,
   Flex,
@@ -22,10 +22,16 @@ import FriendRequestCard from '../ProfilePage/FriendRequestCard.jsx';
 // firstname lastname id picture
 function FriendRequests(requests) {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  let [reqCount, setReqCount] = useState(0);
+
+  useEffect(()=>{
+    setReqCount(requests.requests.length);
+  }, []);
+
   return (
     <>
       <Button onClick={onOpen}>
-        Friend Requests: {requests.requests.length || 0}
+        Friend Requests: {reqCount}
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
