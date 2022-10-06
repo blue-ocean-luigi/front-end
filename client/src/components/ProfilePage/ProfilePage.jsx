@@ -60,7 +60,7 @@ function ProfilePage() {
         </Button>
         <Center w="20vw" h="100%" position="relative">
           <Image src={userInfo.picture === undefined ? userInfo.picture : defaultProfilePic} boxSize="15vw" borderRadius="full" position="absolute" top="calc((100% - 13vw) / 2)" />
-          <Text zIndex="2" position="absolute" left="0" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="white" transform="translateX(20%)" border="1px solid red">{`${userInfo.firstname} ${userInfo.lastname}`}</Text>
+          <Text zIndex="2" position="absolute" left="0" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="white" transform="translateX(20%)">{`${userInfo.firstname} ${userInfo.lastname}`}</Text>
         </Center>
       </Box>
       <Box minHeight="20vh" w="80%" border="1px solid gray" mb="1em">
