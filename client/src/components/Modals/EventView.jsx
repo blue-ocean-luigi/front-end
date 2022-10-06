@@ -20,15 +20,24 @@ import {
 } from '@chakra-ui/react';
 import CommentList from '../Comments/CommentList';
 import { please } from '../../request';
+import { UseContextAll } from '../ContextAll';
 
 function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps }) {
   console.log('DEBUG this is eventinfo: ', eventInfo)
+  const { userID } = UseContextAll();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [comment, setComment] = useState('');
+  const [going, setGoing] = useState(rsvps.filter(r => r.user_id === userID).length > 0);
 
+  console.log('DEBUG this is rsvps: ', rsvps)
+  console.log('DEBUG this is going: ', rsvps.filter(r => r.user_id === userID).length > 0)
 
   function sendRSVP() {
-    console.log('send RSVP');
+    please.createRsvp({ post_id: eventInfo.post_id, user_id: userID, paid: false })
+      .then((res) => please.getRsvp(eventInfo.post_id))
+      .then((res) => setRsvps(res.data))
+      .then((res) => setGoing(true))
+      .catch((err) => console.log(err))
   }
 
   function handleInvite() {
@@ -75,7 +84,13 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps }) {
             </Tooltip>
           </Stack>
           <ModalFooter>
-            <Button colorScheme="blue" onClick={() => sendRSVP()}> RSVP </Button>
+            { !going
+              && <Button colorScheme="blue" onClick={() => sendRSVP()}> RSVP </Button>
+            }
+            {
+              going
+              && <Badge colorScheme="blue">Going</Badge>
+            }
             <Button colorScheme="ghost" onClick={() => handleInvite()}> Invite </Button>
           </ModalFooter>
           <CommentList comments={eventInfo.comments} />

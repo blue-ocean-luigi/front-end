@@ -20,6 +20,7 @@ function Post({post, updateFeed}) {
   const { userID, userInfo } = UseContextAll();
   const [rsvps, setRsvps] = useState([]);
 
+
   // get number of rsvps
   useEffect(() => {
     please.getRsvp(post.post_id)

@@ -98,7 +98,7 @@ class EventItem extends React.Component {
   }
 
   render() {
-    const { event, userID, updateFeed, rsvps } = this.props;
+    const { event, userID, updateFeed, rsvps, setRsvps, going, setGoing } = this.props;
     const { comment, likes, comments } = this.state;
     // console.log('in event item and rendering: ', event);
 
@@ -152,7 +152,7 @@ class EventItem extends React.Component {
             </Tooltip>
           </Stack>
         </HStack>
-        <EventView eventInfo={event} handleLike={this.handleLike} sendComment={this.sendComment} rsvps={rsvps} />
+        <EventView eventInfo={event} handleLike={this.handleLike} sendComment={this.sendComment} rsvps={rsvps} setRsvps={setRsvps} />
         <Box>
           {/* <CommentList comments={event.comments} /> */}
           <CommentList comments={comments} />
