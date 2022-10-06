@@ -1,60 +1,96 @@
 import React, { useState, useEffect } from 'react';
+import {
+  ChakraProvider,
+  Center,
+  Flex,
+  Box,
+  Text,
+  Heading,
+  Image,
+  Button,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { MdBuild , MdInsertPhoto } from "react-icons/md"
+import { UseContextAll } from '../ContextAll';
 import './ProfilePage.css';
+import FriendRequests from '../Modals/FriendRequests.jsx'
 import FriendsList from "../FriendsListSubcomponents/FriendsList.jsx"
+import { please } from "../../request.jsx"
 
 function ProfilePage() {
-// user will actually come from context hook
+  const defaultBackgroundImage = 'https://news.clas.ufl.edu/wp-content/uploads/sites/4/2020/06/AdobeStock_345118478-copy-1440x961-1-e1613512040649.jpg';
+  const defaultProfilePic = 'https://i.pinimg.com/736x/50/d8/03/50d803bda6ba43aaa776d0e243f03e7b.jpg';
 
-let backgroundImage = 'https://news.clas.ufl.edu/wp-content/uploads/sites/4/2020/06/AdobeStock_345118478-copy-1440x961-1-e1613512040649.jpg';
+  const { isOpen: isOpenFriendRequests,
+    onOpen: onOpenFriendRequests,
+    onClose: onCloseFriendRequests
+  } = useDisclosure();
 
-let userbio = 'This is an example bio that i am using just to fill space, i could use a lorem ipsum but if i did i wouldnt be able to talk about guiena pigs would i?';
+  const {
+    userInfo,
+    userGroups,
+    userFriends,
+    homePosts,
+  } = UseContextAll();
 
-let friends = [
-  { name: 'bell pepper', profilePicture: 'https://homefrontfarmers.com/wp-content/uploads/bb-plugin/cache/hff-changing-peppers-sm-1500x1001-panorama.jpg' },
-  { name: 'cucumber', profilePicture: 'https://www.plantgrower.org/uploads/6/5/5/4/65545169/published/cucumber-slices.jpg?1516496438'},
-  { name: 'carrot', profilePicture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrtYa4VW-7zI-UL564n3GZub9m6mK1L6aibg&usqp=CAU' },
-  { name: 'romaine', profilePicture: 'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/319725_1100-800x825.jpg' },
-  { name: 'tomato', profilePicture: 'https://www.willhiteseed.com/assets/images/products/0315-large.jpg' }];
+  const [banner, setBanner] = useState('');
 
-  const testobjgroup = [
-    { groupName: 'no girls allowed', description: 'a super cool super special group with none of those icky girls' },
-    { groupName: 'cat owners', description: 'we are a group of people who own cats, not just cat, but cats... lots of cats. its not an addiction, its not a problem, its okay this is fine.' },
-  ];
+  useEffect(() => {
+    //  set banner to the one in db if it exists, otherwise use def
+    let banner = userInfo.banner ? userInfo.banner : defaultBackgroundImage;
+    setBanner(banner);
+  }, []);
+
+  // console.log(userInfo);
+  // console.log(userFriends);
 
   return (
-    <div className="profile_page_container">
-      <div
-        className="pp_banner_container"
-        style={{ backgroundImage: `url(${backgroundImage})`,
-          backgroundPosition: 'center',
-          backgroundSize: 'cover',
-        }}
-        alt="profile banner"
-      >
-        <img className="pp_profile_pic" src="https://i.pinimg.com/736x/50/d8/03/50d803bda6ba43aaa776d0e243f03e7b.jpg" alt="profile icon" />
-        {/* <img className="pp_profile_banner" src="https://news.clas.ufl.edu/wp-content/uploads/sites/4/2020/06/AdobeStock_345118478-copy-1440x961-1-e1613512040649.jpg" alt="profile banner" /> */}
-      </div>
-      <div className="pp_bio_container">
-        <h3 className="pp_bio_title">bio: </h3>
-        <p className="pp_bio_text">{`${userbio}`}</p>
-      </div>
-      <div className="pp_friend_group_container">
-        <div className="pp_friends_container">
-          <FriendsList friends={friends} />
-        </div>
-        <div className="pp_groups_container">
-          {testobjgroup.map((group, i) => (
-            <span
-              key={i}
-              className="pp_group_name"
-              onClick={()=>console.log('clicked', group.groupName)}>
-              {group.groupName}
-            </span>
-            )) }
-        </div>
-      </div>
-    </div>
+    <Center display="flex" flexDirection="column">
+      <Box backgroundImage={`url(${banner})`} backgroundSize="cover" backgroundPosition="center" w="80%" h="40vh" minHeight="20vw" position="relative" m="1em">
+        <Box position="absolute" right="5" top="5%" zIndex="2" cursor="pointer">
+          <FriendRequests
+            requests={userFriends.requestlist}
+            isOpen={isOpenFriendRequests}
+            onOpen={onOpenFriendRequests}
+          />
+        </Box>
+        {/* </Button> */}
+        <Button rightIcon={<MdInsertPhoto />} position="absolute" right="5" bottom="5%">
+          Update banner
+        </Button>
+        <Center w="20vw" h="100%" position="relative">
+          <Image src={ userInfo.picture || defaultProfilePic} boxSize="15vw" borderRadius="full" position="absolute" top="calc((100% - 13vw) / 2)" />
+          <Text zIndex="2" position="absolute" left="5%" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="white" transform="translate-X(-50%)">{`${userInfo.firstname} ${userInfo.lastname}`}</Text>
+        </Center>
+      </Box>
+      <Box minHeight="20vh" w="80%" border="1px solid gray" mb="1em">
+        <Text fontSize="2em">About Me</Text>
+        <Text fontSize="1.2em">{userInfo.aboutme || 'This user has not filled out their bio :('}</Text>
+      </Box>
+      <Flex flexDirection="row" w="80%" justifyContent="space-evenly">
+        <Box w="50%" h="20vh" overflowY="auto" border="1px solid red" mr="0.5em">
+          {userFriends.length > 0 ? <FriendsList friends={userFriends} />
+            : <Text>Add a friend!</Text>}
+        </Box>
+        <Box w="50%" h="20vh" overflowY="auto" border="1px solid red" ml="0.5em">
+          {/* <GroupList /> */}
+          <Text>GROUPS SUBCOMPONENT HERE</Text>
+        </Box>
+      </Flex>
+    </Center>
   );
 }
 
 export default ProfilePage;
+
+//color mode switcher
+//color mode script
+
+//need to add friend requests modal when new button clicked
+//need to handle change of profile banner
+
+//need to change from using userid from userinfo to currentuserid from context and do axios requests (cross check for current user id to see if its the current users profile or a friends profile)
+
+//when viewing other profile page, banner buttons should show:
+  //if friends: friends (checkmark)
+  //if not friends: add as friend

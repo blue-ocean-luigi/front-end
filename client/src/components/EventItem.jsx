@@ -13,18 +13,19 @@ import {
 } from '@chakra-ui/react';
 import EventView from './Modals/EventView';
 import CommentList from './Comments/CommentList';
+import { UseContextAll } from './ContextAll';
 import { please } from '../request';
 
 class EventItem extends React.Component {
   constructor(props) {
     super(props);
     this.handleLike = this.handleLike.bind(this);
+    this.sendComment = this.sendComment.bind(this);
     this.state = {
       comment: '',
       comments: props.event.comments,
       likes: props.event.postlikes.length,
       justLiked: false,
-      sendComment: props.event.sendComment,
     };
   }
 
@@ -59,13 +60,25 @@ class EventItem extends React.Component {
   }
 
 
+  sendComment(comment) {
+    const { event, userID } = this.props;
+
+    please.createComment({ post_id: event.post_id, user_id: userID, message: comment })
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          comment: '',
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   render() {
+    const { event, userID } = this.props;
     const { comment, likes, comments } = this.state;
-    const { event, userID, userInfo, sendComment } = this.props;
-
-
-    console.log('this is event props: ', event)
+    console.log('in event item and rendering: ', event);
 
     return (
       // eslint-disable-next-line max-len
@@ -123,8 +136,7 @@ class EventItem extends React.Component {
         />
         <Button
           colorScheme="blue"
-          onClick={() => {console.log('hello')
-          }}
+          onClick={() => this.sendComment(comment)}
         >
           Post
         </Button>

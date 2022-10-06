@@ -9,9 +9,14 @@ import {
 import { UseContextAll } from './ContextAll';
 import { please } from '../request';
 
-
-function Welcome({setMainPage}) {
-  const { setUserInfo, userInfo, setUserID, setUserGroups, setUserFriends } = UseContextAll();
+function Welcome() {
+  const {
+    setUserInfo,
+    userInfo,
+    setUserID,
+    setUserGroups,
+    setUserFriends,
+    setMainPage} = UseContextAll();
   const firstname = useRef();
   const lastname = useRef();
   const photoURL = useRef();
@@ -28,7 +33,8 @@ function Welcome({setMainPage}) {
     };
     console.log(data);
     please.addUser(firstname.current.value, lastname.current.value, userInfo.email, '').then(d => { setUserInfo({...userInfo, id: d.data.id}); setUserID(d.data.id);}).then(() => setMainPage('home'));
-  }
+  };
+
   return (
     <div>
       <h1>Welcome to Community Crossing</h1>

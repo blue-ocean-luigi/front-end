@@ -17,6 +17,7 @@ import FriendsList from '../FriendsListSubcomponents/FriendsList';
 import HomeFeedPost from './post/HomeFeedPost';
 import NewUserFeed from './NewUserFeed';
 import ReturnUserFeed from './ReturnUserFeed';
+import GroupList from '../GroupList/GroupList';
 import './HomePage.css';
 import { please } from '../../request';
 import { UseContextAll } from '../ContextAll';
@@ -72,23 +73,7 @@ function HomePage() {
               />
             </Box>
 
-            <Box ml={1} align="center">
-              <Heading mb={1} fontSize="xl">
-                Your Groups
-              </Heading>
-              {userGroups.map((group, i) => (
-                <Box
-                  p={1}
-                  align="left"
-                  key= {i}
-                  onClick={()=>console.log('clicked', group.name)}
-                >
-                  <Text>
-                    {group.name}
-                  </Text>
-                </Box>
-              )) }
-            </Box>
+            <GroupList groups={userGroups} />
             <FriendsList friends={userFriends.friendlist} />
           </Box>
           {newUser ? <NewUserFeed /> : <ReturnUserFeed homePosts={homePosts} />}
