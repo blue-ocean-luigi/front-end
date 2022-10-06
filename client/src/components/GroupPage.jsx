@@ -82,6 +82,22 @@ function GroupPage() {
       .catch((err) => console.log(err));
   }
 
+  // GROUP FEED
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    please.getGroupPosts(currentGroupID)
+      .then((res) => setEvents(res.data))
+      .catch((err) => console.log(err));
+  }, [currentGroupID]);
+
+  function updateFeed() {
+    please.getGroupPosts(currentGroupID)
+      .then((res) => setEvents(res.data))
+      .catch((err) => console.log(err));
+  }
+
+
   // admin editing of members
   function handleMemberStatus(e, status) {
     console.log('DEBUG made it into handleMemberStatus')
@@ -172,6 +188,7 @@ function GroupPage() {
                     <InviteFriends
                       onClose={onCloseFriendsList}
                       isOpen={isOpenFriendsList}
+                      members={members}
                     />
                   </>
                   )
@@ -223,7 +240,7 @@ function GroupPage() {
             <Box p={1} position="relative" overflow-y="auto" h="100%" w="70%">
               {
                 inGroup
-                && <GroupFeed userID={userID} groupID={currentGroupID} />
+                && <GroupFeed userID={userID} groupID={currentGroupID} events={events} updateFeed={updateFeed}/>
               }
               {
                 !inGroup
