@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Image, Grid, Text, VStack } from '@chakra-ui/react';
+import { UseContextAll } from '../ContextAll';
 
 function SearchCard({id, name, picture}) {
   // console.log(id, name, picture)
-  return (
+  const { mainPage, setMainPage, setCurrentUserID } = UseContextAll();
 
+  function handleSelect() {
+    console.log('connect to friend profile or group page')
+    // setCurrentUserID(friend.id);
+    // setMainPage('profile');
+  }
+  return (
 
     <Box>
       <Grid
@@ -14,7 +21,7 @@ function SearchCard({id, name, picture}) {
           height: '70px',
           overflow: 'hidden'
         }}>
-        <Box>
+        <Box onClick={() => handleSelect()}>
           <Image
             src={picture}
             sx={{
