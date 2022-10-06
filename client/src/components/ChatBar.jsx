@@ -55,6 +55,7 @@ export default function ChatBar() {
   const messageToast = useToast();
   const toastRef = useRef();
   const { isOpen: modalIsOpen, onOpen: modalOnOpen, onClose: modalOnClose } = useDisclosure();
+  const chatHistoryRef = useRef();
   const sendChat = (event) => {
     event.preventDefault();
     const message = chatInput.current.value;
@@ -99,6 +100,12 @@ export default function ChatBar() {
   }, [userID]);
   useEffect(() => {
     please.getMessages(userID, friendID).then(res =>setMessageHistory(res.data))
+    //chatHistoryRef.current.scrollTo({top: chatHistoryRef.current.scrollHeight});
+    if (chatHistoryRef.current) {
+      setTimeout(() => {
+        chatHistoryRef.current.scrollTo({top: chatHistoryRef.current.scrollHeight});
+      }, 100);
+    }
   }, [friendID]);
   const lastFive = (list) => [...list].reverse().slice(0, 4).reverse();
 
@@ -185,10 +192,9 @@ export default function ChatBar() {
           <ModalCloseButton />
           <ModalBody>
             <Flex w="100%">
-              {/*
               <Box flexGrow="1" maxW="20%" maxH="calc(80vh)" overflowY="auto">
               { userFriends.friendlist ? userFriends.friendlist.map(friend =>
-              <Box key={friend.id} onClick={() => {setFriendID(friend.id); setFriendName(friend.firstname); }}>
+              <Box as={Button} minW="150px" minH="60px" key={friend.id} onClick={() => {setFriendID(friend.id); setFriendName(friend.firstname); }}>
                   <Box w="100%">
                     <Flex>
                       <Avatar src={friend.picture} />
@@ -202,10 +208,9 @@ export default function ChatBar() {
                 </Box>
               ) : null}
               </Box>
-              */}
               <Spacer flexGrow="0.1"/>
               <Box flexGrow="1" maxW="80%">
-                <Box  w="100%" maxH="calc(80vh)" overflowY="auto" flexDirection="column">
+                <Box  w="100%" maxH="calc(80vh)" ref={chatHistoryRef} overflowY="auto" flexDirection="column">
                   { messageHistory.length ? messageHistory.map((msg, i) => (
                     <Box w="100%" mb={4} key={i}>
                       <Flex w="100%" >
