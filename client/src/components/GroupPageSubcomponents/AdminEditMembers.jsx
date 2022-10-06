@@ -22,7 +22,7 @@ function AdminEditMembers({onClose, isOpen, members, memberRequests, editing, ha
         <ModalHeader />
         <ModalCloseButton />
         <ModalBody>
-          <IncomingGroupRequests memberRequests={memberRequests} editing={editing} />
+          <IncomingGroupRequests memberRequests={memberRequests} editing={editing} handleMemberStatus={handleMemberStatus}/>
           <Divider mt={8} mb={4} />
           <GroupMemberList members={members} editing={editing} handleMemberStatus={handleMemberStatus} isGroupAdmin={isGroupAdmin} />
         </ModalBody>

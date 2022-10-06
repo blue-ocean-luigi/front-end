@@ -30,12 +30,9 @@ function GroupPage() {
     setMainPage,
     currentGroupID,
   } = UseContextAll();
-  console.log(userInfo);
+
   // state to store all group info for group page
   const [groupInfo, setGroupInfo] = useState({});
-
-  // edit these once verify on context
-  // const [userInfo, setUserInfo] = useState({});
   const [members, setMembers] = useState([]);
   const [isGroupAdmin, setGroupAdmin] = useState(false);
   const [inGroup, setInGroup] = useState(false);
@@ -52,42 +49,30 @@ function GroupPage() {
   }, [currentGroupID]);
 
   // on load of group, check if the current user gets admin control
+
   useEffect(() => {
-    // check if user is in the group AND if they are an admin
-    // if admin, show admin panel
-    // if not admin but in group, show normal view
-    // if not admin and not in group, WHAT DO I SHOW???
-    // SHOW ERROR PAGE in feed and members and add a button that directs them to request
     const pos = userGroups.map(g => g.id).indexOf(currentGroupID);
     if (
       // in group and admin
       userGroups.filter((g) => g.id === currentGroupID).length > 0
       && userGroups[pos].admin
     ) {
+      // console.log('DEBUG in group AND admin')
       setInGroup(true);
       setGroupAdmin(true);
     } else if (
       // not admin but in group
       userGroups.filter((g) => g.id === currentGroupID).length > 0
       && !userGroups[pos].admin) {
+      // console.log('DEBUG in group but not admin here is userInfo: ', userInfo)
       setInGroup(true);
-      // setGroupAdmin(false); //don't think i need this bc redundant
+      setGroupAdmin(false);
     } else {
       // not admin and not in group
+      // console.log('DEBUG not in group nor admin')
       setInGroup(false);
     }
   }, [userGroups, currentGroupID]);
-
-
-
-  const testFriendList = [
-    {
-      name: 'apple', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'orange', profilePicture: "https://bit.ly/dan-abramov"
-    },
-  ];
 
   function handleEditMembers() {
     please.getOpenGroupRequest(currentGroupID)
@@ -99,9 +84,7 @@ function GroupPage() {
 
   // admin editing of members
   function handleMemberStatus(e, status) {
-    // console.log(e);
-    // console.log('this is status: ', status);
-
+    console.log('DEBUG made it into handleMemberStatus')
     if (status === 'approve') {
       please.acceptGroupRequest(currentGroupID, e.id)
         .then(() => please.getGroupInfo(currentGroupID))
@@ -110,7 +93,12 @@ function GroupPage() {
     } else if (status === 'deny') {
       please.denyGroupRequest(currentGroupID, e.id)
         .then(() => please.getGroupInfo(currentGroupID))
-        .then((res) => setMembers(res.data.members))
+        .then((res) => {
+          setMembers(res.data.members);
+          const removedPos = members.map((m) => m.id).indexOf(e.id);
+          const updatedReq = members.splice(removedPos, 1);
+          setMemberRequests(updatedReq);
+        })
         .catch((err) => console.log(err));
     } else if (status === 'adminify') {
       please.giveMemberAdminStatus(currentGroupID, e.id)
@@ -118,10 +106,11 @@ function GroupPage() {
         .then((res) => setMembers(res.data.members))
         .catch((err) => console.log(err));
     } else {
+      console.log('DEBUG preparing to remove');
       please.removeGroupMember(currentGroupID, e.id)
         .then(() => please.getGroupInfo(currentGroupID))
         .then((res) => setMembers(res.data.members))
-        .catch((err) => console.log(err));
+        .catch((err) => console.log('DEBUG did not deny:', err))
     }
   }
   // hook for handling friendsList modal

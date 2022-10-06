@@ -7,7 +7,7 @@ import {
 import GroupMember from './GroupMember';
 import AdminEditMembers from './AdminEditMembers';
 
-function IncomingGroupRequests({memberRequests, editing}) {
+function IncomingGroupRequests({memberRequests, editing, handleMemberStatus}) {
 
   const [isGroupRequest, setIsGroupRequest] = useState(true);
 
@@ -22,6 +22,7 @@ function IncomingGroupRequests({memberRequests, editing}) {
             member={m}
             editing={editing}
             isGroupRequest={isGroupRequest}
+            handleMemberStatus={handleMemberStatus}
             key={i}
           />
         )) : 'No group requests'
