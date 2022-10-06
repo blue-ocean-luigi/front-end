@@ -45,6 +45,18 @@ module.exports = {
     }
   },
 
+
+  getComment: async (req, res) => {
+    const post_id = req.params.post_id
+    try {
+      const comments = await model.getComment(post_id);
+      res.status(200).send(comments);
+    } catch (err) {
+      console.log(err);
+      res.sendStatus(404);
+    }
+  },
+
   createComment: async (req, res) => {
     try {
       const comment_id = await model.createComment(req.body);
@@ -281,6 +293,15 @@ module.exports = {
     } catch (err) {
       console.log(err);
       res.sendStatus(400);
+    }
+  },
+  denyGroupRequest: async (req, res) => {
+    try {
+      await model.denyGroupRequest(req.params);
+      res.sendStatus(200);
+    } catch (err) {
+      console.log(err);
+      res.sendStatus(400)
     }
   },
   addMemberToGroup: async (req, res) => {

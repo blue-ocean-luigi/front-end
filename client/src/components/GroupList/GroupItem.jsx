@@ -7,9 +7,22 @@ import {
   Button,
   HStack,
 } from '@chakra-ui/react';
+import { UseContextAll } from '../ContextAll';
 
-function GroupItem({ group, page }) {
+function GroupItem({ group }) {
   console.log(group);
+  const {
+    setCurrentGroupID,
+    setMainPage,
+  } = UseContextAll();
+
+  // on click of group, go to group page
+  function handleSelect() {
+    console.log(group.id);
+    setCurrentGroupID(group.id);
+    setMainPage('group');
+  }
+
   return (
     <Box
       boxShadow="sm"
@@ -18,7 +31,7 @@ function GroupItem({ group, page }) {
       borderWidth="1px"
     >
       <HStack justifyContent="space-between" p={1}>
-        <Flex justifyContent="left">
+        <Flex justifyContent="left" onClick={() => handleSelect()}>
           <Image
             borderRadius="full"
             boxSize="80px"

@@ -3,26 +3,39 @@ import { Box } from '@chakra-ui/react';
 import './HomeFeedPost.css';
 import PostItem from '../../PostItem';
 import EventItem from '../../EventItem';
+import { UseContextAll } from '../../ContextAll';
+import { please } from '../../../request';
 
-function Post({post}) {
+function Post({post, sendComment}) {
+  // console.log('this is post')
+  // function sendComment(comment) {
+  //   console.log('in send comment here is the big object: ', comment)
+  //   // send post request
+  //   please.createComment(comment)
+  //     // getPostComments will be a new query from Brian
+  //     .then(() => console.log('successfully posted comment'))
+  //     .catch((err) => console.log(err));
+  // }
+
+  // TODO uncomment the context stuff once we get it working
+  const { userID, userInfo } = UseContextAll();
   return (
     <Box mr={4}>
       {
       post.isevent ? (
-        <EventItem event={post} />
-        // <>
-        //   <img className="hp_post_image" src="https://i.pinimg.com/originals/42/90/35/429035c30c3e0aa7169168a93fdbe551.jpg" alt="poster" />
-        //   <p className="hp_post_name">{post.userName}</p>
-        //   <p className="hp_post_content">{post.content}</p>
-        //   <span className="hp_post_date">date</span>
-        // </>
+        <EventItem
+          event={post}
+          userID={userID}
+          userInfo={userInfo}
+          sendComment={sendComment}
+        />
       ) : (
-        <PostItem post={post} />
-        // <>
-        //   <img className="hp_post_image" src="https://i.pinimg.com/originals/42/90/35/429035c30c3e0aa7169168a93fdbe551.jpg" alt="poster" />
-        //   <p className="hp_post_name">{post.groupName}</p>
-        //   <p className="hp_post_content">{post.description}</p>
-        // </>
+        <PostItem
+          post={post}
+          userID={userID}
+          userInfo={userInfo}
+          sendComment={sendComment}
+        />
       )
       }
     </Box>
