@@ -159,16 +159,23 @@ function GroupPage() {
               p={1}
             >
               <Flex mb={1} justifyContent="space-between">
-                <Button
-                  size="xs"
-                  onClick={onOpenFriendsList}
-                >
-                  Invite your friends
-                </Button>
-                <InviteFriends
-                  onClose={onCloseFriendsList}
-                  isOpen={isOpenFriendsList}
-                />
+                {
+                  inGroup
+                  && (
+                  <>
+                    <Button
+                      size="xs"
+                      onClick={onOpenFriendsList}
+                    >
+                      Invite your friends
+                    </Button>
+                    <InviteFriends
+                      onClose={onCloseFriendsList}
+                      isOpen={isOpenFriendsList}
+                    />
+                  </>
+                  )
+                }
                 {
                   isGroupAdmin
                   && (
