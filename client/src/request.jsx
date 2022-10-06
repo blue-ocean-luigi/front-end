@@ -128,7 +128,7 @@ export const please = {
     }),
 
   // create a new group
-  createNewGroup: (user_id, name, about, state, city, zip) =>
+  createNewGroup: (user_id, name, about, state, city, zip, picture) =>
     axios({
       url: "/groups/create",
       method: "post",
@@ -140,6 +140,7 @@ export const please = {
         city,
         zip,
         user_id,
+        picture
       },
     }),
 
@@ -306,6 +307,14 @@ export const please = {
     axios({
       url: `/rsvp/${post_id}&${user_id}`,
       method: "delete",
+      baseURL: basePath,
+    }),
+
+  // search for people and group with a term
+  searchPeopleAndGroups: (term) =>
+    axios({
+      url: `/search/${term}`,
+      method: "get",
       baseURL: basePath,
     }),
 };
