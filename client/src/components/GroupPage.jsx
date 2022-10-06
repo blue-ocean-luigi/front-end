@@ -143,53 +143,11 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
     {
       name: 'orange', profilePicture: "https://bit.ly/dan-abramov"
     },
-    {
-      name: 'banana', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'space shuttle', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'pepper', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'salt', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'grape', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'pear', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'apple1', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'orange1', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'banana1', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'space shuttle1', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'pepper1', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'salt1', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'grape1', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'pear1', profilePicture: "https://bit.ly/dan-abramov"
-    },
   ];
 
   function handleEditMembers(groupID) {
     console.log('clicked button');
-    please.getOpenGroupRequest(1)
+    please.getOpenGroupRequest(groupID)
       .then((results) => {
         console.log('this is requests: ', results.data)
         setMemberRequests(results.data);
@@ -304,6 +262,7 @@ function GroupPage({ page, groupID = 1, userID=1 }) {
                         page={page}
                         editing={editing}
                         handleMemberStatus={handleMemberStatus}
+                        isGroupAdmin={isGroupAdmin}
                       />
                     </>
                   )

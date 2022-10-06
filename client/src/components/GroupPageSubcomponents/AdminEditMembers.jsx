@@ -14,7 +14,7 @@ import IncomingGroupRequests from './IncomingGroupRequests';
 import GroupMemberList from '../GroupPageSubcomponents/GroupMemberList';
 
 // TODO: connect to GET requests
-function AdminEditMembers({onClose, isOpen, members, memberRequests, page, editing, handleMemberStatus}) {
+function AdminEditMembers({onClose, isOpen, members, memberRequests, page, editing, handleMemberStatus, isGroupAdmin}) {
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered scrollBehavior="inside" size="lg">
       <ModalOverlay />
@@ -24,7 +24,7 @@ function AdminEditMembers({onClose, isOpen, members, memberRequests, page, editi
         <ModalBody>
           <IncomingGroupRequests memberRequests={memberRequests} page={page} editing={editing} />
           <Divider mt={8} mb={4} />
-          <GroupMemberList members={members} page={page} editing={editing} handleMemberStatus={handleMemberStatus} />
+          <GroupMemberList members={members} page={page} editing={editing} handleMemberStatus={handleMemberStatus} isGroupAdmin={isGroupAdmin} />
         </ModalBody>
         <ModalFooter>
           <Button onClick={onClose}>Close</Button>
