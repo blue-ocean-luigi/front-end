@@ -92,4 +92,9 @@ update banner should utilize axios request for update user, just pass in all the
 
 need to somehow re render the profile page (maybe call one of the context states?) in order to get the friends list to render updated count
 
+        <InputGroup position="absolute" r="5" b="5%" w="15vw">
+          <InputLeftElement children={<MdInsertPhoto />} />
+          <Input type="file"  onChange={(e)=>console.log(e.target)} />
+        </InputGroup>
+
 */
