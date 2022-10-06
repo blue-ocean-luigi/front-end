@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   ChakraProvider,
   Center,
@@ -40,12 +41,31 @@ function ProfilePage() {
     setBanner(currBanner);
   }, []);
 
+  const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
+
+  function handlePhoto(e) {
+    const body = new FormData();
+    body.set('key', IMGBB_API_KEY);
+    body.append('image', e.target.files[0]);
+
+    axios({
+      method: 'post',
+      url: 'https://api.imgbb.com/1/upload',
+      data: body,
+    })
+      .then((response) => {
+        console.log(response.data.data.display_url);
+        setBanner(response.data.data.display_url);
+        // setPostPhoto(response.data.data.display_url);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   function handleBannerClick() {
     document.getElementById('ban_up').click();
   }
-
-  // console.log(userInfo);
-  // console.log(userFriends);
 
   return (
     <Center display="flex" flexDirection="column">
@@ -56,7 +76,7 @@ function ProfilePage() {
           />
         </Box>
         <InputGroup w="15vw" position="absolute" right="5" bottom="5%">
-          <Input type="file" id="ban_up" display="none" />
+          <Input type="file" id="ban_up" display="none" onChange={(e) => { handlePhoto(e); }} />
           <Button position="absolute" right="0" bottom="5%" rightIcon={<MdInsertPhoto />}onClick={(e)=>handleBannerClick(e)}>Update Banner</Button>
         </InputGroup>
         <Center w="20vw" h="100%" position="relative">
