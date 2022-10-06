@@ -10,6 +10,7 @@ import {
   ButtonGroup,
 } from '@chakra-ui/react';
 import { please } from '../../request';
+import { UseContextAll } from '../ContextAll';
 
 // TODO: Sort group member list such that admins show up at the top of the member list
 
@@ -34,7 +35,12 @@ function onEdit(e) {
 
 
 
-function GroupMember({ member, page, editing, isGroupRequest, handleMemberStatus}) {
+function GroupMember({ member, editing, isGroupRequest, handleMemberStatus}) {
+  const {
+    mainPage,
+    setMainPage,
+    setCurrentUserID
+  } = UseContextAll();
   return (
     <Box
       boxShadow="sm"
@@ -74,7 +80,7 @@ function GroupMember({ member, page, editing, isGroupRequest, handleMemberStatus
         </Flex>
         { !isGroupRequest
           && member.admin
-          && page === 'group'
+          && mainPage === 'group'
           && editing
           && (
           <Flex p={1}>
@@ -85,7 +91,7 @@ function GroupMember({ member, page, editing, isGroupRequest, handleMemberStatus
           ) }
         { !isGroupRequest
           && !member.admin
-          && page === 'group'
+          && mainPage === 'group'
           && editing
           && (
           <Flex p={1}>
@@ -96,7 +102,7 @@ function GroupMember({ member, page, editing, isGroupRequest, handleMemberStatus
           </Flex>
           ) }
         { isGroupRequest
-          && page === 'group'
+          && mainPage === 'group'
           && editing
           && (
           <Flex p={1}>
