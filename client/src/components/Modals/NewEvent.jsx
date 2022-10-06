@@ -21,10 +21,13 @@ import {
   Box,
 } from '@chakra-ui/react';
 import { please } from '../../request';
+import { UseContextAll } from '../ContextAll';
 
 const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
 
-function NewEvent({ userID, groupID, updateFeed}) {
+function NewEvent({ updateFeed }) {
+  const { userID, currentGroupID } = UseContextAll();
+  console.log('DEBUG in NewEvent here is context: ', userID, currentGroupID)
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [name, setEventName] = useState('');
   const [content, setContent] = useState('');
@@ -67,11 +70,12 @@ function NewEvent({ userID, groupID, updateFeed}) {
   }
 
   function handleSubmit() {
+    console.log('DEBUG in NewEvent handlesubmit')
     const formBody = {
       user_id: userID,
-      group_id: groupID,
+      group_id: currentGroupID,
       eventname: name,
-      content,
+      content: content,
       photos: [eventPhoto],
       isevent: true,
       // location, <= need to add google stuff
@@ -80,6 +84,7 @@ function NewEvent({ userID, groupID, updateFeed}) {
       endtime: handleTime(endHour, endMins, endMeridiem),
       enddate: endDate,
     };
+    console.log('DEBUG here is the formbody: ', formBody)
     please.createPost(formBody)
       .then(() => {
         updateFeed();

@@ -25,41 +25,58 @@ class EventItem extends React.Component {
       comment: '',
       comments: props.event.comments,
       likes: props.event.postlikes.length,
-      justLiked: false,
+      meLikey: props.event.postlikes.filter(u => u.id === props.userID).length > 0,
     };
+    this.requestInFlight = false;
   }
 
   handleLike(event, userID) {
-    console.log('these are likes: ', event)
+    if (this.requestInFlight) {
+      // console.log('DEBUG: request in flight');
+      return;
+    }
+    this.requestInFlight = true;
+    // console.log('these are likes: ', event)
+    // console.log(`DEBUG: likes: ${this.state.likes}`);
+
+    // console.log('DEBUG: event.postlikes', event.postlikes.filter(u => u.id === userID));
     // console.log('in handle like here is event: ', event)
     // console.log('here is userID in handleLike: ', userID)
     // check if the user has already liked the posts
-    if (event.postlikes.filter(u => u.id === userID).length > 0
-    || this.state.justLiked) {
+    if (this.state.meLikey) {
+      // console.log('DEBUG: likes--');
       // user already liked, so remove the like
-      please.deletePostLike(event.post_id, userID)
-        .then(() => this.setState(
-          {
+      please
+        .deletePostLike(event.post_id, userID)
+        .catch((err) => console.log('DEBUG:', err))
+        .then(() => {
+          // console.log('DEBUG: likes-- handled');
+          this.setState({
             likes: this.state.likes - 1,
-            justLiked: false,
-          }))
-        .catch((err) => console.log(err))
+            meLikey: false,
+          });
+          this.requestInFlight = false;
+        })
     } else {
-      please.createPostLike(
-        {
+      // console.log('DEBUG: likes++');
+      please
+        .createPostLike({
           post_id: event.post_id,
           user_id: userID,
-        },
-      )
-        .then(() => this.setState(
-          {
+        })
+        .catch((err) => console.log('DEBUG:', err))
+        .then(() => {
+          // console.log('DEBUG: HERE');
+          // console.log(`DEBUG: resp ${JSON.Stringify(resp)}`);
+          // console.log("DEBUG: likes++ handled");
+          this.setState({
             likes: this.state.likes + 1,
-            justLiked: true,
-          }))
-        .catch((err) => console.log(err));
+            meLikey: true,
+          });
+          this.requestInFlight = false;
+        });
     }
   }
-
 
   sendComment(comment) {
     const { event, userID } = this.props;
@@ -79,7 +96,7 @@ class EventItem extends React.Component {
   render() {
     const { event, userID } = this.props;
     const { comment, likes, comments } = this.state;
-    console.log('in event item and rendering: ', event);
+    // console.log('in event item and rendering: ', event);
 
     return (
       // eslint-disable-next-line max-len
