@@ -11,8 +11,6 @@ import {
 import { UseContextAll } from '../ContextAll';
 
 function Friend({ friend, isGroupInvite, members }) {
-  console.log('DEBUG this is friend: ', friend);
-  console.log('DEBUG this is members: ', members)
   const { mainPage, setMainPage, setCurrentUserID, currentGroupID } = UseContextAll();
   let friendAlreadyInGroup;
   isGroupInvite ? friendAlreadyInGroup = members.filter(m => m.id === friend.id).length > 0 : friendAlreadyInGroup=false;

@@ -9,22 +9,22 @@ import HomeFeedPost from '../HomePage/post/HomeFeedPost';
 import { please } from '../../request';
 import { UseContextAll } from '../ContextAll';
 
-function GroupFeed({events, updateFeed}) {
+function GroupFeed() {
   // TODO Replace hardcoded data with axios call
   const { currentGroupID } = UseContextAll();
-  // const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([]);
 
-  // useEffect(() => {
-  //   please.getGroupPosts(currentGroupID)
-  //     .then((res) => setEvents(res.data))
-  //     .catch((err) => console.log(err));
-  // }, [currentGroupID]);
+  useEffect(() => {
+    please.getGroupPosts(currentGroupID)
+      .then((res) => setEvents(res.data))
+      .catch((err) => console.log(err));
+  }, [currentGroupID]);
 
-  // function updateFeed() {
-  //   please.getGroupPosts(currentGroupID)
-  //     .then((res) => setEvents(res.data))
-  //     .catch((err) => console.log(err));
-  // }
+  function updateFeed() {
+    please.getGroupPosts(currentGroupID)
+      .then((res) => setEvents(res.data))
+      .catch((err) => console.log(err));
+  }
 
   return (
     <Box>
@@ -34,7 +34,7 @@ function GroupFeed({events, updateFeed}) {
       </Flex>
       <Box position="relative" w="100%" align="center" mt={10}>
         <Box mr={4}>
-          {events.map((event) => <HomeFeedPost key={event.name} post={event} />)}
+          {events.map((event) => <HomeFeedPost key={event.name} post={event} updateFeed={updateFeed}/>)}
         </Box>
       </Box>
 

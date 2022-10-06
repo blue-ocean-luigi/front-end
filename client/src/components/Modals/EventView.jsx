@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BiHomeSmile, BiMessageAdd } from "react-icons/bi";
+import { FaRegEnvelopeOpen } from "react-icons/fa";
 import {
   Modal,
   ModalOverlay,
@@ -15,12 +16,16 @@ import {
   Textarea,
   Icon,
   Image,
+  Tooltip,
 } from '@chakra-ui/react';
 import CommentList from '../Comments/CommentList';
+import { please } from '../../request';
 
-function EventView({ eventInfo, handleLike, sendComment }) {
+function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps }) {
+  console.log('DEBUG this is eventinfo: ', eventInfo)
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [comment, setComment] = useState('');
+
 
   function sendRSVP() {
     console.log('send RSVP');
@@ -50,16 +55,24 @@ function EventView({ eventInfo, handleLike, sendComment }) {
             src={eventInfo.picture}
             alt="Event Pic"
           />
-          <Text>Posted by *username* in *group name*</Text>
+          <Text>Posted in {eventInfo.groupname}</Text>
           <Text>{eventInfo.starttime}</Text>
           <ModalBody>
             {eventInfo.content}
           </ModalBody>
           <Stack shouldWrapChildren direction="row">
-            <Text> *no.Likes* </Text>
-            <Icon as={BiHomeSmile} w={6} h={6} onClick={() => handleLike()} />
-            <Text> *no.comments</Text>
-            <Icon as={BiMessageAdd} w={6} h={6} onClick={() => console.log('scroll to comment?')} />
+            <Text> {eventInfo.postlikes.length} </Text>
+            <Tooltip>
+              <span><Icon as={BiHomeSmile} w={6} h={6} onClick={() => handleLike()} /></span>
+            </Tooltip>
+            <Text> {eventInfo.comments.length} </Text>
+            <Tooltip label="comments">
+              <span><Icon as={BiMessageAdd} w={6} h={6} onClick={() => console.log('scroll to comment?')} /></span>
+            </Tooltip>
+            <Text> {rsvps.length} </Text>
+            <Tooltip label="RSVPs">
+              <span><Icon as={FaRegEnvelopeOpen} w={6} h={6} /></span>
+            </Tooltip>
           </Stack>
           <ModalFooter>
             <Button colorScheme="blue" onClick={() => sendRSVP()}> RSVP </Button>

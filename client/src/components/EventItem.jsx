@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BiHomeSmile, BiMessageAdd } from 'react-icons/bi';
+import { FaRegEnvelopeOpen } from "react-icons/fa";
 import {
   Box,
   Text,
@@ -10,6 +11,7 @@ import {
   Stack,
   Icon,
   Textarea,
+  Tooltip,
 } from '@chakra-ui/react';
 import EventView from './Modals/EventView';
 import CommentList from './Comments/CommentList';
@@ -79,8 +81,9 @@ class EventItem extends React.Component {
   }
 
   sendComment(comment) {
-    const { event, userID } = this.props;
 
+    const { event, userID, updateFeed } = this.props;
+    console.log('DEBUG this is updateFeed: ', updateFeed)
     please.createComment({ post_id: event.post_id, user_id: userID, message: comment })
       .then((response) => {
         console.log(response);
@@ -88,13 +91,14 @@ class EventItem extends React.Component {
           comment: '',
         });
       })
+      .then(() => updateFeed())
       .catch((err) => {
         console.log(err);
       });
   }
 
   render() {
-    const { event, userID } = this.props;
+    const { event, userID, updateFeed, rsvps } = this.props;
     const { comment, likes, comments } = this.state;
     // console.log('in event item and rendering: ', event);
 
@@ -135,13 +139,20 @@ class EventItem extends React.Component {
           <Stack shouldWrapChildren direction="row">
             {/* <Text>{event.postlikes.length}</Text> */}
             <Text>{likes}</Text>
-            <Icon as={BiHomeSmile} w={6} h={6} onClick={() => this.handleLike(event, userID)} />
-            {/* <Text>{event.comments.length}</Text> */}
+            <Tooltip label="likes">
+              <span><Icon as={BiHomeSmile} w={6} h={6} onClick={() => this.handleLike(event, userID)} /></span>
+            </Tooltip>
             <Text>{comments.length}</Text>
-            <Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} />
+            <Tooltip label="comments">
+              <span><Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} /></span>
+            </Tooltip>
+            <Text> {rsvps.length} </Text>
+            <Tooltip label="RSVPs">
+              <span><Icon as={FaRegEnvelopeOpen} w={6} h={6} /></span>
+            </Tooltip>
           </Stack>
         </HStack>
-        <EventView eventInfo={event} handleLike={this.handleLike} sendComment={this.sendComment} />
+        <EventView eventInfo={event} handleLike={this.handleLike} sendComment={this.sendComment} rsvps={rsvps} />
         <Box>
           {/* <CommentList comments={event.comments} /> */}
           <CommentList comments={comments} />
@@ -154,7 +165,7 @@ class EventItem extends React.Component {
         />
         <Button
           colorScheme="blue"
-          onClick={() => this.sendComment(comment)}
+          onClick={() => {this.sendComment(comment, updateFeed)} }
         >
           Post
         </Button>

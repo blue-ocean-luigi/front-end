@@ -70,7 +70,6 @@ function NewEvent({ updateFeed }) {
   }
 
   function handleSubmit() {
-    console.log('DEBUG in NewEvent handlesubmit')
     const formBody = {
       user_id: userID,
       group_id: currentGroupID,
@@ -84,7 +83,6 @@ function NewEvent({ updateFeed }) {
       endtime: handleTime(endHour, endMins, endMeridiem),
       enddate: endDate,
     };
-    console.log('DEBUG here is the formbody: ', formBody)
     please.createPost(formBody)
       .then(() => {
         updateFeed();

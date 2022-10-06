@@ -10,6 +10,7 @@ import {
   Stack,
   Icon,
   Textarea,
+  Tooltip,
 } from '@chakra-ui/react';
 import EventView from '../Modals/EventView';
 import CommentList from './CommentList';
@@ -106,7 +107,9 @@ class CommentItem extends React.Component {
             <Text>
               {likes}
             </Text>
-            <Icon as={BiHomeSmile} w={6} h={6} onClick={() => this.handleLike(comment, userID)} />
+            <Tooltip label="likes">
+              <span><Icon as={BiHomeSmile} w={6} h={6} onClick={() => this.handleLike(comment, userID)} /></span>
+            </Tooltip>
           </Stack>
         </HStack>
       </Box>
