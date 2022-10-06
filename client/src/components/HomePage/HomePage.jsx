@@ -12,6 +12,8 @@ import {
   Image,
   Text,
 } from '@chakra-ui/react';
+import axios from 'axios'
+import Searches from './Searches';
 import GroupPage from '../GroupPage';
 import FriendsList from '../FriendsListSubcomponents/FriendsList';
 import HomeFeedPost from './post/HomeFeedPost';
@@ -21,6 +23,7 @@ import GroupList from '../GroupList/GroupList';
 import './HomePage.css';
 import { please } from '../../request';
 import { UseContextAll } from '../ContextAll';
+import CreateGroupButton from './CreateGroupButton';
 //  props should be user info, if user is new
 function HomePage() {
   const {
@@ -31,16 +34,30 @@ function HomePage() {
   } = UseContextAll();
   const [newUser, setNewUser] = useState(false);
   const [search, setSearch] = useState('');
+  const [content, setContent] = useState([]);
 
   function handleChange(e) {
     setSearch(e.target.value);
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log('searched for: ', search);
-    setSearch('');
-  }
+  useEffect(() => {
+    if (!search) {
+      setContent([])
+      return
+    }
+    ;(async () => {
+      try {
+        const results = await please.searchPeopleAndGroups(search)
+        const data = results.data
+        setContent(data)
+        console.log('THIS IS DATA', data)
+
+      } catch (err) {
+        console.log(err)
+      }
+
+     })()
+  }, [search])
 
   return (
     <Flex h="100vh" w="100%" justifyContent="space-between">
@@ -50,8 +67,18 @@ function HomePage() {
             <Heading mt={4} mb={1}>
               Home
             </Heading>
-            <Input variant="filled" placeholder="Search for users and groups" onChange={(e) => handleChange(e)} value={search} />
-            <Button onClick={(e) => handleSubmit(e)}>Search</Button>
+            <Input variant="filled" placeholder="Search for users and groupssss" onChange={(e) => handleChange(e)} value={search}/>
+            {/* <Button onClick={(e) => handleSubmit(e)}>Search</Button> */}
+
+            <Box >
+              <Box maxH='40vh' width='100%' p='0' overflowY='auto' position='absolute' bgColor='white' zIndex='9999'>
+                <Box px={4}>
+                  <Box borderTopWidth='1px' pt={2} pb={4}>
+                    <Searches data={content}/>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
           </Box>
         </Flex>
         <Divider />
@@ -72,7 +99,7 @@ function HomePage() {
                 onClick={() => console.log('clicked profile image')}
               />
             </Box>
-
+            <CreateGroupButton />
             <GroupList groups={userGroups} />
             <FriendsList friends={userFriends.friendlist} />
           </Box>
@@ -84,8 +111,3 @@ function HomePage() {
 }
 
 export default HomePage;
-
-// should list
-// search, event feed, groups list & friends list,
-
-// need to set up so that i render a list of fiends and a list of groups in the left column, and on click those utilize the context to re render the page based on

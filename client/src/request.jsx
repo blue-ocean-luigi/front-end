@@ -146,6 +146,12 @@ export const please = {
       },
     }),
 
+  denyGroupRequest: (group_id, requester_id) =>
+    axios({
+      url: `/groups/request/${group_id}&${requester_id}`,
+      method: "delete",
+      baseURL: basePath,
+    }),
   // accept new member group request
   acceptGroupRequest: (group_id, user_id) =>
     axios({
@@ -230,6 +236,14 @@ export const please = {
       baseURL: basePath,
     }),
 
+  // get comments for a post
+  getComment: (post_id) =>
+    axios({
+      url: `/comment/${post_id}`,
+      method: "get",
+      baseURL: basePath,
+    }),
+
   // creating a comment
   createComment: (info) =>
     axios({
@@ -309,6 +323,14 @@ export const please = {
     axios({
       url: `/rsvp/${post_id}&${user_id}`,
       method: "delete",
+      baseURL: basePath,
+    }),
+
+  // search for people and group with a term
+  searchPeopleAndGroups: (term) =>
+    axios({
+      url: `/search/${term}`,
+      method: "get",
       baseURL: basePath,
     }),
 };

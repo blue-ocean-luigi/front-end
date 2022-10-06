@@ -7,7 +7,7 @@ import {
 import GroupMember from './GroupMember';
 import AdminEditMembers from './AdminEditMembers';
 
-function IncomingGroupRequests({memberRequests, page, editing}) {
+function IncomingGroupRequests({memberRequests, editing, handleMemberStatus}) {
 
   const [isGroupRequest, setIsGroupRequest] = useState(true);
 
@@ -16,15 +16,17 @@ function IncomingGroupRequests({memberRequests, page, editing}) {
       <Heading mb={1} fontSize="xl">
         Group Requests
       </Heading>
-      {memberRequests.map((m) => (
-        <GroupMember
-          key={m.name}
-          member={m}
-          page={page}
-          editing={editing}
-          isGroupRequest={isGroupRequest}
-        />
-      ))}
+      { memberRequests.length > 0
+        ? memberRequests.map((m, i) => (
+          <GroupMember
+            member={m}
+            editing={editing}
+            isGroupRequest={isGroupRequest}
+            handleMemberStatus={handleMemberStatus}
+            key={i}
+          />
+        )) : 'No group requests'
+      }
     </Box>
   );
 }

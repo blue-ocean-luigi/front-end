@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
 import {
   Modal,
   ModalOverlay,
@@ -19,13 +18,14 @@ import {
   Button,
   Box,
 } from '@chakra-ui/react';
+import { please } from '../../request';
 
 const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
 
-function NewPost({ groupID, userID}) {
+function NewPost({ groupID, userID, updateFeed }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [postContent, setPostContent] = useState('');
-  const [postPhoto, setPostPhoto] = useState('');
+  const [postPhoto, setPostPhoto] = useState();
 
   function handlePhoto(e) {
     const body = new FormData();
@@ -50,10 +50,17 @@ function NewPost({ groupID, userID}) {
       user_id: userID,
       group_id: groupID,
       content: postContent,
-      photo: postPhoto,
+      isevent: false,
+      photos: [postPhoto],
     };
-    console.log(formBody);
-    onClose();
+    please.createPost(formBody)
+      .then(() => {
+        updateFeed();
+        onClose();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (

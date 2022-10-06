@@ -17,7 +17,7 @@ export function ContextAllProvider({ children }) {
   const [userFriends, setUserFriends] = useState([]);
   const [userChats, setUserChats] = useState([]);
   const [homePosts, setHomePosts] = useState([]);
-  const [currentGroup, setCurrentGroup] = useState('');
+  const [currentGroupID, setCurrentGroupID] = useState(''); //  expects group ID
   const [currentUserID, setCurrentUserID] = useState('');
 
   useEffect(() => {
@@ -29,6 +29,15 @@ export function ContextAllProvider({ children }) {
         console.log(err);
       });
   }, [userID]); //  add userID here
+
+  // please.getUserInfoByID(userID)
+  // .then((response) => {
+  //   setUserInfo(response.data);
+  // })
+  // .catch((err) => {
+  //   console.log(err);
+  // });
+
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const values = {
@@ -46,8 +55,8 @@ export function ContextAllProvider({ children }) {
     setUserChats,
     homePosts,
     setHomePosts,
-    currentGroup,
-    setCurrentGroup,
+    currentGroupID,
+    setCurrentGroupID,
     currentUserID,
     setCurrentUserID,
   };

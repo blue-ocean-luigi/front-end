@@ -10,13 +10,6 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   useDisclosure,
 } from '@chakra-ui/react';
 import { UseContextAll } from './ContextAll';
@@ -28,140 +21,98 @@ import AdminEditMembers from './GroupPageSubcomponents/AdminEditMembers';
 import RequestToJoinGroup from './GroupPageSubcomponents/RequestToJoinGroup';
 import { please } from '../request';
 
-function GroupPage({ page, userID, groupID = 1 }) {
-  console.log('here is group page: ', groupID);
-
-  // const { userGroups, userInfo, userFriends } = UseContextAll();
+function GroupPage() {
+  const {
+    userID,
+    userGroups,
+    userInfo,
+    userFriends,
+    setMainPage,
+    currentGroupID,
+  } = UseContextAll();
 
   // state to store all group info for group page
-  const [groupInfo, setGroupInfo] = useState({}); // can delete once context is working
-
-  // edit these once verify on context
-  // const [userInfo, setUserInfo] = useState({});
+  const [groupInfo, setGroupInfo] = useState({});
   const [members, setMembers] = useState([]);
-  const [isGroupAdmin, setGroupAdmin] = useState(true);
-  const [inGroup, setInGroup] = useState(true);
+  const [isGroupAdmin, setGroupAdmin] = useState(false);
+  const [inGroup, setInGroup] = useState(false);
+  const [memberRequests, setMemberRequests] = useState([]);
 
   // on load of group, get all group page info
   useEffect(() => {
-    please.getGroupInfo(1)
-    .then((res) => {
-      setGroupInfo(res.data);
-      setMembers(res.data.members);
-    })
-    .catch((err) => console.log(err))
-  }, [groupID])
-
-  console.log('this is group info: ', groupInfo)
+    please.getGroupInfo(currentGroupID)
+      .then((res) => {
+        setGroupInfo(res.data);
+        setMembers(res.data.members);
+      })
+      .catch((err) => console.log(err));
+  }, [currentGroupID]);
 
   // on load of group, check if the current user gets admin control
 
-  // useEffect((groupInfo) => {
-  //   console.log('this is groupInfo: ', groupInfo)
-  //   please.getUserByID(1)
-  //   .then((res) => {
-  //     // check if user is in the group AND if they are an admin
-  //     // if admin, show admin panel
-  //     // if not admin but in group, show normal view
-  //     // if not admin and not in group, WHAT DO I SHOW???
-  //       // SHOW ERROR PAGE in feed and members and add a button that directs them to request
-  //     const pos = res.data.groups.map(g => g.name).indexOf(groupInfo.name);
-  //     console.log('this is group name: ', groupInfo.name)
-  //     console.log('this is pos: ', res.data.groups.map(g => g.name))
-  //     if (
-  //       // admin and in group
-  //       res.data.groups.filter(g => g.name === groupInfo.name).length > 0
-  //       &&
-  //       res.data.groups[pos]['admin']
-  //       ) {
-  //       setInGroup(true);
-  //       setGroupAdmin(true);
-  //       setUserInfo(res.data);
-  //     }
-  //     else if (
-  //       // not admin but in group
-  //       res.data.groups.filter(g => g.name === groupInfo.name).length > 0
-  //       &&
-  //       !res.data.groups[pos]['admin']
-  //       ) {
-  //         setInGroup(true);
-  //         setUserInfo(res.data);
-  //         // setGroupAdmin(false); //don't think i need this bc redundant
-  //       }
-  //     else {
-  //       // not admin and not in group
-  //       setInGroup(false);
-  //       setUserInfo(res.data);
-  //     }
-  //   })
-  //   .catch((err) => console.log(err))
-  // }, [userID])
+  useEffect(() => {
+    const pos = userGroups.map(g => g.id).indexOf(currentGroupID);
+    if (
+      // in group and admin
+      userGroups.filter((g) => g.id === currentGroupID).length > 0
+      && userGroups[pos].admin
+    ) {
+      // console.log('DEBUG in group AND admin')
+      setInGroup(true);
+      setGroupAdmin(true);
+    } else if (
+      // not admin but in group
+      userGroups.filter((g) => g.id === currentGroupID).length > 0
+      && !userGroups[pos].admin) {
+      // console.log('DEBUG in group but not admin here is userInfo: ', userInfo)
+      setInGroup(true);
+      setGroupAdmin(false);
+    } else {
+      // not admin and not in group
+      // console.log('DEBUG not in group nor admin')
+      setInGroup(false);
+    }
+  }, [userGroups, currentGroupID]);
 
-
-
-
-  const [memberRequests, setMemberRequests] = useState(
-    [
-      { name: 'Kevin', isAdmin: true, profilePicture: "https://bit.ly/dan-abramov" },
-      { name: 'Matt', isAdmin: false, profilePicture: "https://bit.ly/dan-abramov" },
-    ],
-  );
-
-  const testFriendList = [
-    {
-      name: 'apple', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'orange', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'banana', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'space shuttle', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'pepper', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'salt', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'grape', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'pear', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'apple1', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'orange1', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'banana1', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'space shuttle1', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'pepper1', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'salt1', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'grape1', profilePicture: "https://bit.ly/dan-abramov"
-    },
-    {
-      name: 'pear1', profilePicture: "https://bit.ly/dan-abramov"
-    },
-  ];
-
-  function onClick() {
-    console.log('clicked button');
+  function handleEditMembers() {
+    please.getOpenGroupRequest(currentGroupID)
+      .then((results) => {
+        setMemberRequests(results.data);
+      })
+      .catch((err) => console.log(err));
   }
 
+  // admin editing of members
+  function handleMemberStatus(e, status) {
+    console.log('DEBUG made it into handleMemberStatus')
+    if (status === 'approve') {
+      please.acceptGroupRequest(currentGroupID, e.id)
+        .then(() => please.getGroupInfo(currentGroupID))
+        .then((res) => setMembers(res.data.members))
+        .catch((err) => console.log(err));
+    } else if (status === 'deny') {
+      please.denyGroupRequest(currentGroupID, e.id)
+        .then(() => please.getGroupInfo(currentGroupID))
+        .then((res) => {
+          setMembers(res.data.members);
+          const removedPos = members.map((m) => m.id).indexOf(e.id);
+          const updatedReq = members.splice(removedPos, 1);
+          setMemberRequests(updatedReq);
+        })
+        .catch((err) => console.log(err));
+    } else if (status === 'adminify') {
+      please.giveMemberAdminStatus(currentGroupID, e.id)
+        .then(() => please.getGroupInfo(currentGroupID))
+        .then((res) => setMembers(res.data.members))
+        .catch((err) => console.log(err));
+    } else {
+      console.log('DEBUG preparing to remove');
+      please.removeGroupMember(currentGroupID, e.id)
+        .then(() => please.getGroupInfo(currentGroupID))
+        .then((res) => setMembers(res.data.members))
+        .catch((err) => console.log('DEBUG did not deny:', err))
+    }
+  }
   // hook for handling friendsList modal
   const {
     isOpen: isOpenFriendsList,
@@ -208,25 +159,34 @@ function GroupPage({ page, userID, groupID = 1 }) {
               p={1}
             >
               <Flex mb={1} justifyContent="space-between">
-                <Button
-                  size="xs"
-                  onClick={onOpenFriendsList}
-                >
-                  Invite your friends
-                </Button>
-                <InviteFriends
-                  onClose={onCloseFriendsList}
-                  isOpen={isOpenFriendsList}
-                  friends={testFriendList}
-                  page={page}
-                />
+                {
+                  inGroup
+                  && (
+                  <>
+                    <Button
+                      size="xs"
+                      onClick={onOpenFriendsList}
+                    >
+                      Invite your friends
+                    </Button>
+                    <InviteFriends
+                      onClose={onCloseFriendsList}
+                      isOpen={isOpenFriendsList}
+                    />
+                  </>
+                  )
+                }
                 {
                   isGroupAdmin
                   && (
                     <>
                       <Button
                         size="xs"
-                        onClick={() => { setEditing(true); onOpenAdminControl(); }}
+                        onClick={() => {
+                          setEditing(true);
+                          onOpenAdminControl();
+                          handleEditMembers(currentGroupID);
+                        }}
                       >
                         Edit Members
                       </Button>
@@ -235,16 +195,16 @@ function GroupPage({ page, userID, groupID = 1 }) {
                         isOpen={isOpenAdminControl}
                         members={members}
                         memberRequests={memberRequests}
-                        page={page}
                         editing={editing}
+                        handleMemberStatus={handleMemberStatus}
+                        isGroupAdmin={isGroupAdmin}
                       />
                     </>
                   )
                 }
               </Flex>
               {
-                inGroup &&
-                <GroupMemberList members={members} page={page} />
+                inGroup && <GroupMemberList members={members} />
               }
               {
                 !inGroup
@@ -263,7 +223,7 @@ function GroupPage({ page, userID, groupID = 1 }) {
             <Box p={1} position="relative" overflow-y="auto" h="100%" w="70%">
               {
                 inGroup
-                && <GroupFeed />
+                && <GroupFeed userID={userID} groupID={currentGroupID} />
               }
               {
                 !inGroup

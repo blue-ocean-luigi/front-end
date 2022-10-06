@@ -23,23 +23,64 @@ class EventItem extends React.Component {
     this.sendComment = this.sendComment.bind(this);
     this.state = {
       comment: '',
-      likeCount: 0,
+      comments: props.event.comments,
+      likes: props.event.postlikes.length,
+      meLikey: props.event.postlikes.filter(u => u.id === props.userID).length > 0,
     };
+    this.requestInFlight = false;
   }
 
-  handleLike() {
-    const { likeCount } = this.state;
-    if (likeCount < 1) {
-      console.log('send a like, then increase likeCOunt');
-      this.setState({
-        likeCount: 1,
-      });
+  handleLike(event, userID) {
+    if (this.requestInFlight) {
+      // console.log('DEBUG: request in flight');
+      return;
+    }
+    this.requestInFlight = true;
+    // console.log('these are likes: ', event)
+    // console.log(`DEBUG: likes: ${this.state.likes}`);
+
+    // console.log('DEBUG: event.postlikes', event.postlikes.filter(u => u.id === userID));
+    // console.log('in handle like here is event: ', event)
+    // console.log('here is userID in handleLike: ', userID)
+    // check if the user has already liked the posts
+    if (this.state.meLikey) {
+      // console.log('DEBUG: likes--');
+      // user already liked, so remove the like
+      please
+        .deletePostLike(event.post_id, userID)
+        .catch((err) => console.log('DEBUG:', err))
+        .then(() => {
+          // console.log('DEBUG: likes-- handled');
+          this.setState({
+            likes: this.state.likes - 1,
+            meLikey: false,
+          });
+          this.requestInFlight = false;
+        })
+    } else {
+      // console.log('DEBUG: likes++');
+      please
+        .createPostLike({
+          post_id: event.post_id,
+          user_id: userID,
+        })
+        .catch((err) => console.log('DEBUG:', err))
+        .then(() => {
+          // console.log('DEBUG: HERE');
+          // console.log(`DEBUG: resp ${JSON.Stringify(resp)}`);
+          // console.log("DEBUG: likes++ handled");
+          this.setState({
+            likes: this.state.likes + 1,
+            meLikey: true,
+          });
+          this.requestInFlight = false;
+        });
     }
   }
 
   sendComment(comment) {
-    const { event } = this.props;
-    const { userID } = UseContextAll();
+    const { event, userID } = this.props;
+
     please.createComment({ post_id: event.post_id, user_id: userID, message: comment })
       .then((response) => {
         console.log(response);
@@ -53,9 +94,9 @@ class EventItem extends React.Component {
   }
 
   render() {
-    const { event } = this.props;
-    const { comment } = this.state;
-    console.log('in event item and rendering: ', event);
+    const { event, userID } = this.props;
+    const { comment, likes, comments } = this.state;
+    // console.log('in event item and rendering: ', event);
 
     return (
       // eslint-disable-next-line max-len
@@ -90,16 +131,20 @@ class EventItem extends React.Component {
               <Button size="xs" onClick={() => onInvite(event)}> Invite </Button>
             </Flex>
             ) } */}
+
           <Stack shouldWrapChildren direction="row">
-            <Text>{event.postlikes.length}</Text>
-            <Icon as={BiHomeSmile} w={6} h={6} onClick={() => { this.handleLike(); }} />
-            <Text>{event.comments.length}</Text>
+            {/* <Text>{event.postlikes.length}</Text> */}
+            <Text>{likes}</Text>
+            <Icon as={BiHomeSmile} w={6} h={6} onClick={() => this.handleLike(event, userID)} />
+            {/* <Text>{event.comments.length}</Text> */}
+            <Text>{comments.length}</Text>
             <Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} />
           </Stack>
         </HStack>
         <EventView eventInfo={event} handleLike={this.handleLike} sendComment={this.sendComment} />
         <Box>
-          <CommentList comments={event.comments} />
+          {/* <CommentList comments={event.comments} /> */}
+          <CommentList comments={comments} />
         </Box>
         <Textarea
           value={comment}
@@ -107,7 +152,12 @@ class EventItem extends React.Component {
           placeholder="...your comment here"
           size="sm"
         />
-        <Button colorScheme="blue" onClick={() => this.sendComment(comment)}> Post </Button>
+        <Button
+          colorScheme="blue"
+          onClick={() => this.sendComment(comment)}
+        >
+          Post
+        </Button>
       </Box>
     );
   }
