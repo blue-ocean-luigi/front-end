@@ -8,7 +8,15 @@ import SearchCard from '../HomePage/SearchCard';
 function SearchGroup({members, events}) {
   const [ searchArray, setSearchArray ] = useState([]);
 
-  const search = (e) => {
+  const debounce = (func, timeout = 500)  => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {func.apply(this, args); }, timeout)
+    }
+  }
+
+  const search = debounce((e) => {
     const term = e.target.value.toLowerCase();
     const curSearchArray = [];
 
@@ -42,7 +50,7 @@ function SearchGroup({members, events}) {
       });
     }
     setSearchArray(curSearchArray);
-  }
+  })
 
 
   return (
