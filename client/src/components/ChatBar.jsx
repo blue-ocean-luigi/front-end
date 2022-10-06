@@ -30,10 +30,13 @@ import {
   ModalFooter,
   Link,
   HStack,
+  VStack,
   Tabs,
   TabList,
   TabPanels,
   TabPanel,
+  Grid,
+  GridItem,
 } from '@chakra-ui/react';
 import { format } from 'timeago.js';
 import socket from './chatclient';
@@ -56,6 +59,7 @@ export default function ChatBar() {
   const toastRef = useRef();
   const { isOpen: modalIsOpen, onOpen: modalOnOpen, onClose: modalOnClose } = useDisclosure();
   const chatHistoryRef = useRef();
+  const modalChatBarRef = useRef();
   const sendChat = (event) => {
     event.preventDefault();
     const message = chatInput.current.value;
@@ -74,10 +78,8 @@ export default function ChatBar() {
     messageRef.current = messageHistory;
   });
   useEffect(() => {
-    console.log(' the socket is set once');
     socket.off('messageResponse');
     socket.on('messageResponse', (data) => {
-      console.log(data.message);
       if (data.receiver_id === userID) {
         setMessageHistory([...messageRef.current, data]);
         const friend = userFriends.friendlist.filter(f => f.id === data.sender_id)[0];
@@ -106,8 +108,14 @@ export default function ChatBar() {
         chatHistoryRef.current.scrollTo({top: chatHistoryRef.current.scrollHeight});
       }, 100);
     }
+    if (modalChatBarRef.current) {
+      //modalChatRef.current.offsetHeight = modalChatBarRef.current.parentElement.offsetHeight;
+    }
   }, [friendID]);
   const lastFive = (list) => [...list].reverse().slice(0, 4).reverse();
+
+  useEffect(() => {
+  }, [modalIsOpen]);
 
   return (
     <Box
@@ -150,6 +158,7 @@ export default function ChatBar() {
         <Flex w="100%">
           <Center w="100%">
             <FormControl>
+              { !modalIsOpen ?
               <form onSubmit={sendChat}>
                 <Input
                   disabled={(friendID === 0)}
@@ -162,6 +171,7 @@ export default function ChatBar() {
                   variant='filled'
                 />
               </form>
+              : null }
             </FormControl>
           </Center>
           <Menu>
@@ -191,26 +201,27 @@ export default function ChatBar() {
           <ModalHeader>All Your Messages</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Flex w="100%">
-              <Box flexGrow="1" maxW="20%" maxH="calc(80vh)" overflowY="auto">
-              { userFriends.friendlist ? userFriends.friendlist.map(friend =>
-              <Box as={Button} minW="150px" minH="60px" key={friend.id} onClick={() => {setFriendID(friend.id); setFriendName(friend.firstname); }}>
-                  <Box w="100%">
-                    <Flex>
-                      <Avatar src={friend.picture} />
-                      <Spacer />
-                      <Flex flexDirection="column">
-                        <Text>{friend.firstname}</Text>
-                        <Text as="i">Last thing said</Text>
+            <Grid w="100%" h="calc(80vh)" templateRows="10fr 1fr" templateColumns="0.1fr, 5fr">
+              <GridItem pr={4}>
+                <VStack maxW="200px" maxH="calc(80vh)" overflowY="auto">
+                { userFriends.friendlist ? userFriends.friendlist.map(friend =>
+                <Box as={Button} minH="60px" key={friend.id} onClick={() => {setFriendID(friend.id); setFriendName(friend.firstname); }}>
+                    <Box w="100%">
+                      <Flex>
+                        <Avatar src={friend.picture} />
+                        <Spacer />
+                        <Flex flexDirection="column">
+                          <Text>{friend.firstname}</Text>
+                          <Text as="i">Last thing said</Text>
+                        </Flex>
                       </Flex>
-                    </Flex>
+                    </Box>
                   </Box>
-                </Box>
-              ) : null}
-              </Box>
-              <Spacer flexGrow="0.1"/>
-              <Box flexGrow="1" maxW="80%">
-                <Box  w="100%" maxH="calc(80vh)" ref={chatHistoryRef} overflowY="auto" flexDirection="column">
+                ) : null}
+                </VStack>
+              </GridItem>
+              <GridItem>
+                <Box  w="100%" maxH="calc(70vh)" ref={chatHistoryRef} overflowY="auto" flexDirection="column">
                   { messageHistory.length ? messageHistory.map((msg, i) => (
                     <Box w="100%" mb={4} key={i}>
                       <Flex w="100%" >
@@ -228,8 +239,25 @@ export default function ChatBar() {
                     </Box>
                   )) : <Text>You have no saved messages with {friendName}</Text> }
                 </Box>
-              </Box>
-            </Flex>
+              </GridItem>
+              
+              <GridItem colSpan={2}>
+                <FormControl ref={modalChatBarRef}>
+                  <form onSubmit={sendChat}>
+                    <Input
+                      disabled={(friendID === 0)}
+                      ref={chatInput}
+                      pl={4}
+                      pr={4}
+                      placeholder={`send a message to ${friendName}`}
+                      variant='filled'
+                      position="relative"
+                      bottom="0"
+                    />
+                  </form>
+                </FormControl>
+              </GridItem>
+            </Grid>
           </ModalBody>
         </ModalContent>
       </Modal>
