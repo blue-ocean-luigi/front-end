@@ -57,7 +57,7 @@ function ProfilePage() {
         console.log(response.data.data.display_url);
         setBanner(response.data.data.display_url);
         //updateUser: (firstname, lastname, email, aboutme, picture, user_id, banner)
-        please.updateUser(userInfo.firstname, userInfo.lastname, userInfo.email, userInfo.picture, userInfo.id, response.data.data.display_url)
+        please.updateUser(userInfo.firstname, userInfo.lastname, userInfo.email, userInfo.aboutme, userInfo.picture, userInfo.id, response.data.data.display_url).then((data)=> console.log(data))
       })
       .catch((error) => {
         console.log(error);
@@ -65,6 +65,7 @@ function ProfilePage() {
   }
 
   console.log(userInfo)
+
 
   function handleBannerClick() {
     document.getElementById('ban_up').click();

@@ -53,8 +53,8 @@ export const please = {
         email,
         aboutme,
         picture,
-        user_id,
-        banner
+        banner,
+        user_id
       },
     }),
 
