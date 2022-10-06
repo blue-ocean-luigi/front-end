@@ -36,19 +36,8 @@ function HomePage() {
   const [search, setSearch] = useState('');
   const [content, setContent] = useState([]);
 
-  const dummy = [
-    {user_id: 1, firstName: 'Brian', lastName: 'Pham', picture: 'https://cdn.vox-cdn.com/thumbor/-naXoT1PTZa-nEbqdI5hsbHsIjo=/0x0:1215x717/1520x1013/filters:focal(662x145:856x339):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/52782137/Ahri_Splash_4.0.jpg'},
-    {group_id: 1, name: 'Maplestory', picture: 'https://mlpnk72yciwc.i.optimole.com/cqhiHLc.IIZS~2ef73/w:600/h:338/q:75/https://bleedingcool.com/wp-content/uploads/2022/06/MapleStory-Destiny-Remastered.jpg'}
-  ]
-
   function handleChange(e) {
     setSearch(e.target.value);
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log('searched for: ', search);
-    setSearch('');
   }
 
   useEffect(() => {
@@ -56,11 +45,17 @@ function HomePage() {
       setContent([])
       return
     }
-    //;(async () => {
-    //    const results = await axios.get('')
-    //    const data = results.data
-    //    setContent(data)
-    //  })()
+    ;(async () => {
+      try {
+        const results = await please.searchPeopleAndGroups(search)
+        const data = results.data
+        setContent(data)
+
+      } catch (err) {
+        console.log(err)
+      }
+
+     })()
   }, [search])
 
   return (
@@ -71,13 +66,15 @@ function HomePage() {
             <Heading mt={4} mb={1}>
               Home
             </Heading>
-            <Input variant="filled" placeholder="Search for users and groupssss" onChange={(e) => handleChange(e)} value={search} />
+            <Input variant="filled" placeholder="Search for users and groupssss" onChange={(e) => handleChange(e)} value={search}/>
             {/* <Button onClick={(e) => handleSubmit(e)}>Search</Button> */}
 
-            <Box maxH='40vh' p='0' overflowY='auto'>
-              <Box px={4}>
-                <Box borderTopWidth='1px' pt={2} pb={4}>
-                  <Searches data={dummy}/>
+            <Box >
+              <Box maxH='40vh' width='100%' p='0' overflowY='auto' position='absolute' bgColor='white' zIndex='9999'>
+                <Box px={4}>
+                  <Box borderTopWidth='1px' pt={2} pb={4}>
+                    <Searches data={content}/>
+                  </Box>
                 </Box>
               </Box>
             </Box>
