@@ -18,7 +18,7 @@ import {
 } from '@chakra-ui/react';
 // TODO: add invite button to either FriendsList as a conditionally rendered button
 // OR map each individual friend to a new friends list with invite buttons
-function requestToJoinGroup({onClose, isOpen, groupInfo}) {
+function RequestToJoinGroup({onClose, isOpen, groupInfo}) {
 
   const [postContent, setPostContent] = useState('');
 
@@ -54,4 +54,4 @@ function requestToJoinGroup({onClose, isOpen, groupInfo}) {
   );
 }
 
-export default requestToJoinGroup;
+export default RequestToJoinGroup;

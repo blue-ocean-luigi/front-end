@@ -40,6 +40,9 @@ import {
 } from '@chakra-ui/react';
 import { format } from 'timeago.js';
 import socket from './chatclient';
+import { render } from 'timeago.js';
+
+
 
 
 import { UseContextAll } from './ContextAll';
@@ -240,7 +243,7 @@ export default function ChatBar() {
                   )) : <Text>You have no saved messages with {friendName}</Text> }
                 </Box>
               </GridItem>
-              
+
               <GridItem colSpan={2}>
                 <FormControl ref={modalChatBarRef}>
                   <form onSubmit={sendChat}>

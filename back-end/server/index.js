@@ -12,6 +12,12 @@ app.use(morgan('dev'));
 
 app.use("/crossing", router);
 
+const port = process.env.PORT || 3001;
+
+app.listen((port), () => {
+  console.log(`Server is running on port:${port}`);
+});
+
 /* socket IO stuff */
 const http = require('http').Server(app);
 
@@ -41,8 +47,4 @@ http.listen(3002, () => {
 
 /* end of socket IO stuff */
 
-const port = process.env.PORT || 3001;
 
-app.listen((port), () => {
-  console.log(`Server is running on port:${port}`);
-});

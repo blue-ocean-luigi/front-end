@@ -9,12 +9,19 @@ import {
 } from '@chakra-ui/react';
 import { UseContextAll } from '../ContextAll';
 
-function onInvite(e) {
-  console.log('invited friend: ', e);
-}
-
-function Friend({ friend, page }) {
+function Friend({ friend }) {
   console.log(friend);
+  const { mainPage, setMainPage, setCurrentUserID } = UseContextAll();
+
+  //  if you click friends name and pic => friend profile
+  function handleSelect() {
+    setCurrentUserID(friend.id);
+    setMainPage('profile');
+  }
+  //  if you click invite button => invite chat message send
+  function onInvite(e) {
+    console.log('invited friend: ', e);
+  }
 
   return (
     <Box
@@ -24,7 +31,7 @@ function Friend({ friend, page }) {
       borderWidth="1px"
     >
       <HStack justifyContent="space-between" p={1}>
-        <Flex justifyContent="left">
+        <Flex justifyContent="left" onClick={() => handleSelect()}>
           <Image
             borderRadius="full"
             boxSize="80px"
@@ -38,7 +45,7 @@ function Friend({ friend, page }) {
             </Text>
           </Box>
         </Flex>
-        { page === 'group'
+        { mainPage === 'group'
           && (
           <Flex p={1}>
             <Button size="xs" onClick={() => onInvite(friend)}> Invite </Button>

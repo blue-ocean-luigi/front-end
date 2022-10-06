@@ -21,6 +21,7 @@ import GroupList from '../GroupList/GroupList';
 import './HomePage.css';
 import { please } from '../../request';
 import { UseContextAll } from '../ContextAll';
+import CreateGroupButton from './CreateGroupButton';
 //  props should be user info, if user is new
 function HomePage() {
   const {
@@ -72,7 +73,7 @@ function HomePage() {
                 onClick={() => console.log('clicked profile image')}
               />
             </Box>
-
+            <CreateGroupButton />
             <GroupList groups={userGroups} />
             <FriendsList friends={userFriends.friendlist} />
           </Box>
@@ -84,8 +85,3 @@ function HomePage() {
 }
 
 export default HomePage;
-
-// should list
-// search, event feed, groups list & friends list,
-
-// need to set up so that i render a list of fiends and a list of groups in the left column, and on click those utilize the context to re render the page based on
