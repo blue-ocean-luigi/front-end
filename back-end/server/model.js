@@ -635,6 +635,24 @@ SELECT post_id,
 
     return pool.query(query, values);
   },
+  denyGroupRequest : (info) => {
+    const values = [
+      info.group_id,
+      info.requester_id
+    ]
+
+    console.log(values)
+
+    const query = `
+      DELETE FROM
+        group_requests
+      WHERE
+        group_id = $1
+      AND
+        requester_id = $2`;
+
+    return pool.query(query, values)
+  },
   addMemberToGroup: (info) => {
     const values = [info.group_id, info.user_id];
     console.log(values);

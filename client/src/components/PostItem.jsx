@@ -78,9 +78,9 @@ class PostItem extends React.Component {
   }
 
   sendComment(comment) {
-    const { event, userID } = this.props;
+    const { post, userID } = this.props;
 
-    please.createComment({ post_id: event.post_id, user_id: userID, message: comment })
+    please.createComment({ post_id: post.post_id, user_id: userID, message: comment })
       .then((response) => {
         console.log(response);
         this.setState({
