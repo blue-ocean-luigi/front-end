@@ -26,7 +26,7 @@ export const please = {
     }),
 
   // post new user to db
-  addUser: (firstname, lastname, email, aboutme, picture) =>
+  addUser: (firstname, lastname, email, aboutme, picture, banner) =>
     axios({
       url: "/user/add",
       method: "post",
@@ -37,11 +37,12 @@ export const please = {
         email,
         aboutme,
         picture,
+        banner
       },
     }),
 
   // update user info (need all arguments)
-  updateUser: (firstname, lastname, email, aboutme, picture, user_id) =>
+  updateUser: (firstname, lastname, email, aboutme, picture, user_id, banner) =>
     axios({
       url: "/user/update",
       method: "put",
@@ -53,6 +54,7 @@ export const please = {
         aboutme,
         picture,
         user_id,
+        banner
       },
     }),
 
@@ -144,6 +146,12 @@ export const please = {
       },
     }),
 
+  denyGroupRequest: (group_id, requester_id) =>
+    axios({
+      url: `/groups/request/${group_id}&${requester_id}`,
+      method: "delete",
+      baseURL: basePath,
+    }),
   // accept new member group request
   acceptGroupRequest: (group_id, user_id) =>
     axios({
@@ -225,6 +233,14 @@ export const please = {
     axios({
       url: `/posts/${post_id}`,
       method: "delete",
+      baseURL: basePath,
+    }),
+
+  // get comments for a post
+  getComment: (post_id) =>
+    axios({
+      url: `/comment/${post_id}`,
+      method: "get",
       baseURL: basePath,
     }),
 

@@ -7,6 +7,7 @@ router.get('/groupposts/:group_id', controller.getGroupPosts)
 router.post('/posts', controller.createPost)
 router.delete("/posts/:post_id", controller.deletePost);
 //comments
+router.get('/comment/:post_id',controller.getComment)
 router.post('/comment', controller.createComment)
 router.delete('/comment/:comment_id', controller.deleteComment)
 //likes
@@ -45,6 +46,7 @@ router.post('/groups/accept', controller.addMemberToGroup)
 router.put('/groups/admin', controller.makeGroupAdmin)
 router.delete('/groups/member/:group_id&:user_id', controller.removeGroupMember)
 router.delete('/groups/:group_id', controller.deleteGroup)
+router.delete('/groups/request/:group_id&:requester_id', controller.denyGroupRequest)
 
 //messages
 router.get('/messages/user', controller.getMessages)

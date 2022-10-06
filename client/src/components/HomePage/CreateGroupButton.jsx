@@ -79,18 +79,18 @@ function CreateGroupButton() {
           <ModalHeader>Create New Group</ModalHeader>
           <ModalCloseButton onClick={() => setOpenModal(false)} />
           <ModalBody>
-            <FormControl ref={formRef}>
+            <FormControl ref={formRef} isRequired>
               <FormLabel>Group Name</FormLabel>
               <Input type="text" placeholder="Group Name" />
               <FormLabel>City</FormLabel>
-              <Input ype="text" placeholder="City" />
+              <Input type="text" placeholder="City" />
               <FormLabel>State</FormLabel>
-              <Input ype="text" placeholder="State" />
+              <Input type="text" maxlength="2" placeholder="XX" />
               <FormLabel>Zip</FormLabel>
-              <Input type="number" maxLength="5" placeholder="Zip" />
+              <Input type="text" maxlength="5" placeholder="XXXXX" />
               <FormLabel>Group Bio</FormLabel>
               <Textarea type="text" rows="6" placeholder="Group Bio" />
-              <FormLabel>picture</FormLabel>
+              <FormLabel requiredIndicator>picture</FormLabel>
               <Input type="file" style={{ border: '0px' }} />
             </FormControl>
           </ModalBody>

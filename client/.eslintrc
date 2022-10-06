@@ -1,7 +1,7 @@
-{
-  "extends": ["airbnb", "airbnb/hooks"],
-  "globals": {
-    "window": true,
-    "document": true
-  }
-}
+// {
+//   "extends": ["airbnb", "airbnb/hooks"],
+//   "globals": {
+//     "window": true,
+//     "document": true
+//   }
+// }

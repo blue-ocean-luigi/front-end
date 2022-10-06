@@ -30,6 +30,15 @@ export function ContextAllProvider({ children }) {
       });
   }, [userID]); //  add userID here
 
+  // please.getUserInfoByID(userID)
+  // .then((response) => {
+  //   setUserInfo(response.data);
+  // })
+  // .catch((err) => {
+  //   console.log(err);
+  // });
+
+
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const values = {
     userID,
