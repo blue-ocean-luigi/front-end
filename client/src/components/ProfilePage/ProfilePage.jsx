@@ -6,6 +6,9 @@ import {
   Box,
   Text,
   Heading,
+  Input,
+  InputGroup,
+  InputRightElement,
   Image,
   Button,
   useDisclosure,
@@ -37,6 +40,10 @@ function ProfilePage() {
     setBanner(currBanner);
   }, []);
 
+  function handleBannerClick() {
+    document.getElementById('ban_up').click();
+  }
+
   // console.log(userInfo);
   // console.log(userFriends);
 
@@ -48,9 +55,10 @@ function ProfilePage() {
             requests={userFriends.requestlist}
           />
         </Box>
-        <Button rightIcon={<MdInsertPhoto />} position="absolute" right="5" bottom="5%">
-          Update banner
-        </Button>
+        <InputGroup w="15vw" position="absolute" right="5" bottom="5%">
+          <Input type="file" id="ban_up" display="none" />
+          <Button position="absolute" right="0" bottom="5%" rightIcon={<MdInsertPhoto />}onClick={(e)=>handleBannerClick(e)}>Update Banner</Button>
+        </InputGroup>
         <Center w="20vw" h="100%" position="relative">
           <Image src={userInfo.picture === undefined ? userInfo.picture : defaultProfilePic} boxSize="15vw" borderRadius="full" position="absolute" top="calc((100% - 13vw) / 2)" />
           <Text zIndex="2" position="absolute" left="0" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="white" transform="translateX(20%)">{`${userInfo.firstname} ${userInfo.lastname}`}</Text>
