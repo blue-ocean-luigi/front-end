@@ -16,15 +16,17 @@ function IncomingGroupRequests({memberRequests, page, editing}) {
       <Heading mb={1} fontSize="xl">
         Group Requests
       </Heading>
-      {memberRequests.map((m) => (
-        <GroupMember
-          key={m.name}
-          member={m}
-          page={page}
-          editing={editing}
-          isGroupRequest={isGroupRequest}
-        />
-      ))}
+      { memberRequests.length > 0
+        ? memberRequests.map((m) => (
+          <GroupMember
+            key={m.name}
+            member={m}
+            page={page}
+            editing={editing}
+            isGroupRequest={isGroupRequest}
+          />
+        )) : 'No group requests'
+      }
     </Box>
   );
 }

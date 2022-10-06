@@ -19,7 +19,7 @@ function PostItem({ post }) {
   console.log('this is post: ', post)
   const { userID } = UseContextAll();
   const [comment, setComment] = useState('');
-  const [likeCount, setLikeCount] = useState(0);
+  const [likeCount, setLikeCount] = useState(post.postlikes.length);
 
   function sendComment() {
     please.createComment({ post_id: post.post_id, user_id: userID, message: comment })
@@ -33,9 +33,34 @@ function PostItem({ post }) {
   }
 
   function handleLike() {
-    if (likeCount < 1) {
-      console.log('send a like, then increase likeCOunt');
-    }
+    console.log('liking ')
+    // // console.log('in handle like here is event: ', event)
+    // // console.log('here is userID in handleLike: ', userID)
+    // // check if the user has already liked the posts
+    // if (post.postlikes.filter(u => u.id === userID).length > 0
+    // || this.state.justLiked) {
+    //   // user already liked, so remove the like
+    //   please.deletePostLike(event.post_id, userID)
+    //     .then(() => this.setState(
+    //       {
+    //         likes: this.state.likes - 1,
+    //         justLiked: false,
+    //       }))
+    //     .catch((err) => console.log(err))
+    // } else {
+    //   please.createPostLike(
+    //     {
+    //       post_id: event.post_id,
+    //       user_id: userID,
+    //     },
+    //   )
+    //     .then(() => this.setState(
+    //       {
+    //         likes: this.state.likes + 1,
+    //         justLiked: true,
+    //       }))
+    //     .catch((err) => console.log(err));
+    // }
   }
 
   return (
@@ -67,7 +92,7 @@ function PostItem({ post }) {
           {/* (post.photo && <img></img>) */}
         <Stack shouldWrapChildren direction="row">
           <Text>
-            {post.postlikes.length}
+            {likeCount}
           </Text>
           <Icon as={BiHomeSmile} w={6} h={6} onClick={() => { handleLike(); }} />
           <Text>

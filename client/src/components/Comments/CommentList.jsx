@@ -14,6 +14,7 @@ import {
 import CommentItem from './CommentItem';
 
 function CommentList({ comments }) {
+  console.log('in comment list component now: ', comments)
   const [commentLike, setCommentLike] = useState(0);
 
   function sendCommentLike() {
