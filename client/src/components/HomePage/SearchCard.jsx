@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Box, Image, Grid, Text, VStack } from '@chakra-ui/react';
 
 function SearchCard({id, name, picture}) {
-
+  // console.log(id, name, picture)
   return (
+
 
     <Box>
       <Grid

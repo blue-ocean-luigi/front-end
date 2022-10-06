@@ -50,6 +50,7 @@ function HomePage() {
         const results = await please.searchPeopleAndGroups(search)
         const data = results.data
         setContent(data)
+        console.log('THIS IS DATA', data)
 
       } catch (err) {
         console.log(err)
