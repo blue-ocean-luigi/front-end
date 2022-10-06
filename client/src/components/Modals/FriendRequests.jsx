@@ -17,12 +17,17 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
+import FriendRequestCard from '../ProfilePage/FriendRequestCard.jsx';
+
 function FriendRequests(requests) {
   console.log('//////////////', requests.requests);
+  // firstname lastname id picture
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
-      <Button onClick={onOpen}>Friend Requests: {requests.requests.length || 0}</Button>
+      <Button onClick={onOpen}>
+        Friend Requests: {requests.requests.length || 0}
+      </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -30,7 +35,8 @@ function FriendRequests(requests) {
           <ModalHeader>Modal Title</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text>THIS IS WHERE THE LIST OF REQUEST TILES GOES</Text>
+            {requests.requests && requests.requests.map((req) =>
+            <FriendRequestCard request={req}/>)}
           </ModalBody>
 
           <ModalFooter>
