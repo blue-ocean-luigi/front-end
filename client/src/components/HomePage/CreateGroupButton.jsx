@@ -43,7 +43,7 @@ function CreateGroupButton() {
     const zip = formRef.current.children[7].value;
     const about = formRef.current.children[9].value;
     const photofile = formRef.current.children[11].files[0];
-    const photoURL = null;
+    let photoURL = null;
     if (photofile !== undefined) {
       const getPhotoURL = await handlePhoto(photofile);
       photoURL = getPhotoURL.data.data.display_url;
@@ -55,8 +55,8 @@ function CreateGroupButton() {
       .then((results) => {
         const groupID = results.data.id; // newgroupID
         setOpenModal(false); // closes modal
-        // setCurrentGroupID(groupID);
-        // setMainPage('group');
+        setCurrentGroupID(groupID);
+        setMainPage('group');
       })
       .catch((err) => {
         console.error(err);
