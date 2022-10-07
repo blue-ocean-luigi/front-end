@@ -334,16 +334,15 @@ export const please = {
       baseURL: basePath,
     }),
 
-    //check if friends
-    checkIfFriends: (user_id, other_id) =>
+  //  check if friends
+  checkIfFriends: (user_id, other_id) =>
     axios({
       url: `/friends/check`,
       method: "get",
       baseURL: basePath,
-      params : {
+      params: {
         user_id,
-        other_id
-      }
-    })
+        other_id,
+      },
+    }),
 };
-
