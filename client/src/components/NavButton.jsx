@@ -20,7 +20,7 @@ export default function NavButton() {
   return (
 
     <Menu zIndex={9999}>
-      <MenuButton  zIndex={9999} variant="ghost" mt="4px" ml="4px" position="fixed" top="0" left="0"as={Button}>Menu</MenuButton>
+      <MenuButton  zIndex={9999} backgroundColor="#f7d359" mt="4px" ml="4px" position="fixed" top="0" left="0"as={Button}>Menu</MenuButton>
       <MenuList zIndex={9999}>
         <MenuItem zIndex={9999} onClick={() => setMainPage('home')}>Home</MenuItem>
         <MenuItem zIndex={9999} onClick={() => handleSwitch()}>Profile</MenuItem>
