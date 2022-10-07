@@ -55,6 +55,7 @@ export default function ChatBar() {
   const [friendID, setFriendID] = useState(0)
   const [friendName, setFriendName] = useState('')
   const chatInput = useRef()
+  const modalChatInput = useRef()
   const [messageHistory, setMessageHistory] = useState([]);
   const { isOpen, onToggle } = useDisclosure();
   const messageRef = useRef([]);
@@ -63,9 +64,12 @@ export default function ChatBar() {
   const { isOpen: modalIsOpen, onOpen: modalOnOpen, onClose: modalOnClose } = useDisclosure();
   const chatHistoryRef = useRef();
   const modalChatBarRef = useRef();
+  const friendRef = useRef();
+  const [lastMessages, setLastMessages] = useState({})
   const sendChat = (event) => {
     event.preventDefault();
-    const message = chatInput.current.value;
+    const input = modalIsOpen ? modalChatInput : chatInput;
+    const message = input.current.value;
     const sendData = {
       message: message,
       receiver_id: friendID, // the friends userId
@@ -75,46 +79,68 @@ export default function ChatBar() {
     setMessageHistory([...messageHistory, sendData])
     please.postMessage(userID, friendID, message);
     socket.emit('message', sendData);
-    chatInput.current.value = '';
+    input.current.value = '';
   }
   useEffect(() => {
+    if (chatHistoryRef.current) {
+      chatHistoryRef.current.scrollTo({top: chatHistoryRef.current.scrollHeight})
+    }
+  }, [messageHistory])
+  useEffect(() => {
     messageRef.current = messageHistory;
+    friendRef.current = friendID;
   });
   useEffect(() => {
     socket.off('messageResponse');
     socket.on('messageResponse', (data) => {
       if (data.receiver_id === userID) {
-        setMessageHistory([...messageRef.current, data]);
-        const friend = userFriends.friendlist.filter(f => f.id === data.sender_id)[0];
-        toastRef.current = messageToast({
-          duration: 2000,
-          isClosable: true,
-          render: () => (
-            <Alert status='info' borderRadius='md' p={3}>
-              <Flex flexDirection="column">
-                <AlertIcon />
-                <Center><AlertTitle>New Message</AlertTitle></Center>
-                <Center><AlertDescription>{ `You have a message from ${friend.firstname}`}</AlertDescription></Center>
-                <Center><Button onClick={() => { setFriendID(data.sender_id); messageToast.close(toastRef.current); }} variant='ghost'>Reply</Button></Center>
-              </Flex>
-            </Alert>
-          )
-        })
+        //console.log('sender/friend ids:', data.sender_id, friendRef.current);
+        if (data.sender_id == friendRef.current) {
+          setMessageHistory([...messageRef.current, data]);
+        }
+        //setMessageHistory([...messageRef.current, data]);
+          const friend = userFriends.friendlist.filter(f => f.id === data.sender_id)[0];
+          toastRef.current = messageToast({
+            duration: 2000,
+            isClosable: true,
+            render: () => (
+              <Alert status='info' borderRadius='md' p={3}>
+                <Flex flexDirection="column">
+                  <AlertIcon />
+                  <Center><AlertTitle>New Message</AlertTitle></Center>
+                  <Center><AlertDescription>{ `You have a message from ${friend.firstname}`}</AlertDescription></Center>
+                  <Center>
+                    <Button onClick={() => { setFriendID(data.sender_id); messageToast.close(toastRef.current); }} variant='ghost'>
+                    Reply
+                    </Button>
+                  </Center>
+                </Flex>
+              </Alert>
+            )
+          })
       }
     });
   }, [userID]);
   useEffect(() => {
     please.getMessages(userID, friendID).then(res =>setMessageHistory(res.data))
     //chatHistoryRef.current.scrollTo({top: chatHistoryRef.current.scrollHeight});
-    if (chatHistoryRef.current) {
       setTimeout(() => {
-        chatHistoryRef.current.scrollTo({top: chatHistoryRef.current.scrollHeight});
+        if (chatHistoryRef.current) {
+          chatHistoryRef.current.scrollTo({top: chatHistoryRef.current.scrollHeight});
+        }
       }, 100);
-    }
     if (modalChatBarRef.current) {
       //modalChatRef.current.offsetHeight = modalChatBarRef.current.parentElement.offsetHeight;
     }
-  }, [friendID]);
+    userFriends.friendlist.forEach(f => {
+      please.getMessages(userID, f.id).then(res => {
+        //const id = f.id;
+        //const msg = res.data[0];
+        lastMessages[f.id] = res.data[res.data.length - 1].message;
+        setLastMessages({...lastMessages})
+      })
+    })
+  }, [friendID, modalIsOpen]);
   const lastFive = (list) => [...list].reverse().slice(0, 4).reverse();
 
   useEffect(() => {
@@ -188,13 +214,15 @@ export default function ChatBar() {
                       <Spacer />
                       <Flex flexDirection="column">
                         <Text>{friend.firstname}</Text>
-                        <Text as="i">Last thing said</Text>
+                        <Text as="i">
+                          {  }
+                        </Text>
                       </Flex>
                     </Flex>
                   </Box>
                 </MenuItem>
               ) : null}
-              <MenuItem><Link onClick={() => modalOnOpen()}>View chats and message history</Link></MenuItem>
+              <MenuItem onClick={() => modalOnOpen()}><Link>View chats and message history</Link></MenuItem>
             </MenuList>
           </Menu>
         </Flex>
@@ -208,14 +236,23 @@ export default function ChatBar() {
               <GridItem pr={4}>
                 <VStack maxW="200px" maxH="calc(80vh)" overflowY="auto">
                 { userFriends.friendlist ? userFriends.friendlist.map(friend =>
-                <Box as={Button} minH="60px" key={friend.id} onClick={() => {setFriendID(friend.id); setFriendName(friend.firstname); }}>
+                <Box as={Button}
+                    minH="60px"
+                    minW="200px"
+                    key={friend.id}
+                    variant={friend.id === friendID ? 'outline' : null }
+                    onClick={() => {
+                      setFriendID(friend.id);
+                      setFriendName(friend.firstname);
+                    }}
+                >
                     <Box w="100%">
                       <Flex>
                         <Avatar src={friend.picture} />
                         <Spacer />
                         <Flex flexDirection="column">
                           <Text>{friend.firstname}</Text>
-                          <Text as="i">Last thing said</Text>
+                          <Text as="i">{lastMessages[friend.id]}</Text>
                         </Flex>
                       </Flex>
                     </Box>
@@ -241,6 +278,7 @@ export default function ChatBar() {
                       </Flex>
                     </Box>
                   )) : <Text>You have no saved messages with {friendName}</Text> }
+                  <Spacer />
                 </Box>
               </GridItem>
 
@@ -249,7 +287,7 @@ export default function ChatBar() {
                   <form onSubmit={sendChat}>
                     <Input
                       disabled={(friendID === 0)}
-                      ref={chatInput}
+                      ref={modalChatInput}
                       pl={4}
                       pr={4}
                       placeholder={`send a message to ${friendName}`}

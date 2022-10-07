@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import {
   Modal,
@@ -19,19 +19,36 @@ import {
   Select,
   Stack,
   Box,
+  extendTheme,
 } from '@chakra-ui/react';
+import {
+  useJsApiLoader,
+  GoogleMap,
+  Marker,
+  Autocomplete,
+  DirectionsRenderer,
+} from '@react-google-maps/api';
+import '../App.css';
+import { GOOGLE_API } from '../../../config';
+import { FaLocationArrow, FaGoogle } from 'react-icons/fa';
+const GEO_API = 'https://maps.googleapis.com/maps/api/geocode/json';
 import { please } from '../../request';
 import { UseContextAll } from '../ContextAll';
 
 const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
+// const zIndices = {
+//   zIndices: { modal: 800 },
+// }
+
+
 
 function NewEvent({ updateFeed }) {
   const { userID, currentGroupID } = UseContextAll();
-  console.log('DEBUG in NewEvent here is context: ', userID, currentGroupID)
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [name, setEventName] = useState('');
   const [content, setContent] = useState('');
-  const [eventPhoto, setEventPhoto] = useState('');
+  const [eventPhoto, setEventPhoto] = useState();
+  // const [location, setLocation] = useState('');
   const [startHour, setStartHour] = useState('12');
   const [startMins, setStartMins] = useState('00');
   const [startMeridiem, setStartMeridiem] = useState('PM');
@@ -40,6 +57,11 @@ function NewEvent({ updateFeed }) {
   const [endMins, setEndMins] = useState('00');
   const [endMeridiem, setEndMeridiem] = useState('PM');
   const [endDate, setEndDate] = useState('');
+  const location = useRef('')
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: GOOGLE_API,
+    libraries: ['places'],
+  });
 
   function handleTime(hour, mins, meridiem) {
     let time;
@@ -70,29 +92,34 @@ function NewEvent({ updateFeed }) {
   }
 
   function handleSubmit() {
-    console.log('DEBUG in NewEvent handlesubmit')
     const formBody = {
       user_id: userID,
       group_id: currentGroupID,
-      eventname: name,
+      name: name,
       content: content,
       photos: [eventPhoto],
-      isevent: true,
-      // location, <= need to add google stuff
-      starttime: handleTime(startHour, startMins, startMeridiem),
-      startdate: startDate,
-      endtime: handleTime(endHour, endMins, endMeridiem),
-      enddate: endDate,
+      isEvent: true,
+      location: location.current.value,
+      startTime: handleTime(startHour, startMins, startMeridiem),
+      startDate,
+      endTime: handleTime(endHour, endMins, endMeridiem),
+      endDate,
+      payment_amt: 0,
     };
-    console.log('DEBUG here is the formbody: ', formBody)
+    console.log(formBody);
     please.createPost(formBody)
-      .then(() => {
+      .then((response) => {
+        console.log(response);
         updateFeed();
         onClose();
       })
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  if (!isLoaded) {
+    return <h1>loading</h1>;
   }
 
   return (
@@ -116,7 +143,11 @@ function NewEvent({ updateFeed }) {
               <Input type="file" onChange={(e) => { handlePhoto(e); }} />
 
               <FormLabel>Location of Event</FormLabel>
-
+              <Box>
+                <Autocomplete>
+                  <input type="text" ref={location}/>
+                </Autocomplete>
+              </Box>
               <FormLabel>Date and Time</FormLabel>
               <FormHelperText>Start Date</FormHelperText>
               <Input type="date" onChange={(e) => { setStartDate(e.target.value); }} />

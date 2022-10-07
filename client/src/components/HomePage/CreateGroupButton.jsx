@@ -21,7 +21,7 @@ const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
 
 function CreateGroupButton() {
   const [openModal, setOpenModal] = useState(false);
-  const { userID } = UseContextAll();
+  const { userID, setCurrentGroupID, setMainPage } = UseContextAll();
   const formRef = useRef();
 
   const handlePhoto = (photo) => {
@@ -33,7 +33,7 @@ function CreateGroupButton() {
       method: 'post',
       url: 'https://api.imgbb.com/1/upload',
       data: body,
-    });
+    })
   };
 
   const submitForm = async () => {
@@ -43,15 +43,20 @@ function CreateGroupButton() {
     const zip = formRef.current.children[7].value;
     const about = formRef.current.children[9].value;
     const photofile = formRef.current.children[11].files[0];
-    const getPhotoURL = await handlePhoto(photofile);
-    const photoURL = getPhotoURL.data.data.display_url;
+    let photoURL = null;
+    if (photofile !== undefined) {
+      const getPhotoURL = await handlePhoto(photofile);
+      photoURL = getPhotoURL.data.data.display_url;
+    }
+
+    console.log({name,city,state,zip,about,photoURL})
 
     please.createNewGroup(userID, name, about, state, city, zip, photoURL)
       .then((results) => {
         const groupID = results.data.id; // newgroupID
         setOpenModal(false); // closes modal
-        // change main page;
-        // change current group
+        setCurrentGroupID(groupID);
+        setMainPage('group');
       })
       .catch((err) => {
         console.error(err);
@@ -87,7 +92,7 @@ function CreateGroupButton() {
               <FormLabel>State</FormLabel>
               <Input type="text" maxlength="2" placeholder="XX" />
               <FormLabel>Zip</FormLabel>
-              <Input type="text" maxlength="5" placeholder="XXXXX" />
+              <Input type="text" maxLength="5" placeholder="XXXXX" />
               <FormLabel>Group Bio</FormLabel>
               <Textarea type="text" rows="6" placeholder="Group Bio" />
               <FormLabel requiredIndicator>picture</FormLabel>

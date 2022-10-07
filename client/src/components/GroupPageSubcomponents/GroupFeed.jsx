@@ -9,22 +9,22 @@ import HomeFeedPost from '../HomePage/post/HomeFeedPost';
 import { please } from '../../request';
 import { UseContextAll } from '../ContextAll';
 
-function GroupFeed() {
+function GroupFeed({events, updateFeed}) {
   // TODO Replace hardcoded data with axios call
   const { currentGroupID } = UseContextAll();
-  const [events, setEvents] = useState([]);
+  // const [events, setEvents] = useState([]);
 
-  useEffect(() => {
-    please.getGroupPosts(currentGroupID)
-      .then((res) => setEvents(res.data))
-      .catch((err) => console.log(err));
-  }, [currentGroupID]);
+  // useEffect(() => {
+  //   please.getGroupPosts(currentGroupID)
+  //     .then((res) => setEvents(res.data))
+  //     .catch((err) => console.log(err));
+  // }, [currentGroupID]);
 
-  function updateFeed() {
-    please.getGroupPosts(currentGroupID)
-      .then((res) => setEvents(res.data))
-      .catch((err) => console.log(err));
-  }
+  // function updateFeed() {
+  //   please.getGroupPosts(currentGroupID)
+  //     .then((res) => setEvents(res.data))
+  //     .catch((err) => console.log(err));
+  // }
 
   return (
     <Box>

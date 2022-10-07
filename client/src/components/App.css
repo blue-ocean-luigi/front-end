@@ -74,6 +74,15 @@ html body {
   z-index: 2;
 }
 
+.pac-container {
+  /* background-color: #FFF; */
+  z-index: 9999;
+  /* display: inline-block; */
+  position: fixed;
+  /* float: left; */
+}
+
+
 /* .site_banner_img::before {
   content: '';
   filter: blur(3px);
