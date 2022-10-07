@@ -48,7 +48,7 @@ function BioUpdate(props) {
 
   return (
     <>
-      <Button onClick={onOpen}  position="absolute" right="5px" bottom="5px">Update Bio</Button>
+      <Button onClick={onOpen} position="absolute" right="5px" bottom="5px" color="black" background="#f7d359">Update Bio</Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
