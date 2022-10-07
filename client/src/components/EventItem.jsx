@@ -152,9 +152,16 @@ class EventItem extends React.Component {
             </Tooltip> */}
             <Text> {rsvps.length} </Text>
             <Tooltip label="RSVPs">
-              <IconButton variant="ghost" onClick={onOpenRsvp}>
-                <Icon as={FaRegEnvelopeOpen} w={5} h={5} />
-              </IconButton>
+              {
+                rsvps.length > 0
+                  ? (
+                    <IconButton variant="ghost" onClick={onOpenRsvp}>
+                      <Icon as={FaRegEnvelopeOpen} w={5} h={5} />
+                    </IconButton>
+                  )
+                  : <Icon as={FaRegEnvelopeOpen} w={5} h={5} />
+              }
+
             </Tooltip>
             <RsvpList onClose={onCloseRsvp} isOpen={isOpenRsvp} rsvps={rsvps} />
           </Stack>
