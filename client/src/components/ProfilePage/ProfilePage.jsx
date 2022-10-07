@@ -44,18 +44,25 @@ function ProfilePage() {
   const [profileFriends, setProfileFriends] = useState([]);
   const [profileGroups, setProfileGroups] = useState([]);
   const [profileInfo, setProfileInfo] = useState({});
+  const [profileReqests, setProfileRequests] = useState([]);
 
   useEffect(() => {
     //  set banner to the one in db if it exists, otherwise use def
     console.log(userID, currentUserID);
     if (userID === currentUserID) {
-      console.log('userInfo:', userInfo);
-      console.log('userFriends', userFriends);
       setMyProfile(true);
-      setBio(userInfo.aboutme);
-      setProfileInfo(userInfo);
-      setProfileFriends(userFriends.friendlist);
-      setProfileGroups(userGroups);
+      please.getUserByID(userID)
+        .then((response) => {
+          console.log(response.data);
+          setBio(response.data.info.aboutme);
+          setProfileInfo(response.data.info);
+          setProfileFriends(response.data.friends.friendlist);
+          setProfileGroups(response.data.groups);
+          setProfileRequests(response.data.friends.requestlist);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       setMyProfile(false);
       please.getUserByID(currentUserID)
@@ -65,6 +72,7 @@ function ProfilePage() {
           setProfileInfo(response.data.info);
           setProfileFriends(response.data.friends.friendlist);
           setProfileGroups(response.data.groups);
+          setProfileRequests(response.data.friends.requestlist);
         })
         .catch((err) => {
           console.log(err);
@@ -105,7 +113,7 @@ function ProfilePage() {
         <Box position="absolute" right="5" top="5%" zIndex="2" cursor="pointer">
           {isMyprofile && (
           <FriendRequests
-            requests={userFriends.requestlist}
+            requests={profileReqests}
           />
           )}
           {!isMyprofile && (
@@ -115,7 +123,7 @@ function ProfilePage() {
         {isMyprofile && (
         <InputGroup w="15vw" position="absolute" right="5" bottom="5%">
           <Input type="file" id="ban_up" display="none" onChange={(e) => { handlePhoto(e); }} />
-          <Button position="absolute" right="0" bottom="5%" rightIcon={<MdInsertPhoto />}onClick={(e)=>handleBannerClick(e)}>Update Banner</Button>
+          <Button position="absolute" right="0" bottom="5%" rightIcon={<MdInsertPhoto />} onClick={(e) => handleBannerClick(e)}>Update Banner</Button>
         </InputGroup>
         )}
         <Center w="20vw" h="100%" position="relative">
