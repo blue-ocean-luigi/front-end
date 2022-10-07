@@ -37,7 +37,7 @@ export const please = {
         email,
         aboutme,
         picture,
-        banner
+        banner,
       },
     }),
 
@@ -54,7 +54,7 @@ export const please = {
         aboutme,
         picture,
         user_id,
-        banner
+        banner,
       },
     }),
 
@@ -142,7 +142,7 @@ export const please = {
         city,
         zip,
         user_id,
-        picture
+        picture,
       },
     }),
 

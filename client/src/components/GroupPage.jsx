@@ -156,7 +156,7 @@ function GroupPage() {
       <VStack p={2} h="100vh" w="100%" gap={2}>
         <Flex h="fit-content" w="100%">
           <Box p={2} w="100%">
-            <SearchGroup />
+            <SearchGroup members={members} events={events} />
             <Heading mt={4} mb={1}>
               {groupInfo.name}
             </Heading>

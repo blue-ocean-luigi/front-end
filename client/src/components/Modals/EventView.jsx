@@ -19,8 +19,12 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import CommentList from '../Comments/CommentList';
+<<<<<<< HEAD
 import { please } from '../../request';
 import { UseContextAll } from '../ContextAll';
+=======
+import Maps from './Maps';
+>>>>>>> main
 
 function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps }) {
   console.log('DEBUG this is eventinfo: ', eventInfo)
@@ -82,6 +86,7 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps }) {
               <span><Icon as={FaRegEnvelopeOpen} w={6} h={6} /></span>
             </Tooltip>
           </Stack>
+          <Maps endLoc={eventInfo.location} />
           <ModalFooter>
             { !going
               && <Button colorScheme="blue" onClick={() => sendRSVP()}> RSVP </Button>
