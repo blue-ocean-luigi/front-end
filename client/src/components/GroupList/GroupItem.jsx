@@ -35,7 +35,7 @@ function GroupItem({ group }) {
           <Image
             borderRadius="full"
             boxSize="80px"
-            src={group.picture}
+            src={ group.picture }
             alt={group.name}
             p={1}
           />

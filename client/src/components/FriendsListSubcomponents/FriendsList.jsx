@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Heading,
@@ -7,11 +7,12 @@ import Friend from './Friend';
 
 // TODO: edit the hook to work for page control????
 
-function FriendsList({ friends }) {
-  console.log(friends);
+function FriendsList({ friends, isGroupInvite, members}) {
+  // console.log(friends);
+
   return (
     <Box align="center">
-      {friends && friends.map((f) => <Friend key={f.name} friend={f} />)}
+      {friends && friends.map((f) => <Friend key={f.name} friend={f} isGroupInvite={isGroupInvite} members={members}/>)}
     </Box>
   );
 }
