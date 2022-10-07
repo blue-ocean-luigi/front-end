@@ -40,9 +40,9 @@ function RequestFriend() {
 
   return (
     <Box>
-      {friendStatus === 'friend' && <Button onClick={() => setOpenChatModal(true) } background="rgba(250,250,250,1)" color="blue.500"> Chat Now </Button>}
-      {friendStatus === 'pending' && <Button background="rgba(250,250,250,1)" color="blue.500"> Pending </Button>}
-      {friendStatus === 'stranger' && <Button background="rgba(250,250,250,1)" color="blue.500" onClick={() => handleRequest()}> Request Friend </Button>}
+      {friendStatus === 'friend' && <Button onClick={() => setOpenChatModal(true) } background="rgba(0,0,0,0.8)" color="#f7d359"> Chat Now </Button>}
+      {friendStatus === 'pending' && <Button background="rgba(0,0,0,0.8)" color="#f7d359"> Pending </Button>}
+      {friendStatus === 'stranger' && <Button background="rgba(0,0,0,0.8)" color="#f7d359" onClick={() => handleRequest()}> Request Friend </Button>}
     </Box>
   );
 }
