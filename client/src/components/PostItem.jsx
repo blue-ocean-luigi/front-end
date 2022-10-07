@@ -10,6 +10,7 @@ import {
   Stack,
   Icon,
   Textarea,
+  Tooltip,
 } from '@chakra-ui/react';
 import EventView from './Modals/EventView';
 import CommentList from './Comments/CommentList';
@@ -133,10 +134,14 @@ class PostItem extends React.Component {
 
           <Stack shouldWrapChildren direction="row">
             <Text>{likes}</Text>
-            <Icon as={BiHomeSmile} w={6} h={6} onClick={() => this.handleLike(post, userID)} />
-            {/* <Text>{event.comments.length}</Text> */}
+            <Tooltip label="likes">
+              <span><Icon as={BiHomeSmile} w={6} h={6} onClick={() => this.handleLike(post, userID)} /></span>
+            </Tooltip>
             <Text>{comments.length}</Text>
-            <Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} />
+            <Tooltip label="comments">
+              <span><Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} /></span>
+            </Tooltip>
+
           </Stack>
         </HStack>
         <Box>

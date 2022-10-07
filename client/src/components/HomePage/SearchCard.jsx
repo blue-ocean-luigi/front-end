@@ -18,17 +18,16 @@ function SearchCard({id, name, picture}) {
         sx={{
           gridTemplateColumns: '50px 1fr',
           gridColumnGap: '1rem',
-          height: '70px',
+          height: '40px',
           overflow: 'hidden'
         }}>
         <Box onClick={() => handleSelect()}>
           <Image
-            src={picture}
-            sx={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'civer'
-            }}/>
+            borderRadius="full"
+            boxSize="40px"
+            src={picture ? picture : 'https://picsum.photos/seed/picsum/200/300'}
+            p={1}
+          />
         </Box>
         <VStack>
           <Text noOfLines={1}>{name}</Text>

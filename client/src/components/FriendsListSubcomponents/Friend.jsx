@@ -11,8 +11,6 @@ import {
 import { UseContextAll } from '../ContextAll';
 
 function Friend({ friend, isGroupInvite, members }) {
-  console.log('DEBUG this is friend: ', friend);
-  console.log('DEBUG this is members: ', members)
   const { mainPage, setMainPage, setCurrentUserID, currentGroupID } = UseContextAll();
   let friendAlreadyInGroup;
   isGroupInvite ? friendAlreadyInGroup = members.filter(m => m.id === friend.id).length > 0 : friendAlreadyInGroup=false;
@@ -39,7 +37,7 @@ function Friend({ friend, isGroupInvite, members }) {
           <Image
             borderRadius="full"
             boxSize="80px"
-            src={friend.picture}
+            src={friend.picture ? friend.picture : 'https://i.picsum.photos/id/1062/5092/3395.jpg?hmac=o9m7qeU51uOLfXvepXcTrk2ZPiSBJEkiiOp-Qvxja-k'}
             alt={friend.firstname}
             p={1}
           />
