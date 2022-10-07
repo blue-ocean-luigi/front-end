@@ -37,6 +37,8 @@ import {
   TabPanel,
   Grid,
   GridItem,
+  FormLabel,
+  Textarea
 } from '@chakra-ui/react';
 import { format } from 'timeago.js';
 import socket from './chatclient';
@@ -44,13 +46,23 @@ import { render } from 'timeago.js';
 
 
 
-
 import { UseContextAll } from './ContextAll';
 import { please } from '../request';
 
+export const sendInvite = (to, from, groupID) => {
+  const inviteMessage = `___invite___${groupID}`;
+    const sendData = {
+      message: inviteMessage,
+      receiver_id: to, // the friends userId
+      sender_id: from, // the senders userId
+      createdat: Date.now()
+    };
+    please.postMessage(from, to, inviteMessage);
+    socket.emit('message', sendData);
+}
 
 export default function ChatBar() {
-  const { userInfo, userID, userFriends, currentUserID, openChatModal, setOpenChatModal } = UseContextAll();
+  const { userInfo, userID, userFriends, userGroups, currentUserID, openChatModal, setOpenChatModal, currentGroupID, setCurrentGroupID, setMainPage } = UseContextAll();
   const [chatFocus, setChatFocus] = useState(false);
   const [friendID, setFriendID] = useState(0)
   const [friendName, setFriendName] = useState('')
@@ -66,6 +78,7 @@ export default function ChatBar() {
   const modalChatBarRef = useRef();
   const friendRef = useRef();
   const [lastMessages, setLastMessages] = useState({})
+  const { isOpen: requestIsOpen, onOpen: requestOnOpen, onClose: requestOnClose } = useDisclosure();
   const sendChat = (event) => {
     event.preventDefault();
     const input = modalIsOpen ? modalChatInput : chatInput;
@@ -154,7 +167,8 @@ export default function ChatBar() {
     if (userFriends && userFriends.friendlist) {
       userFriends.friendlist.forEach(f => {
         please.getMessages(userID, f.id).then(res => {
-          res.data.length ? lastMessages[f.id] = res.data[res.data.length - 1].message : null;
+          const data = res.data.filter(msg => !msg.message.startsWith('___invite___'));
+          data.length ? lastMessages[f.id] = data[data.length - 1].message : null;
           setLastMessages({...lastMessages})
         })
       })
@@ -225,7 +239,7 @@ export default function ChatBar() {
           <Menu>
             <MenuButton ml="4px" mr="4px" as={Button}>Chat Menu</MenuButton>
             <MenuList>
-              { userFriends.friendlist ? userFriends.friendlist.map(friend =>
+              { userFriends.friendlist ? userFriends.friendlist.slice(0,4).map(friend =>
               <MenuItem key={friend.id} onClick={() => {setFriendID(friend.id); setFriendName(friend.firstname); }}>
                   <Box w="100%">
                     <Flex>
@@ -251,9 +265,9 @@ export default function ChatBar() {
           <ModalHeader>All Your Messages</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Grid w="100%" h="calc(80vh)" templateRows="10fr 1fr" templateColumns="0.1fr, 5fr">
-              <GridItem pr={4}>
-                <VStack minW="200px" maxW="400px" maxH="calc(80vh)" overflowY="auto">
+            <Grid w="100%" h="calc(80vh)" templateRows="10fr 1fr" templateColumns="1fr 5fr">
+              <GridItem pr={4} minW="200px" maxW="300px">
+                <VStack minW="200px" maxW="300px" maxH="calc(80vh)" overflowY="auto">
                 { userFriends.friendlist ? userFriends.friendlist.map(friend =>
                 <Box as={Button}
                     minH="60px"
@@ -268,8 +282,7 @@ export default function ChatBar() {
                     <Box w="100%">
                       <Flex>
                         <Avatar src={friend.picture} />
-                        <Spacer />
-                        <Flex flexDirection="column">
+                        <Flex minW="150px" flexDirection="column">
                           <Text>{friend.firstname}</Text>
                           <Text as="i">{ lastMessages.hasOwnProperty(friend.id) ? (lastMessages[friend.id].length > 12 ? lastMessages[friend.id].slice(0, 12) + '...' : lastMessages[friend.id]) : null }</Text>
                         </Flex>
@@ -281,11 +294,30 @@ export default function ChatBar() {
               </GridItem>
               <GridItem>
                 <Box  w="100%" maxH="calc(70vh)" ref={chatHistoryRef} overflowY="auto" flexDirection="column">
-                  { messageHistory.length ? messageHistory.map((msg, i) => (
+                  { messageHistory.length ? messageHistory.map((msg, i) => {
+                    if (msg.message.startsWith('___invite___'))  {
+                      const groupId = Number(msg.message.replace('___invite___', ''));
+                      const group = (async () => {
+                        let thing = await please.getGroupInfo(groupId);
+                        return thing;
+                      })();
+                      if (userGroups && (userGroups.filter(grp => grp.id === groupId).length === 0)) {
+                        return <Box>
+                          <Button onClick={() => {
+                            setCurrentGroupID(groupId);
+                            setMainPage('group');
+                            modalOnClose();
+                          }}>Join This Group</Button>
+                            </Box>
+                      } else {
+                        return null
+                      }
+                    } else {
+                    return (
                     <Box w="100%" mb={4} key={i}>
                       <Flex w="100%" >
                         {msg.sender_id === userID ? <Spacer /> : null}
-                        <Center minW="25%" maxW="75%">
+                        <Center minW="25%">
                           <Alert borderRadius='md' w="100%" p={4} status={msg.sender_id === userID ? 'success' : 'warning'}>
                             <Flex flexDirection="column">
                               <Text>{msg.message}</Text>
@@ -296,7 +328,8 @@ export default function ChatBar() {
                         {msg.sender_id === userID ? null: <Spacer />}
                       </Flex>
                     </Box>
-                  )) : <Text>You have no saved messages with {friendName}</Text> }
+                    )}
+                  }) : <Text>You have no saved messages with {friendName}</Text> }
                   <Spacer />
                 </Box>
               </GridItem>
@@ -324,6 +357,5 @@ export default function ChatBar() {
     </Box>
   )
 }
-
 function AllMessages () {
 }
