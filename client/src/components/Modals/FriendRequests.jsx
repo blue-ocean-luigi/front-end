@@ -58,7 +58,7 @@ function FriendRequests({requests}) {
 
   return (
     <>
-      <Button onClick={onOpen} background="rgba(0,0,0,0.8)" color="#f7d359">
+      <Button onClick={onOpen} background="#f7d359" color="black">
         Friend Requests: {reqCount}
       </Button>
 

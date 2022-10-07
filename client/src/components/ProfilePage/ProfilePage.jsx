@@ -139,7 +139,7 @@ function ProfilePage() {
         <InputGroup w="100%" position="absolute" right="5" bottom="5%">
           <Input type="file" id="ban_up" display="none" onChange={(e) => { handlePhoto(e); }} />
           <Input type="file" id="pic_up" display="none" onChange={(e) => { handlePhoto(e); }} />
-          <Button background="rgba(0,0,0,0.8)" color="#f7d359" position="absolute" right="0" bottom="5%" rightIcon={<MdInsertPhoto />} onClick={(e) => handleBannerClick(e, 'ban')}>Update Banner</Button>
+          <Button background="#f7d359" color="black" position="absolute" right="0" bottom="5%" rightIcon={<MdInsertPhoto />} onClick={(e) => handleBannerClick(e, 'ban')}>Update Banner</Button>
           <Button color="#f7d359" background="transparent" position="absolute" left="6vw" transform="translateY(-5px)" rightIcon={<MdInsertPhoto />} onClick={(e) => handleBannerClick(e, 'pic')} zIndex="5" size="m">Update Picture</Button>
         </InputGroup>
         )}
@@ -148,9 +148,11 @@ function ProfilePage() {
           <Text w="100%" zIndex="2" position="absolute" left="0" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="#f7d359">{`${profileInfo.firstname} ${profileInfo.lastname}`}</Text>
         </Center>
       </Box>
-      <Box minHeight="20vh" w="80%" border="1px solid gray" mb="1em" position="relative">
-        <Text fontSize="2em">About Me</Text>
-        <Text fontSize="1.2em">{bio || 'This user has not filled out their bio :('}</Text>
+      <Box h="20vh" w="80%" border="1px solid gray" mb="1em" position="relative" overflowY="auto">
+        <Text fontSize="2em" position="absolute" left="2%" top="5%">About Me: </Text>
+        <Center overflowY="auto" w="70%" h="fit-content" zIndex="5">
+          <Text fontSize="1.2em" position="absolute" m="1em" top="30%" left="15%" right="15%" textIndent="1em">{bio || 'This user has not filled out their bio :('}</Text>
+        </Center>
         {isMyprofile && (
         <BioUpdate updateBio={setBio} onClose={onClose} onOpen={onOpen} isOpen={isOpen} />)}
       </Box>
