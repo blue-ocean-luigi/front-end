@@ -12,6 +12,9 @@ function FriendsList({ friends, isGroupInvite, members}) {
 
   return (
     <Box align="center">
+            <Heading mb={1} fontSize="xl">
+        Your Friends
+      </Heading>
       {friends && friends.map((f) => <Friend key={f.name} friend={f} isGroupInvite={isGroupInvite} members={members}/>)}
     </Box>
   );
