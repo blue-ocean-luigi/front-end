@@ -6,7 +6,7 @@ import EventItem from '../../EventItem';
 import { UseContextAll } from '../../ContextAll';
 import { please } from '../../../request';
 
-function Post({post, updateFeed}) {
+function Post({post, updateFeed, setEvents}) {
   // console.log('this is post')
   // function sendComment(comment) {
   //   console.log('in send comment here is the big object: ', comment)
@@ -17,9 +17,8 @@ function Post({post, updateFeed}) {
   //     .catch((err) => console.log(err));
   // }
 
-  const { userID, userInfo } = UseContextAll();
+  const { userID, userInfo, currentGroupID } = UseContextAll();
   const [rsvps, setRsvps] = useState([]);
-
 
   // get number of rsvps
   useEffect(() => {
@@ -39,6 +38,8 @@ function Post({post, updateFeed}) {
           updateFeed={updateFeed}
           rsvps={rsvps}
           setRsvps={setRsvps}
+          currentGroupID={currentGroupID}
+          setEvents={setEvents}
         />
       ) : (
         <PostItem
@@ -46,6 +47,8 @@ function Post({post, updateFeed}) {
           userID={userID}
           userInfo={userInfo}
           updateFeed={updateFeed}
+          currentGroupID={currentGroupID}
+          setEvents={setEvents}
         />
       )
       }

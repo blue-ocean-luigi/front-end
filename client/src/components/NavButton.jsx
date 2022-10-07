@@ -24,7 +24,6 @@ export default function NavButton() {
       <MenuList zIndex={9999}>
         <MenuItem zIndex={9999} onClick={() => setMainPage('home')}>Home</MenuItem>
         <MenuItem zIndex={9999} onClick={() => handleSwitch()}>Profile</MenuItem>
-        <MenuItem zIndex={9999} onClick={() => setMainPage('group')}>Your Groups</MenuItem>
         <MenuItem zIndex={9999} onClick={() => logout().then(() => { setMainPage('login'); setUserInfo({}); })}>Log Out</MenuItem>
       </MenuList>
     </Menu>

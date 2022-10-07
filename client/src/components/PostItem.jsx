@@ -32,25 +32,14 @@ class PostItem extends React.Component {
 
   handleLike(post, userID) {
     if (this.requestInFlight) {
-      // console.log('DEBUG: request in flight');
       return;
     }
     this.requestInFlight = true;
-    // console.log('these are likes: ', event)
-    // console.log(`DEBUG: likes: ${this.state.likes}`);
-
-    // console.log('DEBUG: event.postlikes', event.postlikes.filter(u => u.id === userID));
-    // console.log('in handle like here is event: ', event)
-    // console.log('here is userID in handleLike: ', userID)
-    // check if the user has already liked the posts
     if (this.state.meLikey) {
-      // console.log('DEBUG: likes--');
-      // user already liked, so remove the like
       please
         .deletePostLike(post.post_id, userID)
         .catch((err) => console.log('DEBUG:', err))
         .then(() => {
-          // console.log('DEBUG: likes-- handled');
           this.setState({
             likes: this.state.likes - 1,
             meLikey: false,
@@ -58,7 +47,6 @@ class PostItem extends React.Component {
           this.requestInFlight = false;
         })
     } else {
-      // console.log('DEBUG: likes++');
       please
         .createPostLike({
           post_id: post.post_id,
@@ -66,9 +54,6 @@ class PostItem extends React.Component {
         })
         .catch((err) => console.log('DEBUG:', err))
         .then(() => {
-          // console.log('DEBUG: HERE');
-          // console.log(`DEBUG: resp ${JSON.Stringify(resp)}`);
-          // console.log("DEBUG: likes++ handled");
           this.setState({
             likes: this.state.likes + 1,
             meLikey: true,
@@ -79,8 +64,7 @@ class PostItem extends React.Component {
   }
 
   sendComment(comment) {
-    const { post, userID } = this.props;
-
+    const { post, userID, currentGroupID } = this.props;
     please.createComment({ post_id: post.post_id, user_id: userID, message: comment })
       .then((response) => {
         console.log(response);
@@ -88,9 +72,13 @@ class PostItem extends React.Component {
           comment: '',
         });
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then((res) => please.getGroupPosts(post.group_id))
+      .then((res) => {
+        const newComments = res.data.filter(i=> i.post_id===post.post_id)[0].comments;
+        this.setState({comments: newComments})
+      })
+      .catch((err) => console.log('HAI hit an error getting group posts: ', post))
+
   }
 
   render() {
@@ -125,13 +113,6 @@ class PostItem extends React.Component {
               </Text>
             </Box>
           </Flex>
-          {/* { page === 'group'
-            && (
-            <Flex p={1}>
-              <Button size="xs" onClick={() => onInvite(event)}> Invite </Button>
-            </Flex>
-            ) } */}
-
           <Stack shouldWrapChildren direction="row">
             <Text>{likes}</Text>
             <Tooltip label="likes">
@@ -153,12 +134,17 @@ class PostItem extends React.Component {
           placeholder="...your comment here"
           size="sm"
         />
-        <Button
-          colorScheme="blue"
-          onClick={() => this.sendComment(comment)}
-        >
-          Post
-        </Button>
+        <Box align="right">
+          <Button
+            mt={2}
+            mb={2}
+            backgroundColor="#f7d359"
+            variant="ghost"
+            onClick={() => this.sendComment(comment)}
+          >
+            Post Comment
+          </Button>
+        </Box>
       </Box>
     );
   }

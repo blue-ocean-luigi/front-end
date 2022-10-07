@@ -16,20 +16,23 @@ import {
   useDisclosure,
   Button,
 } from '@chakra-ui/react';
+import { UseContextAll } from '../ContextAll';
+import { please } from '../../request';
 // TODO: add invite button to either FriendsList as a conditionally rendered button
 // OR map each individual friend to a new friends list with invite buttons
 function RequestToJoinGroup({onClose, isOpen, groupInfo}) {
-
+  const {userID, currentGroupID} = UseContextAll();
   const [postContent, setPostContent] = useState('');
 
   function handleSubmit() {
-    const formBody = {
-      user_id: userID,
-      group_id: groupID,
-      content: postContent,
-    };
-    console.log(formBody);
-    onClose();
+    please.requestToJoinGroup(currentGroupID, userID, postContent)
+      .then((response) => {
+        console.log('HAI: ', response);
+        onClose();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
