@@ -18,7 +18,7 @@ function GroupItem({ group }) {
 
   // on click of group, go to group page
   function handleSelect() {
-    console.log(group.id);
+    // console.log(group.id);
     setCurrentGroupID(group.id);
     setMainPage('group');
   }
