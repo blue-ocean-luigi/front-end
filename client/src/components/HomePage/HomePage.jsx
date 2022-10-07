@@ -129,7 +129,6 @@ function HomePage() {
                 display: 'flex', justifyContent: 'center', alignItems: 'center', paddingBottom: '15px',
               }}
               >
-                <Heading fontSize="30px" paddingRight="15px">Your Groups</Heading>
                 <CreateGroupButton />
               </Box>
               <GroupList groups={userGroups} />

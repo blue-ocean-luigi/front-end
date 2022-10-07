@@ -125,6 +125,7 @@ class EventItem extends React.Component {
             <Image
               borderRadius="full"
               boxSize="80px"
+              objectFit="cover"
               src={event.picture}
               alt={event.eventname}
               p={1}

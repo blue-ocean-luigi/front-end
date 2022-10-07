@@ -100,6 +100,7 @@ class PostItem extends React.Component {
             <Image
               borderRadius="full"
               boxSize="80px"
+              objectFit="cover"
               src={post.picture}
               alt={post.firstname}
               p={1}
