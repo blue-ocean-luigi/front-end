@@ -77,7 +77,7 @@ function CreateGroupButton() {
 
   return (
     <>
-      <Button onClick={onClick}>Create New Group</Button>
+      <Button mt={4} mb={4} onClick={onClick}>Create New Group</Button>
       <Modal isOpen={openModal}>
         <ModalOverlay />
         <ModalContent>

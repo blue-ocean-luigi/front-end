@@ -183,7 +183,6 @@ function GroupPage() {
                   && (
                   <>
                     <Button
-                      size="xs"
                       onClick={onOpenFriendsList}
                     >
                       Invite your friends
@@ -201,7 +200,6 @@ function GroupPage() {
                   && (
                     <>
                       <Button
-                        size="xs"
                         onClick={() => {
                           setEditing(true);
                           onOpenAdminControl();
@@ -240,7 +238,7 @@ function GroupPage() {
 
             </Box>
             <Divider orientation="vertical" />
-            <Box p={1} position="relative" overflow-y="auto" h="100%" w="70%">
+            <Box p={2} position="relative" overflow-y="auto" h="100%" w="70%">
               {
                 inGroup
                 && <GroupFeed userID={userID} events={events} setEvents={setEvents} updateFeed={updateFeed}/>

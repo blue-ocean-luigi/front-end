@@ -161,7 +161,9 @@ class EventItem extends React.Component {
           size="sm"
         />
         <Button
-          colorScheme="blue"
+          mt={2}
+          mb={2}
+          colorScheme="gray"
           onClick={() => {
             this.sendComment(comment)
           } }

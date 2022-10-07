@@ -11,6 +11,7 @@ import {
   HStack,
   Image,
   Text,
+  Spacer,
 } from '@chakra-ui/react';
 import axios from 'axios'
 import Searches from './Searches';
@@ -60,9 +61,9 @@ function HomePage() {
   }, [search])
 
   return (
-    <Flex h="100vh" w="100%" justifyContent="space-between">
+    <Flex h="100vh" w="100%" justifyContent="space-between" >
       <VStack p={2} h="100vh" w="100%" gap={2}>
-        <Flex h="fit-content" w="100%">
+        <Flex h="fit-content" w="100vw">
           <Box p={2} w="100%">
             <Heading mt={4} mb={1}>
               Home
@@ -73,7 +74,7 @@ function HomePage() {
           </Box>
         </Flex>
         <Divider />
-        <Flex bottom={0} h="100%" w="100%">
+        <Flex bottom={0} h="100%" w="100%" gap={10}>
 
           <Box
             h="100%"
@@ -94,6 +95,7 @@ function HomePage() {
             <GroupList groups={userGroups} />
             <FriendsList friends={userFriends.friendlist} />
           </Box>
+          <Divider orientation = 'vertical' />
           {newUser ? <NewUserFeed /> : <ReturnUserFeed homePosts={homePosts} />}
         </Flex>
       </VStack>
