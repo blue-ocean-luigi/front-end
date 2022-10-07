@@ -94,7 +94,10 @@ function GroupPage() {
   function updateFeed() {
     please.getGroupPosts(currentGroupID)
       .then((res) => setEvents(res.data))
-      .catch((err) => console.log(err));
+      .then(() => console.log('HAI got new event data in update!'))
+      // .then(() => window.location.reload(true))
+      .catch((err) => console.log('HAI in error while trying to update feed: ', err))
+
   }
 
 
@@ -240,7 +243,7 @@ function GroupPage() {
             <Box p={1} position="relative" overflow-y="auto" h="100%" w="70%">
               {
                 inGroup
-                && <GroupFeed userID={userID} events={events} updateFeed={updateFeed}/>
+                && <GroupFeed userID={userID} events={events} setEvents={setEvents} updateFeed={updateFeed}/>
                 // && <GroupFeed userID={userID} groupID={currentGroupID} />
               }
               {

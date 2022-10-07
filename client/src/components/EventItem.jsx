@@ -81,9 +81,7 @@ class EventItem extends React.Component {
   }
 
   sendComment(comment) {
-
-    const { event, userID, updateFeed } = this.props;
-    console.log('DEBUG this is updateFeed: ', updateFeed)
+    const { event, setEvents, userID, updateFeed, currentGroupID } = this.props;
     please.createComment({ post_id: event.post_id, user_id: userID, message: comment })
       .then((response) => {
         console.log(response);
@@ -91,15 +89,24 @@ class EventItem extends React.Component {
           comment: '',
         });
       })
-      .then(() => updateFeed())
-      .catch((err) => {
-        console.log(err);
-      });
+      .then((res) => console.log('HAI just finished sending comment '))
+      .then((res) => please.getGroupPosts(currentGroupID))
+      .then((res) => {
+        console.log('HAI this is res: ', res.data)
+        const newComments = res.data.filter(i=> i.post_id===event.post_id)[0].comments;
+        console.log('HAI newComments: ', newComments)
+        this.setState({comments: newComments})
+
+      })
+      .catch((err) => console.log('HAI hit an error getting group posts: ', err))
+      .then(() => console.log('HAI just finished updating feed'))
+
   }
 
   render() {
     const { event, userID, updateFeed, rsvps, setRsvps, going, setGoing } = this.props;
     const { comment, likes, comments } = this.state;
+    console.log('HAI IN STATE HERE IS COMMENTS: ', comments)
     // console.log('in event item and rendering: ', event);
 
     return (
@@ -165,7 +172,12 @@ class EventItem extends React.Component {
         />
         <Button
           colorScheme="blue"
-          onClick={() => {this.sendComment(comment, updateFeed)} }
+          onClick={() => {
+            console.log('HAI in button')
+            this.sendComment(comment)
+            // const newComments = comments.push(comment)
+            // this.setState({comments: newComments})
+          } }
         >
           Post
         </Button>

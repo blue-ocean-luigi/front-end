@@ -23,6 +23,12 @@ class CommentList extends React.Component {
     this.requestInFlight = false;
   }
 
+
+  // handleNewComment(newComment) {
+  //   newCommentList = this.state.comments.push(newCommentList);
+  //   this.setState(comments: newCommentList);
+  // }
+
   render() {
     const { userID } = this.props;
     const { comments } = this.state;
@@ -40,7 +46,7 @@ class CommentList extends React.Component {
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
-            {comments.map((comment, index) =>
+            {this.props.comments.map((comment, index) =>
             <CommentItem
               userID = {userID}
               comment={comment}

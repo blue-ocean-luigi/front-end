@@ -33,7 +33,7 @@ function GroupFeed({events, setEvents, updateFeed}) {
       </Flex>
       <Box position="relative" w="100%" align="center" mt={10}>
         <Box mr={4}>
-          {events.map((event) => <HomeFeedPost key={event.name} post={event} updateFeed={updateFeed}/>)}
+          {events.map((event) => <HomeFeedPost key={event.name} post={event} updateFeed={updateFeed} setEvents={setEvents}/>)}
         </Box>
       </Box>
 

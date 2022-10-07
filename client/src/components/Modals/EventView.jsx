@@ -29,7 +29,7 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [comment, setComment] = useState('');
   const [going, setGoing] = useState(rsvps.filter(r => r.user_id === userID).length > 0);
-
+  const [currentComments, setCurrentComments] = useState(eventInfo.comments)
   console.log('DEBUG this is rsvps: ', rsvps)
   console.log('DEBUG this is going: ', rsvps.filter(r => r.user_id === userID).length > 0)
 
