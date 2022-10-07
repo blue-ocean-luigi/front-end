@@ -96,7 +96,7 @@ export default function App() {
         })()}
       </div>
       { (user && (mainPage != 'login') && (mainPage != 'welcome')) ? <NavButton zIndex={9999} /> : null }
-      { (user && (mainPage != 'login') && (mainPage != 'welcome')) ? <ChatBar /> : null }
+      {/* { (user && (mainPage != 'login') && (mainPage != 'welcome')) ? <ChatBar /> : null } */}
     </ChakraProvider>
   );
 }
