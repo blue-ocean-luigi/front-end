@@ -104,6 +104,9 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps, events
               {' '}
               {eventInfo.groupname}
             </Text>
+            <Text>
+              Posted by {' '}{eventInfo.firstname}{' '}{eventInfo.lastname}
+            </Text>
             <Text>{convertTime(eventInfo.starttime)}</Text>
           </Box>
           <ModalBody>
