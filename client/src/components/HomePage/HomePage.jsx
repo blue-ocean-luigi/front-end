@@ -118,6 +118,7 @@ function HomePage() {
                 src="https://i.pinimg.com/originals/42/90/35/429035c30c3e0aa7169168a93fdbe551.jpg"
                 alt="User Name"
                 borderRadius="full"
+                objectFit="cover"
                 onClick={() => console.log('clicked profile image')}
               />
               <Text fontSize="2xl">{`${userInfo.firstname} ${userInfo.lastname}`}</Text>

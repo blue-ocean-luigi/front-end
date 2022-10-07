@@ -96,6 +96,7 @@ function EventView({
             mr={2}
             borderRadius="full"
             boxSize="150px"
+            objectFit="cover"
             src={eventInfo.picture ? eventInfo.picture : 'https://picsum.photos/seed/picsum/200/300'}
             alt="Event Pic"
           />
