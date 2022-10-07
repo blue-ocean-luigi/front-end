@@ -181,6 +181,7 @@ function GroupPage() {
                   && (
                   <>
                     <Button
+                      backgroundColor="#f7d359"
                       onClick={onOpenFriendsList}
                     >
                       Invite your friends
@@ -198,6 +199,7 @@ function GroupPage() {
                   && (
                     <>
                       <Button
+                        backgroundColor="#f7d359"
                         onClick={() => {
                           setEditing(true);
                           onOpenAdminControl();
@@ -252,6 +254,7 @@ function GroupPage() {
                       </Box>
                       <Button
                         width="50%"
+                        backgroundColor="#f7d359"
                         onClick={onOpenGroupRequest}
                       >
                         Join

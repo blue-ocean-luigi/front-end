@@ -4,18 +4,31 @@ import {
   Heading,
 } from '@chakra-ui/react';
 import Friend from './Friend';
-
+import { UseContextAll } from '../ContextAll';
 // TODO: edit the hook to work for page control????
 
 function FriendsList({ friends, isGroupInvite, members }) {
   // console.log(friends);
+  const { mainPage } = UseContextAll();
 
   return (
-    <Box overflow="hidden" width="95%" maxHeight="500px" position="relative">
-      <Box align="center" width="105%" overflowY="scroll" maxHeight="500px" paddingRight="15px">
-        {friends && friends.map((f) => <Friend key={f.name} friend={f} isGroupInvite={isGroupInvite} members={members} />)}
+    <>
+      {mainPage === 'home' && (
+        <Box overflow="hidden" width="95%" maxHeight="500px" position="relative">
+          <Box align="center" width="105%" overflowY="scroll" maxHeight="500px" paddingRight="15px">
+            {friends && friends.map((f) => <Friend key={f.name} friend={f} isGroupInvite={isGroupInvite} members={members} />)}
+          </Box>
+        </Box>
+      )}
+      {mainPage === 'profile' && (
+      <Box align="center">
+        <Heading mb={1} fontSize="xl">
+          Friends
+        </Heading>
+        {friends && friends.map((f) => <Friend key={f.name} friend={f} isGroupInvite={isGroupInvite} members={members}/>)}
       </Box>
-    </Box>
+      )}
+    </>
   );
 }
 

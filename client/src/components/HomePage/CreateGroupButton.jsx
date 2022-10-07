@@ -76,7 +76,7 @@ function CreateGroupButton() {
 
   return (
     <Box>
-      <Button mt={4} mb={4} onClick={onClick}>Create New Group</Button>
+      <Button mt={4} mb={4} backgroundColor="#f7d359" onClick={onClick}>Create New Group</Button>
       <Modal isOpen={openModal}>
         <ModalOverlay />
         <ModalContent>
@@ -99,7 +99,7 @@ function CreateGroupButton() {
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={submitForm}>
+            <Button backgroundColor="#f7d359" mr={3} onClick={submitForm}>
               Submit
             </Button>
             <Button mr={3} onClick={clearForm}>

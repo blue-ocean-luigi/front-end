@@ -38,7 +38,7 @@ class CommentList extends React.Component {
       <Accordion allowToggle>
         <AccordionItem>
           <h2>
-            <AccordionButton>
+            <AccordionButton _expanded={{ bg: '#f7d359', color: 'black' }}>
               <Box flex='1' textAlign='left'>
                 Show Comments
               </Box>

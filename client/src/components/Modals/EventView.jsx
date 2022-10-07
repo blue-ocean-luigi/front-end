@@ -81,7 +81,7 @@ function EventView({
 
   return (
     <div>
-      <Button mt={4} mb={1} size="md" variant="ghost" onClick={onOpen}>Event Details</Button>
+      <Button mt={4} mb={1} size="sm" backgroundColor="#f7d359" onClick={onOpen}>Event Details</Button>
       <Modal
         size="xl"
         isOpen={isOpen}
@@ -138,12 +138,12 @@ function EventView({
           </Stack>
           <Maps endLoc={eventInfo.location} />
           <ModalFooter>
-            <Button mr={1} colorScheme="gray" variant="ghost" onClick={() => handleInvite()}> Invite </Button>
+            <Button mr={1} backgroundColor="#f7d359" variant="ghost" onClick={() => handleInvite()}> Invite </Button>
             { !going
-              && <Button ml={1} colorScheme="gray" variant="ghost" onClick={() => sendRSVP()}> RSVP </Button>}
+              && <Button ml={1} backgroundColor="#f7d359" variant="ghost" onClick={() => sendRSVP()}> RSVP </Button>}
             {
               going
-              && <Badge colorScheme="gray" variant="subtle">You RSVPed</Badge>
+              && <Badge colorScheme="grey" variant="subtle">You RSVPed</Badge>
             }
           </ModalFooter>
           <CommentList comments={eventInfo.comments} />

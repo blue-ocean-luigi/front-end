@@ -105,8 +105,8 @@ class PostItem extends React.Component {
               p={1}
             />
             <Box p={1} align="left">
-              <Text fontSize="2xl">
-                {post.firstname}
+              <Text fontSize="xl">
+                {`${post.firstname} ${post.lastname}: `}
               </Text>
               <Text>
                 {post.content}
@@ -138,11 +138,11 @@ class PostItem extends React.Component {
           <Button
             mt={2}
             mb={2}
-            colorScheme="gray"
+            backgroundColor="#f7d359"
             variant="ghost"
             onClick={() => this.sendComment(comment)}
           >
-            Post
+            Post Comment
           </Button>
         </Box>
       </Box>

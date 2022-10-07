@@ -94,7 +94,7 @@ class CommentItem extends React.Component {
             />
             <Box p={1} align="left">
               <Text fontSize="lg" fontWeight="bold">
-                {`${comment.firstName}:`}
+                {`${comment.firstName} ${comment.lastName}:`}
               </Text>
               <Text>
                 {message}

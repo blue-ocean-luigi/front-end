@@ -32,6 +32,9 @@ function HomePage() {
     userGroups,
     userFriends,
     homePosts,
+    userID,
+    setMainPage,
+    setCurrentUserID,
   } = UseContextAll();
   const [newUser, setNewUser] = useState(false);
   const [search, setSearch] = useState('');
@@ -65,6 +68,11 @@ function HomePage() {
       }
     })();
   }, [search]);
+
+  function navProfile() {
+    setCurrentUserID(userID);
+    setMainPage('profile');
+  }
 
   return (
     <Flex h="100vh" w="100%" justifyContent="space-between">
@@ -104,7 +112,7 @@ function HomePage() {
             p={1}
             marginLeft="2%"
           >
-            <Box w="100%" h="fit-content" p={1} align="center">
+            <Box w="100%" h="fit-content" p={1} align="center" onClick={() => navProfile()}>
               <Image
                 boxSize="200px"
                 src="https://i.pinimg.com/originals/42/90/35/429035c30c3e0aa7169168a93fdbe551.jpg"
@@ -112,6 +120,7 @@ function HomePage() {
                 borderRadius="full"
                 onClick={() => console.log('clicked profile image')}
               />
+              <Text fontSize="2xl">{`${userInfo.firstname} ${userInfo.lastname}`}</Text>
             </Box>
             <Box style={{
               display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '15px',
