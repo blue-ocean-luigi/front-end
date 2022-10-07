@@ -25,7 +25,7 @@ function GroupFeed() {
       .then((res) => setEvents(res.data))
       .catch((err) => console.log(err));
   }
-  
+
   return (
     <Box>
       <Flex position="absolute" top={0} w="100%" justifyContent="flex-end">

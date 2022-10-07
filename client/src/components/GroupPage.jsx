@@ -83,19 +83,19 @@ function GroupPage() {
   }
 
   // GROUP FEED
-  // const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([]);
 
-  // useEffect(() => {
-  //   please.getGroupPosts(currentGroupID)
-  //     .then((res) => setEvents(res.data))
-  //     .catch((err) => console.log(err));
-  // }, [currentGroupID]);
+  useEffect(() => {
+    please.getGroupPosts(currentGroupID)
+      .then((res) => setEvents(res.data))
+      .catch((err) => console.log(err));
+  }, [currentGroupID]);
 
-  // function updateFeed() {
-  //   please.getGroupPosts(currentGroupID)
-  //     .then((res) => setEvents(res.data))
-  //     .catch((err) => console.log(err));
-  // }
+  function updateFeed() {
+    please.getGroupPosts(currentGroupID)
+      .then((res) => setEvents(res.data))
+      .catch((err) => console.log(err));
+  }
 
 
   // admin editing of members
