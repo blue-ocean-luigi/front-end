@@ -134,14 +134,17 @@ class PostItem extends React.Component {
           placeholder="...your comment here"
           size="sm"
         />
-        <Button
-          mt={2}
-          mb={2}
-          colorScheme="gray"
-          onClick={() => this.sendComment(comment)}
-        >
-          Post
-        </Button>
+        <Box align="right">
+          <Button
+            mt={2}
+            mb={2}
+            colorScheme="gray"
+            variant="ghost"
+            onClick={() => this.sendComment(comment)}
+          >
+            Post
+          </Button>
+        </Box>
       </Box>
     );
   }

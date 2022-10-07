@@ -94,20 +94,18 @@ function GroupPage() {
   function updateFeed() {
     please.getGroupPosts(currentGroupID)
       .then((res) => setEvents(res.data))
-      .then(() => console.log('HAI got new event data in update!'))
-      // .then(() => window.location.reload(true))
       .catch((err) => console.log('HAI in error while trying to update feed: ', err))
-
   }
 
 
   // admin editing of members
   function handleMemberStatus(e, status) {
-    console.log('DEBUG made it into handleMemberStatus')
     if (status === 'approve') {
       please.acceptGroupRequest(currentGroupID, e.id)
         .then(() => please.getGroupInfo(currentGroupID))
         .then((res) => setMembers(res.data.members))
+        .then((res) => please.getOpenGroupRequest(currentGroupID))
+        .then((res) => setMemberRequests(res.data))
         .catch((err) => console.log(err));
     } else if (status === 'deny') {
       please.denyGroupRequest(currentGroupID, e.id)

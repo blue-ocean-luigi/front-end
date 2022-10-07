@@ -94,7 +94,7 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps }) {
           </ModalBody>
           <Stack shouldWrapChildren direction="row">
             <Text> {eventInfo.postlikes.length} </Text>
-            <Tooltip>
+            <Tooltip label="likes">
               <span><Icon as={BiHomeSmile} w={6} h={6} onClick={() => handleLike()} /></span>
             </Tooltip>
             <Text> {eventInfo.comments.length} </Text>
@@ -108,14 +108,14 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps }) {
           </Stack>
           <Maps endLoc={eventInfo.location} />
           <ModalFooter>
+            <Button mr={1} colorScheme="gray" variant="ghost" onClick={() => handleInvite()}> Invite </Button>
             { !going
-              && <Button colorScheme="blue" onClick={() => sendRSVP()}> RSVP </Button>
+              && <Button ml={1} colorScheme="gray" variant="ghost" onClick={() => sendRSVP()}> RSVP </Button>
             }
             {
               going
-              && <Badge colorScheme="blue" variant='subtle'>You RSVPed</Badge>
+              && <Badge colorScheme="gray" variant='subtle'>You RSVPed</Badge>
             }
-            <Button colorScheme="ghost" onClick={() => handleInvite()}> Invite </Button>
           </ModalFooter>
           <CommentList comments={eventInfo.comments} />
           <Textarea
@@ -124,7 +124,7 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps }) {
             placeholder="...your comment here"
             size="sm"
           />
-          <Button mt={4} colorScheme="blue" onClick={() => handleComment(comment)}> Post </Button>
+          <Box align="right"><Button width="25%" mt={4} colorScheme="gray" variant="ghost" onClick={() => handleComment(comment)}> Post Comment </Button></Box>
         </ModalContent>
       </Modal>
     </div>
