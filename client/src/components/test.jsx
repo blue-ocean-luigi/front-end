@@ -1,15 +1,9 @@
 const please = require('../request');
 
 const func = () => {
-<<<<<<< HEAD
-  please.getUserByEmail('email6@gmail.com')
-    .then((results) => console.log(results.data))
-    .catch((err) => console.log(err));
-=======
-   please.getUserByEmail('email6@gmail.com')
-     .then((results) => console.log(results.data))
-     .catch((err) => console.log(err));
->>>>>>> main
+  // please.getUserByEmail('email6@gmail.com')
+  //   .then((results) => console.log(results.data))
+  //   .catch((err) => console.log(err));
 
   // please.getUserByID(2)
   //   .then((results) => console.log(results.data))

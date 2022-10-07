@@ -35,7 +35,7 @@ function GroupItem({ group }) {
           <Image
             borderRadius="full"
             boxSize="80px"
-            src={ group.picture }
+            src={ group.picture ? group.picture : 'https://picsum.photos/seed/picsum/200/300' }
             alt={group.name}
             p={1}
           />

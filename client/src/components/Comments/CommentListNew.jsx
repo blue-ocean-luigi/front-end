@@ -16,7 +16,7 @@ import EventView from '../Modals/EventView';
 import CommentList from './CommentList';
 import { please } from '../../request';
 
-class CommentItem extends React.Component {
+class CommentListNew extends React.Component {
   constructor(props) {
     super(props);
     this.handleLike = this.handleLike.bind(this);
@@ -117,4 +117,4 @@ class CommentItem extends React.Component {
   }
 }
 
-export default CommentItem;
+export default CommentListNew;

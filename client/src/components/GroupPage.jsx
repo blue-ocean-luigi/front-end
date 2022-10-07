@@ -240,7 +240,8 @@ function GroupPage() {
             <Box p={1} position="relative" overflow-y="auto" h="100%" w="70%">
               {
                 inGroup
-                && <GroupFeed userID={userID} groupID={currentGroupID} events={events} updateFeed={updateFeed}/>
+                && <GroupFeed userID={userID} events={events} updateFeed={updateFeed}/>
+                // && <GroupFeed userID={userID} groupID={currentGroupID} />
               }
               {
                 !inGroup

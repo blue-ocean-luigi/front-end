@@ -12,16 +12,12 @@ import {
   AccordionIcon,
 } from '@chakra-ui/react';
 import CommentItem from './CommentItem';
+import { UseContextAll } from '../ContextAll';
 
 function CommentList({ comments }) {
   const [commentLike, setCommentLike] = useState(0);
+  const { userID } = UseContextAll();
 
-  function sendCommentLike() {
-    if (commentLike < 1) {
-      console.log('send comment');
-      setCommentLike(1);
-    }
-  }
   return (
     <Accordion allowToggle>
       <AccordionItem>
@@ -36,8 +32,8 @@ function CommentList({ comments }) {
         <AccordionPanel pb={4}>
           {comments.map((comment, index) =>
           <CommentItem
+            userID = {userID}
             comment={comment}
-            sendCommentLike={sendCommentLike}
             key={index}
           />)}
         </AccordionPanel>

@@ -51,7 +51,7 @@ function GroupMember({ member, editing, isGroupRequest, handleMemberStatus}) {
           <Image
             borderRadius="full"
             boxSize="80px"
-            src={ member.picture }
+            src={ member.picture ? member.picture : 'https://i.picsum.photos/id/1062/5092/3395.jpg?hmac=o9m7qeU51uOLfXvepXcTrk2ZPiSBJEkiiOp-Qvxja-k' }
             alt={ `${member.id} ? ""` }
             p={1}
           />
