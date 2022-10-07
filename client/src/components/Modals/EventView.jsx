@@ -75,7 +75,6 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps, events
     const newTime = startTime >= 1000 ? startTime.toString() : `0${startTime}`;
     return `${newTime.substr(0, 2)}:${newTime.substr(2, 3)} ${startTimeEnd}`;
   };
-  console.log('BLOO eventinfo: ', eventInfo)
 
   return (
     <div>

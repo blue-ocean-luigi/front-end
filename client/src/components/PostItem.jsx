@@ -142,7 +142,13 @@ class PostItem extends React.Component {
             mr={2}
             colorScheme="gray"
             variant="ghost"
-            onClick={() => this.sendComment(comment)}
+            onClick={() => {
+              if (!comment.message) {
+                alert('you cannot post an empty comment!')
+              } else {
+                this.sendComment(comment);
+              }
+            }}
           >
             Post Comment
           </Button>

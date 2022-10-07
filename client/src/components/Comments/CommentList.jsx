@@ -30,10 +30,8 @@ class CommentList extends React.Component {
   // }
 
   render() {
-    const { userID } = this.props;
-    const { comments } = this.state;
+    const { userID, comments } = this.props;
     // console.log('in event item and rendering: ', event);
-
     return (
       <Accordion allowToggle>
         <AccordionItem>
@@ -49,7 +47,7 @@ class CommentList extends React.Component {
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
-            {this.props.comments.map((comment, index) =>
+            {comments.map((comment, index) =>
             <CommentItem
               userID = {userID}
               comment={comment}
