@@ -39,6 +39,7 @@ function ProfilePage() {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [banner, setBanner] = useState('');
+  const [pic, setPic] = useState('');
   const [bio, setBio] = useState('');
   const [isMyprofile, setMyProfile] = useState(true);
   const [profileFriends, setProfileFriends] = useState([]);
@@ -59,6 +60,8 @@ function ProfilePage() {
           setProfileFriends(response.data.friends.friendlist);
           setProfileGroups(response.data.groups);
           setProfileRequests(response.data.friends.requestlist);
+          setBanner(response.data.info.banner);
+          setPic(response.data.info.picture);
         })
         .catch((err) => {
           console.log(err);
@@ -73,6 +76,8 @@ function ProfilePage() {
           setProfileFriends(response.data.friends.friendlist);
           setProfileGroups(response.data.groups);
           setProfileRequests(response.data.friends.requestlist);
+          setBanner(response.data.info.banner);
+          setPic(response.data.info.picture);
         })
         .catch((err) => {
           console.log(err);
@@ -94,22 +99,32 @@ function ProfilePage() {
     })
       .then((response) => {
         console.log(response.data.data.display_url);
-        setBanner(response.data.data.display_url);
-        //updateUser: (firstname, lastname, email, aboutme, picture, user_id, banner)
-        please.updateUser(userInfo.firstname, userInfo.lastname, userInfo.email, userInfo.aboutme, userInfo.picture, userInfo.id, response.data.data.display_url).then((data)=> console.log(data))
+
+        if (e.target.id === "ban_up") {
+          console.log('banner upload')
+          setBanner(response.data.data.display_url);
+          please.updateUser(userInfo.firstname, userInfo.lastname, userInfo.email, userInfo.aboutme, userInfo.picture, userInfo.id, response.data.data.display_url).then((data)=> console.log(data))
+        }
+        if (e.target.id === "pic_up") {
+          console.log("pic upload")
+          setPic(response.data.data.display_url)
+          please.updateUser(userInfo.firstname, userInfo.lastname, userInfo.email, userInfo.aboutme, response.data.data.display_url, userInfo.id, userInfo.banner).then((data)=>console.log(data))
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  function handleBannerClick() {
-    document.getElementById('ban_up').click();
+  function handleBannerClick(e, type) {
+    type === "ban" ?
+    document.getElementById('ban_up').click() :
+    document.getElementById('pic_up').click()
   }
 
   return (
     <Center display="flex" flexDirection="column">
-      <Box backgroundImage={`url(${profileInfo.banner || defaultBackgroundImage})`} backgroundSize="cover" backgroundPosition="center" w="80%" h="40vh" minHeight="20vw" position="relative" m="1em">
+      <Box backgroundImage={`url(${banner || defaultBackgroundImage})`} backgroundSize="cover" backgroundPosition="center" w="80%" h="40vh" minHeight="20vw" position="relative" m="1em">
         <Box position="absolute" right="5" top="5%" zIndex="2" cursor="pointer">
           {isMyprofile && (
           <FriendRequests
@@ -121,14 +136,16 @@ function ProfilePage() {
           )}
         </Box>
         {isMyprofile && (
-        <InputGroup w="15vw" position="absolute" right="5" bottom="5%">
+        <InputGroup w="100%" position="absolute" right="5" bottom="5%">
           <Input type="file" id="ban_up" display="none" onChange={(e) => { handlePhoto(e); }} />
-          <Button position="absolute" right="0" bottom="5%" rightIcon={<MdInsertPhoto />} onClick={(e) => handleBannerClick(e)}>Update Banner</Button>
+          <Input type="file" id="pic_up" display="none" onChange={(e) => { handlePhoto(e); }} />
+          <Button color="blue.600" position="absolute" right="0" bottom="5%" rightIcon={<MdInsertPhoto />} onClick={(e) => handleBannerClick(e, 'ban')}>Update Banner</Button>
+          <Button background="rgba(250,250,250,0.7)" color="blue.600" position="absolute" left="6vw" transform="translateY(-5px)" rightIcon={<MdInsertPhoto />} onClick={(e) => handleBannerClick(e, 'pic')} zIndex="5" size="m">Update Picture</Button>
         </InputGroup>
         )}
-        <Center w="20vw" h="100%" position="relative">
-          <Image src={profileInfo.picture} boxSize="15vw" borderRadius="full" position="absolute" top="calc((100% - 13vw) / 2)" alt="PIC" />
-          <Text zIndex="2" position="absolute" left="0" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="white" transform="translateX(20%)">{`${profileInfo.firstname} ${profileInfo.lastname}`}</Text>
+        <Center w="20vw" h="100%" position="relative" background="rgba(20,20,20,0.4)" borderRadius="0 10px 10px 0">
+          <Image src={pic || defaultProfilePic} boxSize="15vw" borderRadius="full" position="absolute" top="calc((100% - 13vw) / 2)" alt="PIC" border="3px solid" borderColor="blue.200" />
+          <Text w="100%" zIndex="2" position="absolute" left="0" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="blue.200">{`${profileInfo.firstname} ${profileInfo.lastname}`}</Text>
         </Center>
       </Box>
       <Box minHeight="20vh" w="80%" border="1px solid gray" mb="1em" position="relative">

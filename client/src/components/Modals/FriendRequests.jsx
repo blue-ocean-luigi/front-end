@@ -23,7 +23,7 @@ import FriendRequestCard from '../ProfilePage/FriendRequestCard.jsx';
 
 // firstname lastname id picture
 function FriendRequests({requests}) {
-
+  console.log(requests)
   const {
     userInfo,
     userGroups,
@@ -36,8 +36,12 @@ function FriendRequests({requests}) {
   let [reqCount, setReqCount] = useState(0);
 
   useEffect(()=>{
-    setReqCount(requests.length);
-  }, []);
+    if (requests.length >= 0) {
+      setReqCount(requests.length);
+    } else {
+      setReqCount(0);
+    }
+  }, [requests]);
 
   function handleClose() {
     // console.log("close")
@@ -54,7 +58,7 @@ function FriendRequests({requests}) {
 
   return (
     <>
-      <Button onClick={onOpen}>
+      <Button onClick={onOpen} color="blue.600">
         Friend Requests: {reqCount}
       </Button>
 
