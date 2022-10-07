@@ -10,8 +10,7 @@ import { please } from '../../request';
 import { UseContextAll } from '../ContextAll';
 
 function GroupFeed({events, setEvents, updateFeed}) {
-  console.log('GroupFeed this is updateFeed: ', updateFeed)
-  // TODO Replace hardcoded data with axios call
+
   const { currentGroupID } = UseContextAll();
   // const [events, setEvents] = useState([]);
 
@@ -35,7 +34,7 @@ function GroupFeed({events, setEvents, updateFeed}) {
       </Flex>
       <Box position="relative" w="100%" align="center" mt={10}>
         <Box mr={4}>
-          {events.map((event) => <HomeFeedPost key={event.name} post={event} updateFeed={updateFeed}/>)}
+          {events.map((event) => <HomeFeedPost key={event.name} post={event} updateFeed={updateFeed} setEvents={setEvents}/>)}
         </Box>
       </Box>
 

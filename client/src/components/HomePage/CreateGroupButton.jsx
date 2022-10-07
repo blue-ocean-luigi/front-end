@@ -13,6 +13,7 @@ import {
   FormLabel,
   Input,
   Textarea,
+  Box,
 } from '@chakra-ui/react';
 import { please } from '../../request';
 import { UseContextAll } from '../ContextAll';
@@ -21,7 +22,9 @@ const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
 
 function CreateGroupButton() {
   const [openModal, setOpenModal] = useState(false);
-  const { userID, setCurrentGroupID, setMainPage } = UseContextAll();
+  const {
+    userID, setCurrentGroupID, setMainPage, setUserGroups,
+  } = UseContextAll();
   const formRef = useRef();
 
   const handlePhoto = (photo) => {
@@ -33,7 +36,7 @@ function CreateGroupButton() {
       method: 'post',
       url: 'https://api.imgbb.com/1/upload',
       data: body,
-    })
+    });
   };
 
   const submitForm = async () => {
@@ -49,18 +52,14 @@ function CreateGroupButton() {
       photoURL = getPhotoURL.data.data.display_url;
     }
 
-    console.log({name,city,state,zip,about,photoURL})
+    const getId = await please.createNewGroup(userID, name, about, state, city, zip, photoURL);
+    const updateGroups = await please.getGroupsOfUser(userID);
 
-    please.createNewGroup(userID, name, about, state, city, zip, photoURL)
-      .then((results) => {
-        const groupID = results.data.id; // newgroupID
-        setOpenModal(false); // closes modal
-        setCurrentGroupID(groupID);
-        setMainPage('group');
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    const groupID = getId.data.id;
+    setOpenModal(false);
+    setUserGroups(updateGroups.data);
+    setCurrentGroupID(groupID);
+    setMainPage('group');
   };
 
   const clearForm = () => {
@@ -76,8 +75,8 @@ function CreateGroupButton() {
   };
 
   return (
-    <>
-      <Button onClick={onClick}>Create New Group</Button>
+    <Box>
+      <Button mt={4} mb={4} onClick={onClick}>Create New Group</Button>
       <Modal isOpen={openModal}>
         <ModalOverlay />
         <ModalContent>
@@ -109,7 +108,7 @@ function CreateGroupButton() {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </>
+    </Box>
   );
 }
 

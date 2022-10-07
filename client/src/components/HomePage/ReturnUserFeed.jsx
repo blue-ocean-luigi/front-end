@@ -19,7 +19,6 @@ function ReturnUserFeed({ homePosts }) {
   return (
     <Box>
       <Box position="absolute" w="60%" align="center">
-        <h1>EXISTING USER</h1>
         {homePosts.map((post, i) => <HomeFeedPost key={i} post={post} sendComment={sendCommentHome} />)}
       </Box>
     </Box>
