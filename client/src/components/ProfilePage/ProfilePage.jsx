@@ -37,11 +37,15 @@ function ProfilePage() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [banner, setBanner] = useState('');
   const [bio, setBio] = useState('')
+  const [pic, setPic] = useState('')
 
   useEffect(() => {
-    //  set banner to the one in db if it exists, otherwise use def
-    const currBanner = userInfo.banner ? userInfo.banner : defaultBackgroundImage;
+    console.log(userInfo)
+    const currBanner = userInfo.banner === null ? defaultBackgroundImage : userInfo.banner;
+    const currPic = userInfo.picture === null ?
+    defaultProfilePic : userInfo.picture;
     setBanner(currBanner);
+    setPic(currPic)
     setBio(userInfo.aboutme || "This user has not filled out their bio :(")
   }, []);
 
@@ -52,6 +56,8 @@ function ProfilePage() {
     body.set('key', IMGBB_API_KEY);
     body.append('image', e.target.files[0]);
 
+    console.log(e.target.id);
+
     axios({
       method: 'post',
       url: 'https://api.imgbb.com/1/upload',
@@ -59,21 +65,27 @@ function ProfilePage() {
     })
       .then((response) => {
         console.log(response.data.data.display_url);
-        setBanner(response.data.data.display_url);
-        //updateUser: (firstname, lastname, email, aboutme, picture, user_id, banner)
-        please.updateUser(userInfo.firstname, userInfo.lastname, userInfo.email, userInfo.aboutme, userInfo.picture, userInfo.id, response.data.data.display_url).then((data)=> console.log(data))
+
+        if (e.target.id === "ban_up") {
+          console.log('banner upload')
+          setBanner(response.data.data.display_url);
+          please.updateUser(userInfo.firstname, userInfo.lastname, userInfo.email, userInfo.aboutme, userInfo.picture, userInfo.id, response.data.data.display_url).then((data)=> console.log(data))
+        }
+        if (e.target.id === "pic_up") {
+          console.log("pic upload")
+          setPic(response.data.data.display_url)
+          please.updateUser(userInfo.firstname, userInfo.lastname, userInfo.email, userInfo.aboutme, response.data.data.display_url, userInfo.id, userInfo.banner).then((data)=>console.log(data))
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  function handleBioUpdate() {
-    console.log("bio click")
-  }
-
-  function handleBannerClick() {
-    document.getElementById('ban_up').click();
+  function handleBannerClick(e, type) {
+    type === "ban" ?
+    document.getElementById('ban_up').click() :
+    document.getElementById('pic_up').click()
   }
 
   return (
@@ -84,12 +96,14 @@ function ProfilePage() {
             requests={userFriends.requestlist}
           />
         </Box>
-        <InputGroup w="15vw" position="absolute" right="5" bottom="5%">
+        <InputGroup w="100%" position="absolute" right="5" bottom="5%">
           <Input type="file" id="ban_up" display="none" onChange={(e) => { handlePhoto(e); }} />
-          <Button position="absolute" right="0" bottom="5%" rightIcon={<MdInsertPhoto />}onClick={(e)=>handleBannerClick(e)}>Update Banner</Button>
+          <Input type="file" id="pic_up" display="none" onChange={(e) => { handlePhoto(e); }} />
+          <Button id="ban" position="absolute" right="0" bottom="5%" rightIcon={<MdInsertPhoto />}onClick={(e)=>handleBannerClick(e, "ban")}>Update Banner</Button>
+          <Button id="pic" position="absolute" left="5" bottom="0px" leftIcon={<MdInsertPhoto />}onClick={(e)=>handleBannerClick(e, "pic")} zIndex="5">Update Pic</Button>
         </InputGroup>
         <Center w="20vw" h="100%" position="relative">
-          <Image src={userInfo.picture === undefined ? userInfo.picture : defaultProfilePic} boxSize="15vw" borderRadius="full" position="absolute" top="calc((100% - 13vw) / 2)" />
+          <Image src={pic} boxSize="15vw" borderRadius="full" position="absolute" top="calc((100% - 13vw) / 2)" />
           <Text zIndex="2" position="absolute" left="0" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="white" transform="translateX(20%)">{`${userInfo.firstname} ${userInfo.lastname}`}</Text>
         </Center>
       </Box>
