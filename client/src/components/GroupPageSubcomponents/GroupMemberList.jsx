@@ -10,6 +10,7 @@ import { please } from '../../request';
 
 
 function GroupMemberList({members, editing, handleMemberStatus}) {
+
   return (
     <Box ml={1} align="center">
       <Heading mb={1} fontSize="xl">

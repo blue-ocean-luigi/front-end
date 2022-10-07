@@ -9,7 +9,7 @@ import { UseContextAll } from '../ContextAll';
 function GroupList({ groups }) {
   const { mainPage } = UseContextAll();
   return (
-    <Box align="center">
+    <Box overflow="hidden" width="95%" maxHeight="500px" position="relative">
       {mainPage === 'home' && (
       <Heading mb={1} fontSize="xl">
         Your Groups
@@ -20,7 +20,9 @@ function GroupList({ groups }) {
         Groups
       </Heading>
       )}
-      {groups.map((group) => <GroupItem key={group.id} group={group} />)}
+      <Box align="center" width="105%" overflowY="scroll" maxHeight="500px" paddingRight="15px">
+        {groups.map((group) => <GroupItem key={group.id} group={group} />)}
+      </Box>
     </Box>
   );
 }

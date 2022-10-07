@@ -10,6 +10,7 @@ import { please } from '../../request';
 import { UseContextAll } from '../ContextAll';
 
 function GroupFeed({events, setEvents, updateFeed}) {
+
   const { currentGroupID } = UseContextAll();
   // const [events, setEvents] = useState([]);
 

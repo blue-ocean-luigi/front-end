@@ -10,7 +10,7 @@ import {
 import { UseContextAll } from '../ContextAll';
 
 function GroupItem({ group }) {
-  console.log(group);
+  // console.log(group);
   const {
     setCurrentGroupID,
     setMainPage,

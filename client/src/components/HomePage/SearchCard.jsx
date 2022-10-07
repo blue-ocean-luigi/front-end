@@ -2,17 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { Box, Image, Grid, Text, VStack } from '@chakra-ui/react';
 import { UseContextAll } from '../ContextAll';
 
-function SearchCard({id, name, picture}) {
+function SearchCard({id, name, picture, type}) {
   // console.log(id, name, picture)
-  const { mainPage, setMainPage, setCurrentUserID } = UseContextAll();
+  const { mainPage, setMainPage, setCurrentUserID, setCurrentGroupID } = UseContextAll();
 
   function handleSelect() {
-    // setCurrentUserID(friend.id);
-    // setMainPage('profile');
+    if (type === 'users') {
+      setCurrentUserID(id);
+      setMainPage('profile');
+    } else if ( type === 'groups' ) {
+      setCurrentGroupID(id);
+      setMainPage('group');
+    }
   }
   return (
 
-    <Box>
+    <Box onClick={() => handleSelect()}>
       <Grid
         sx={{
           gridTemplateColumns: '50px 1fr',
@@ -20,7 +25,7 @@ function SearchCard({id, name, picture}) {
           height: '40px',
           overflow: 'hidden'
         }}>
-        <Box onClick={() => handleSelect()}>
+        <Box>
           <Image
             borderRadius="full"
             boxSize="40px"
