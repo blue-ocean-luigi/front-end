@@ -4,7 +4,7 @@ import HomeFeedPost from './post/HomeFeedPost';
 import { UseContextAll } from '../ContextAll';
 import { please } from '../../request';
 
-function ReturnUserFeed() {
+function ReturnUserFeed({feedPosts}) {
   const { userID, homePosts, setHomePosts} = UseContextAll();
 
   // function sendCommentHome(comment) {
@@ -19,7 +19,7 @@ function ReturnUserFeed() {
   return (
     <Box>
       <Box position="absolute" w="60%" align="center">
-        {homePosts.map((post, i) => <HomeFeedPost key={i} post={post} events={homePosts} setEvents={setHomePosts} />)}
+        {feedPosts.map((post, i) => <HomeFeedPost key={i} post={post} events={feedPosts} setEvents={setHomePosts} />)}
       </Box>
     </Box>
   );

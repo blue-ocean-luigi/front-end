@@ -39,6 +39,10 @@ function HomePage() {
   const [newUser, setNewUser] = useState(false);
   const [search, setSearch] = useState('');
   const [content, setContent] = useState([]);
+  const [feedPosts, setFeedPosts] = useState([]);
+  const [homeFriends, setHomeFriends] = useState([]);
+  const [homeGroups, setHomeGroups] = useState([]);
+  const [userPic, setUserPic] = useState('');
 
   const debounce = (func, timeout = 500) => {
     let timer;
@@ -68,6 +72,25 @@ function HomePage() {
       }
     })();
   }, [search]);
+
+  useEffect(() => {
+    please.getUserByID(userID)
+      .then((response) => {
+        setHomeFriends(response.data.friends.friendlist);
+        setHomeGroups(response.data.groups);
+        setUserPic(response.data.info.picture);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    please.getUserPosts(userID)
+      .then((response) => {
+        setFeedPosts(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [userID]);
 
   function navProfile() {
     setCurrentUserID(userID);
@@ -116,7 +139,7 @@ function HomePage() {
               <Image
                 objectFit="cover"
                 boxSize="200px"
-                src={userInfo.picture}
+                src={userPic}
                 alt="User Name"
                 borderRadius="full"
                 onClick={() => console.log('clicked profile image')}
@@ -128,13 +151,13 @@ function HomePage() {
             }}
             >
               <CreateGroupButton />
-              <GroupList groups={userGroups} />
+              <GroupList groups={homeGroups} />
               <Heading fontSize="20px" padding="20px">Your Friends</Heading>
-              <FriendsList friends={userFriends.friendlist} />
+              <FriendsList friends={homeFriends} />
             </Box>
           </Box>
           <Divider orientation="vertical" />
-          {newUser ? <NewUserFeed /> : <ReturnUserFeed />}
+          {newUser ? <NewUserFeed /> : <ReturnUserFeed feedPosts={feedPosts} />}
         </Flex>
       </VStack>
     </Flex>

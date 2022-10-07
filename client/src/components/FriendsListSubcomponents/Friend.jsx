@@ -11,7 +11,7 @@ import {
 import { UseContextAll } from '../ContextAll';
 import { sendInvite } from '../ChatBar';
 
-function Friend({ friend, isGroupInvite, members }) {
+function Friend({ friend, isGroupInvite, members, closeRequestModal }) {
   const { mainPage, setMainPage, setCurrentUserID, currentGroupID, userInfo} = UseContextAll();
   let friendAlreadyInGroup;
   isGroupInvite ? friendAlreadyInGroup = members.filter(m => m.id === friend.id).length > 0 : friendAlreadyInGroup=false;
@@ -54,7 +54,7 @@ function Friend({ friend, isGroupInvite, members }) {
           && !friendAlreadyInGroup
           && (
           <Flex p={1}>
-            <Button size="xs" onClick={() => onInvite(friend)}> Invite </Button>
+            <Button size="xs" onClick={() => { onInvite(friend); closeRequestModal() }}> Invite </Button>
           </Flex>
           ) }
         { mainPage === 'group'

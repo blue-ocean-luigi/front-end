@@ -37,8 +37,14 @@ function GroupMember({ member, editing, isGroupRequest, handleMemberStatus}) {
   const {
     mainPage,
     setMainPage,
-    setCurrentUserID
+    setCurrentUserID,
   } = UseContextAll();
+
+  function handleSelect() {
+    setCurrentUserID(member.id);
+    setMainPage('profile');
+  }
+
   return (
     <Box
       boxShadow="sm"
@@ -47,7 +53,7 @@ function GroupMember({ member, editing, isGroupRequest, handleMemberStatus}) {
       borderWidth="1px"
     >
       <HStack justifyContent="space-between" p={1}>
-        <Flex justifyContent="left">
+        <Flex justifyContent="left" onClick={() => handleSelect()}>
           <Image
             borderRadius="full"
             boxSize="80px"
