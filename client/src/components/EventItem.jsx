@@ -89,7 +89,7 @@ class EventItem extends React.Component {
           comment: '',
         });
       })
-      .then((res) => please.getGroupPosts(currentGroupID))
+      .then((res) => please.getGroupPosts(event.group_id))
       .then((res) => {
         const newComments = res.data.filter(i=> i.post_id===event.post_id)[0].comments;
         this.setState({comments: newComments})
