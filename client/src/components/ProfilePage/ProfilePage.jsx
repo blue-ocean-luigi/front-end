@@ -139,27 +139,29 @@ function ProfilePage() {
         <InputGroup w="100%" position="absolute" right="5" bottom="5%">
           <Input type="file" id="ban_up" display="none" onChange={(e) => { handlePhoto(e); }} />
           <Input type="file" id="pic_up" display="none" onChange={(e) => { handlePhoto(e); }} />
-          <Button background="rgba(250,250,250,1)" color="blue.500" position="absolute" right="0" bottom="5%" rightIcon={<MdInsertPhoto />} onClick={(e) => handleBannerClick(e, 'ban')}>Update Banner</Button>
-          <Button color="blue.300" background="transparent" position="absolute" left="6vw" transform="translateY(-5px)" rightIcon={<MdInsertPhoto />} onClick={(e) => handleBannerClick(e, 'pic')} zIndex="5" size="m">Update Picture</Button>
+          <Button background="#f7d359" color="black" position="absolute" right="0" bottom="5%" rightIcon={<MdInsertPhoto />} onClick={(e) => handleBannerClick(e, 'ban')}>Update Banner</Button>
+          <Button color="#f7d359" background="transparent" position="absolute" left="6vw" transform="translateY(-5px)" rightIcon={<MdInsertPhoto />} onClick={(e) => handleBannerClick(e, 'pic')} zIndex="5" size="m">Update Picture</Button>
         </InputGroup>
         )}
         <Center w="20vw" h="100%" position="relative" background="rgba(0 , 0, 0, 0.6)" borderRadius="0 10px 10px 0">
-          <Image src={pic || defaultProfilePic} boxSize="15vw" borderRadius="full" position="absolute" top="calc((100% - 13vw) / 2)" alt="PIC" border="3px solid" borderColor="blue.300" />
-          <Text w="100%" zIndex="2" position="absolute" left="0" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="blue.300">{`${profileInfo.firstname} ${profileInfo.lastname}`}</Text>
+          <Image src={pic || defaultProfilePic} objectFit="cover" boxSize="15vw" borderRadius="full" position="absolute" top="calc((100% - 13vw) / 2)" alt="PIC" border="3px solid" borderColor="#f7d359" />
+          <Text w="100%" zIndex="2" position="absolute" left="0" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" fontWeight="300" textShadow="2px 2px 2px black" color="#f7d359">{`${profileInfo.firstname} ${profileInfo.lastname}`}</Text>
         </Center>
       </Box>
-      <Box minHeight="20vh" w="80%" border="1px solid gray" mb="1em" position="relative">
-        <Text fontSize="2em">About Me</Text>
-        <Text fontSize="1.2em">{bio || 'This user has not filled out their bio :('}</Text>
+      <Box h="20vh" w="80%" border="1px solid #f7d359" mb="1em" position="relative" overflowY="auto" boxShadow="md" rounded="lg">
+        <Text fontSize="2em" position="absolute" left="2%" top="5%">About Me: </Text>
+        <Center overflowY="auto" w="70%" h="fit-content" zIndex="5">
+          <Text fontSize="1.2em" position="absolute" m="1em" top="30%" left="15%" right="15%" textIndent="1em">{bio || 'This user has not filled out their bio :('}</Text>
+        </Center>
         {isMyprofile && (
         <BioUpdate updateBio={setBio} onClose={onClose} onOpen={onOpen} isOpen={isOpen} />)}
       </Box>
       <Flex flexDirection="row" w="80%" justifyContent="space-evenly">
-        <Box w="50%" h="50vh" overflowY="auto" border="1px solid red" mb="5em" mr="0.5em">
+        <Box w="50%" h="50vh" overflowY="auto" mb="5em" mr="0.5em">
           {profileFriends ? <FriendsList friends={profileFriends} />
             : <Text> No friends to view </Text>}
         </Box>
-        <Box w="50%" h="50vh" overflowY="auto" border="1px solid red" mb="5em" ml="0.5em">
+        <Box w="50%" h="50vh" overflowY="auto" mb="5em" ml="0.5em">
           {profileGroups && <GroupList groups={profileGroups} />}
         </Box>
       </Flex>
@@ -170,25 +172,5 @@ function ProfilePage() {
 export default ProfilePage;
 
 /*
-
-color mode switcher
-color mode script
-
-need to handle change of profile banner
-
-need to change from using userid from userinfo to currentuserid from context and do axios requests (cross check for current user id to see if its the current users profile or a friends profile)
-
-when viewing other profile page, banner buttons should show:
-  if friends: friends (checkmark)
-  if not friends: add as friend
-
-update banner should utilize axios request for update user, just pass in all the redundant information, plus the new url
-
-need to somehow re render the profile page (maybe call one of the context states?) in order to get the friends list to render updated count
-
-        <InputGroup position="absolute" r="5" b="5%" w="15vw">
-          <InputLeftElement children={<MdInsertPhoto />} />
-          <Input type="file"  onChange={(e)=>console.log(e.target)} />
-        </InputGroup>
 
 */

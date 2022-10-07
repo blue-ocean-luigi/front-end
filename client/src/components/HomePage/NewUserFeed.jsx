@@ -1,12 +1,16 @@
 import React from 'react';
-import { Box } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 
 function NewUserFeed() {
   return (
     <Box>
       <Box position="absolute" w="70%" align="center">
-        <h1>NEW USER</h1>
-        List of groups to join here.
+        <Text fontSize="2xl">
+          Uh Oh! You haven't joined any groups yet :(
+        </Text>
+        <Text fontSize="xl">
+          Use the search bar to find groups and friends to start building your community.
+        </Text>
       </Box>
     </Box>
   );

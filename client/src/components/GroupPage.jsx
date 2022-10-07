@@ -94,17 +94,18 @@ function GroupPage() {
   function updateFeed() {
     please.getGroupPosts(currentGroupID)
       .then((res) => setEvents(res.data))
-      .catch((err) => console.log(err));
+      .catch((err) => console.log('HAI in error while trying to update feed: ', err))
   }
 
 
   // admin editing of members
   function handleMemberStatus(e, status) {
-    console.log('DEBUG made it into handleMemberStatus')
     if (status === 'approve') {
       please.acceptGroupRequest(currentGroupID, e.id)
         .then(() => please.getGroupInfo(currentGroupID))
         .then((res) => setMembers(res.data.members))
+        .then((res) => please.getOpenGroupRequest(currentGroupID))
+        .then((res) => setMemberRequests(res.data))
         .catch((err) => console.log(err));
     } else if (status === 'deny') {
       please.denyGroupRequest(currentGroupID, e.id)
@@ -180,7 +181,7 @@ function GroupPage() {
                   && (
                   <>
                     <Button
-                      size="xs"
+                      backgroundColor="#f7d359"
                       onClick={onOpenFriendsList}
                     >
                       Invite your friends
@@ -198,7 +199,7 @@ function GroupPage() {
                   && (
                     <>
                       <Button
-                        size="xs"
+                        backgroundColor="#f7d359"
                         onClick={() => {
                           setEditing(true);
                           onOpenAdminControl();
@@ -237,10 +238,10 @@ function GroupPage() {
 
             </Box>
             <Divider orientation="vertical" />
-            <Box p={1} position="relative" overflow-y="auto" h="100%" w="70%">
+            <Box p={2} position="relative" overflow-y="auto" h="100%" w="70%">
               {
                 inGroup
-                && <GroupFeed userID={userID} events={events} updateFeed={updateFeed}/>
+                && <GroupFeed userID={userID} events={events} setEvents={setEvents} updateFeed={updateFeed}/>
                 // && <GroupFeed userID={userID} groupID={currentGroupID} />
               }
               {
@@ -253,6 +254,7 @@ function GroupPage() {
                       </Box>
                       <Button
                         width="50%"
+                        backgroundColor="#f7d359"
                         onClick={onOpenGroupRequest}
                       >
                         Join

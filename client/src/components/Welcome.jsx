@@ -5,13 +5,15 @@ import {
   FormHelperText,
   Input,
   Textarea,
+  Box,
+  Text,
+  Flex,
 } from '@chakra-ui/react';
 import { UseContextAll } from './ContextAll';
 import { please } from '../request';
 import axios from 'axios';
 
 const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
-
 
 function Welcome() {
   const {
@@ -20,7 +22,8 @@ function Welcome() {
     setUserID,
     setUserGroups,
     setUserFriends,
-    setMainPage} = UseContextAll();
+    setMainPage,
+  } = UseContextAll();
   const firstname = useRef();
   const lastname = useRef();
   const [photoURL, setPhotoURL] = useState('');
@@ -55,25 +58,27 @@ function Welcome() {
   };
 
   return (
-    <div>
-      <h1>Welcome to Community Crossing</h1>
-      <form onSubmit={handleSubmit}>
-        <FormControl>
-          <FormLabel>First Name</FormLabel>
-          <Input ref={firstname} type="text" />
-          <FormLabel>Last Name</FormLabel>
-          <Input ref={lastname} type="text" />
-          <FormLabel>Upload a profile photo</FormLabel>
-          <Input type="file" onChange={(e) => handlePhoto(e, 'photo')} />
-          <FormLabel>Upload a banner for your profile</FormLabel>
-          <Input type="file" onChange={(e) => handlePhoto(e, 'banner')} />
-          <FormHelperText> Accepted file forms: jpeg, png</FormHelperText>
-          <FormLabel>Tell your community a little bit about yourself</FormLabel>
-          <Textarea ref={aboutme} />
-        </FormControl>
-        <Input type="submit" value="Finish account setup!" />
-      </form>
-    </div>
+    <Flex w="100%" justifyContent="space-evenly" >
+      <Box w="50%">
+        <Text fontSize="4xl" textAlign="center">Welcome to Community Crossing</Text>
+        <form onSubmit={handleSubmit}>
+          <FormControl>
+            <FormLabel>First Name</FormLabel>
+            <Input ref={firstname} type="text" />
+            <FormLabel>Last Name</FormLabel>
+            <Input ref={lastname} type="text" />
+            <FormLabel>Upload a profile photo</FormLabel>
+            <Input type="file" onChange={(e) => handlePhoto(e, 'photo')} />
+            <FormLabel>Upload a banner for your profile</FormLabel>
+            <Input type="file" onChange={(e) => handlePhoto(e, 'banner')} />
+            <FormHelperText> Accepted file forms: jpeg, png</FormHelperText>
+            <FormLabel>Tell your community a little bit about yourself</FormLabel>
+            <Textarea ref={aboutme} />
+          </FormControl>
+          <Input backgroundColor="#f7d359" type="submit" value="Finish account setup!" />
+        </form>
+      </Box>
+    </Flex>
   );
 }
 
