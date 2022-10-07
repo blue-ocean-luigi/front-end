@@ -17,24 +17,24 @@ function SearchCard({id, name, picture, type}) {
   }
   return (
 
-    <Box onClick={() => handleSelect()}>
+    <Box onClick={() => handleSelect()} borderBottom="1px solid black">
       <Grid
         sx={{
-          gridTemplateColumns: '50px 1fr',
-          gridColumnGap: '1rem',
-          height: '40px',
-          overflow: 'hidden'
+          gridTemplateColumns: '70px 1fr',
+          gridColumnGap: '5rem',
+          height: '70px',
+          overflow: 'hidden',
         }}>
-        <Box>
+        <Box display="flex" alignItems="center">
           <Image
             borderRadius="full"
-            boxSize="40px"
+            boxSize="70px"
             src={picture ? picture : 'https://picsum.photos/seed/picsum/200/300'}
             p={1}
           />
         </Box>
-        <VStack>
-          <Text noOfLines={1}>{name}</Text>
+        <VStack height="100%">
+          <Text noOfLines={1} fontSize="30px" paddingTop="15px">{name}</Text>
         </VStack>
       </Grid>
     </Box>

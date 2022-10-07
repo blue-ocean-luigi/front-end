@@ -5,7 +5,7 @@ import { Box } from '@chakra-ui/react';
 function Searches(props) {
 
   return (
-    <Box style={{position: "absolute", width:"100%", zIndex:1, backgroundColor: 'var(--chakra-colors-chakra-body-bg'}}>
+    <Box style={{position: "absolute", width:"97%", zIndex:1, backgroundColor: 'var(--chakra-colors-chakra-body-bg'}}>
       {props.data.map((search, index) => {
         let name, id, type
         let picture = search.picture

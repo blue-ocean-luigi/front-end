@@ -17,6 +17,7 @@ function ColorModeSwitcher(props) {
       marginLeft="2"
       onClick={toggleColorMode}
       icon={<SwitchIcon />}
+      zIndex='100'
       {...props}
     />
   );
