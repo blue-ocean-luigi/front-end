@@ -114,6 +114,7 @@ function HomePage() {
           >
             <Box w="100%" h="fit-content" p={1} align="center" onClick={() => navProfile()}>
               <Image
+                objectFit="cover"
                 boxSize="200px"
                 src={userInfo.picture}
                 alt="User Name"
@@ -126,7 +127,6 @@ function HomePage() {
               display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '15px',
             }}
             >
-              <Heading fontSize="20px">Your Groups</Heading>
               <CreateGroupButton />
               <GroupList groups={userGroups} />
               <Heading fontSize="20px" padding="20px">Your Friends</Heading>

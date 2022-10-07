@@ -73,7 +73,7 @@ function NewPost({ updateFeed }) {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create a New Post on *group Name*</ModalHeader>
+          <ModalHeader>Create a New Post</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <FormControl>
