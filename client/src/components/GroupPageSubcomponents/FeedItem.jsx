@@ -27,6 +27,7 @@ function FeedItem({ event }) {
           <Image
             borderRadius="full"
             boxSize="80px"
+            objectFit="cover"
             src={ event.picture }
             // alt={ event.eventName }
             p={1}

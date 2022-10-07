@@ -37,6 +37,7 @@ function Friend({ friend, isGroupInvite, members }) {
           <Image
             borderRadius="full"
             boxSize="80px"
+            objectFit="cover"
             src={friend.picture ? friend.picture : 'https://i.picsum.photos/id/1062/5092/3395.jpg?hmac=o9m7qeU51uOLfXvepXcTrk2ZPiSBJEkiiOp-Qvxja-k'}
             alt={friend.firstname}
             p={1}
