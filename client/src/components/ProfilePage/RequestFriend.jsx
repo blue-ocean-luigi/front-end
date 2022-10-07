@@ -10,7 +10,7 @@ import { UseContextAll } from '../ContextAll';
 import { please } from '../../request';
 
 function RequestFriend() {
-  const { userFriends, currentUserID, userID } = UseContextAll();
+  const { userFriends, currentUserID, userID, setOpenChatModal } = UseContextAll();
   const [friendStatus, setStatus] = useState('stranger');
 
   useEffect(() => {
@@ -40,7 +40,7 @@ function RequestFriend() {
 
   return (
     <Box>
-      {friendStatus === 'friend' && <Button> Chat Now </Button>}
+      {friendStatus === 'friend' && <Button onClick={() => setOpenChatModal(true) }> Chat Now </Button>}
       {friendStatus === 'pending' && <Button> Pending </Button>}
       {friendStatus === 'stranger' && <Button onClick={() => handleRequest()}> Request Friend </Button>}
     </Box>

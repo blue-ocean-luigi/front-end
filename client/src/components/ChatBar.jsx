@@ -50,7 +50,7 @@ import { please } from '../request';
 
 
 export default function ChatBar() {
-  const { userInfo, userID, userFriends } = UseContextAll();
+  const { userInfo, userID, userFriends, currentUserID, openChatModal, setOpenChatModal } = UseContextAll();
   const [chatFocus, setChatFocus] = useState(false);
   const [friendID, setFriendID] = useState(0)
   const [friendName, setFriendName] = useState('')
@@ -91,6 +91,21 @@ export default function ChatBar() {
     friendRef.current = friendID;
   });
   useEffect(() => {
+    console.log('openChatModal changed');
+    if (openChatModal) {
+      setFriendID(currentUserID);
+      modalOnOpen()
+    }
+  }, [openChatModal]);
+  useEffect(() => {
+    if (modalIsOpen) {
+      console.log('modal was open');
+    } else {
+      console.log('modal was closed');
+      setOpenChatModal(false);
+    }
+  }, [modalIsOpen]);
+  useEffect(() => {
     socket.off('messageResponse');
     socket.on('messageResponse', (data) => {
       if (data.receiver_id === userID) {
@@ -108,7 +123,7 @@ export default function ChatBar() {
                 <Flex flexDirection="column">
                   <AlertIcon />
                   <Center><AlertTitle>New Message</AlertTitle></Center>
-                  <Center><AlertDescription>{ `You have a message from ${friend.firstname}`}</AlertDescription></Center>
+                  <Center><AlertDescription>{ (friend && friend.firstname) ? `You have a message from ${friend.firstname}` : 'You have a new message!' }</AlertDescription></Center>
                   <Center>
                     <Button onClick={() => { setFriendID(data.sender_id); messageToast.close(toastRef.current); }} variant='ghost'>
                     Reply
@@ -132,14 +147,14 @@ export default function ChatBar() {
     if (modalChatBarRef.current) {
       //modalChatRef.current.offsetHeight = modalChatBarRef.current.parentElement.offsetHeight;
     }
-    userFriends.friendlist.forEach(f => {
-      please.getMessages(userID, f.id).then(res => {
-        //const id = f.id;
-        //const msg = res.data[0];
-        lastMessages[f.id] = res.data[res.data.length - 1].message;
-        setLastMessages({...lastMessages})
+    if (userFriends && userFriends.friendlist) {
+      userFriends.friendlist.forEach(f => {
+        please.getMessages(userID, f.id).then(res => {
+          res.data.length ? lastMessages[f.id] = res.data[res.data.length - 1].message : null;
+          setLastMessages({...lastMessages})
+        })
       })
-    })
+    }
   }, [friendID, modalIsOpen]);
   const lastFive = (list) => [...list].reverse().slice(0, 4).reverse();
 
@@ -234,13 +249,13 @@ export default function ChatBar() {
           <ModalBody>
             <Grid w="100%" h="calc(80vh)" templateRows="10fr 1fr" templateColumns="0.1fr, 5fr">
               <GridItem pr={4}>
-                <VStack maxW="200px" maxH="calc(80vh)" overflowY="auto">
+                <VStack minW="200px" maxW="400px" maxH="calc(80vh)" overflowY="auto">
                 { userFriends.friendlist ? userFriends.friendlist.map(friend =>
                 <Box as={Button}
                     minH="60px"
                     minW="200px"
                     key={friend.id}
-                    variant={friend.id === friendID ? 'outline' : null }
+                    variant={friend.id === friendID ? null : 'ghost' }
                     onClick={() => {
                       setFriendID(friend.id);
                       setFriendName(friend.firstname);
@@ -252,7 +267,7 @@ export default function ChatBar() {
                         <Spacer />
                         <Flex flexDirection="column">
                           <Text>{friend.firstname}</Text>
-                          <Text as="i">{lastMessages[friend.id]}</Text>
+                          <Text as="i">{ lastMessages.hasOwnProperty(friend.id) ? (lastMessages[friend.id].length > 12 ? lastMessages[friend.id].slice(0, 12) + '...' : lastMessages[friend.id]) : null }</Text>
                         </Flex>
                       </Flex>
                     </Box>
