@@ -20,6 +20,7 @@ import './ProfilePage.css';
 import FriendRequests from '../Modals/FriendRequests.jsx'
 import FriendsList from '../FriendsListSubcomponents/FriendsList.jsx'
 import GroupList from '../GroupList/GroupList.jsx'
+import BioUpdate from '../Modals/BioUpdate.jsx'
 import { please } from '../../request.jsx'
 
 function ProfilePage() {
@@ -32,6 +33,8 @@ function ProfilePage() {
     userFriends,
     homePosts,
   } = UseContextAll();
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const [banner, setBanner] = useState('');
 
@@ -64,8 +67,9 @@ function ProfilePage() {
       });
   }
 
-  console.log(userInfo)
-
+  function handleBioUpdate() {
+    console.log("bio click")
+  }
 
   function handleBannerClick() {
     document.getElementById('ban_up').click();
@@ -88,9 +92,11 @@ function ProfilePage() {
           <Text zIndex="2" position="absolute" left="0" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="white" transform="translateX(20%)">{`${userInfo.firstname} ${userInfo.lastname}`}</Text>
         </Center>
       </Box>
-      <Box minHeight="20vh" w="80%" border="1px solid gray" mb="1em">
+      <Box minHeight="20vh" w="80%" border="1px solid gray" mb="1em" position="relative">
         <Text fontSize="2em">About Me</Text>
         <Text fontSize="1.2em">{userInfo.aboutme || 'This user has not filled out their bio :('}</Text>
+        {/* <Button position="absolute" right="5px" bottom="5px" onClick={(e)=>handleBioUpdate(e)}>Update Bio</Button> */}
+        <BioUpdate onClose={onClose} onOpen={onOpen} isOpen={isOpen} />
       </Box>
       <Flex flexDirection="row" w="80%" justifyContent="space-evenly">
         <Box w="50%" h="50vh" overflowY="auto" border="1px solid red" mb="5em" mr="0.5em">
