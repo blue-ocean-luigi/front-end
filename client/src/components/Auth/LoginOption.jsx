@@ -91,8 +91,6 @@ function Signup({setExistingUser, setMainPage }) {
                   Sign Up
                 </Button>
                 <Spacer />
-                <Text>Or...</Text>
-                <Spacer />
                 <Button onClick={signInWithGoogle}>
                   Sign up using Google
                 </Button>
@@ -142,16 +140,16 @@ function Login({user, loading, error, setExistingUser, setMainPage }) {
     }
   }, [user, loading]);
   return (
-      <Center minH="500px" maxH="800px">
+      <Center h="calc(50vh)">
         <Flex flexDirection="column" h="100%">
           <Center>
-            <Heading>Sign Up</Heading>
+            <Heading>Log In</Heading>
           </Center>
           <Spacer />
           <Box minH="300px" minW="400px" maxH="600px" maxW="600px">
             <FormControl>
-              <Flex flexDirection="column">
-                  <Box>
+              <Flex flexDirection="column" h="100%">
+                  <Box flexGrow="1">
                     <FormLabel>Email Address</FormLabel>
                     <Input
                       type="email"
@@ -160,7 +158,7 @@ function Login({user, loading, error, setExistingUser, setMainPage }) {
                     />
                   </Box>
                   <Spacer />
-                  <Box>
+                  <Box flexGrow="1">
                     <FormLabel>Password</FormLabel>
                     <Input
                       type="password"
@@ -170,14 +168,13 @@ function Login({user, loading, error, setExistingUser, setMainPage }) {
                   </Box>
                   <Spacer />
                 <Button
+                  flexGrow="1"
                   onClick={
                     () => logInWithEmailAndPassword(email, password)
                   }
                 >
                   Log In
                 </Button>
-                <Spacer />
-                Or...
                 <Spacer />
                 <Button onClick={signInWithGoogle}>
                   Log in with Google

@@ -234,7 +234,7 @@ export default function ChatBar() {
           <ModalBody>
             <Grid w="100%" h="calc(80vh)" templateRows="10fr 1fr" templateColumns="0.1fr, 5fr">
               <GridItem pr={4}>
-                <VStack maxW="200px" maxH="calc(80vh)" overflowY="auto">
+                <VStack minW="200px" maxW="400px" maxH="calc(80vh)" overflowY="auto">
                 { userFriends.friendlist ? userFriends.friendlist.map(friend =>
                 <Box as={Button}
                     minH="60px"
