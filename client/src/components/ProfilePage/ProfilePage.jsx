@@ -139,13 +139,13 @@ function ProfilePage() {
         <InputGroup w="100%" position="absolute" right="5" bottom="5%">
           <Input type="file" id="ban_up" display="none" onChange={(e) => { handlePhoto(e); }} />
           <Input type="file" id="pic_up" display="none" onChange={(e) => { handlePhoto(e); }} />
-          <Button color="blue.600" position="absolute" right="0" bottom="5%" rightIcon={<MdInsertPhoto />} onClick={(e) => handleBannerClick(e, 'ban')}>Update Banner</Button>
-          <Button background="rgba(250,250,250,0.7)" color="blue.600" position="absolute" left="6vw" transform="translateY(-5px)" rightIcon={<MdInsertPhoto />} onClick={(e) => handleBannerClick(e, 'pic')} zIndex="5" size="m">Update Picture</Button>
+          <Button background="rgba(250,250,250,1)" color="blue.500" position="absolute" right="0" bottom="5%" rightIcon={<MdInsertPhoto />} onClick={(e) => handleBannerClick(e, 'ban')}>Update Banner</Button>
+          <Button color="blue.300" background="transparent" position="absolute" left="6vw" transform="translateY(-5px)" rightIcon={<MdInsertPhoto />} onClick={(e) => handleBannerClick(e, 'pic')} zIndex="5" size="m">Update Picture</Button>
         </InputGroup>
         )}
-        <Center w="20vw" h="100%" position="relative" background="rgba(20,20,20,0.4)" borderRadius="0 10px 10px 0">
-          <Image src={pic || defaultProfilePic} boxSize="15vw" borderRadius="full" position="absolute" top="calc((100% - 13vw) / 2)" alt="PIC" border="3px solid" borderColor="blue.200" />
-          <Text w="100%" zIndex="2" position="absolute" left="0" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="blue.200">{`${profileInfo.firstname} ${profileInfo.lastname}`}</Text>
+        <Center w="20vw" h="100%" position="relative" background="rgba(0 , 0, 0, 0.6)" borderRadius="0 10px 10px 0">
+          <Image src={pic || defaultProfilePic} boxSize="15vw" borderRadius="full" position="absolute" top="calc((100% - 13vw) / 2)" alt="PIC" border="3px solid" borderColor="blue.300" />
+          <Text w="100%" zIndex="2" position="absolute" left="0" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="blue.300">{`${profileInfo.firstname} ${profileInfo.lastname}`}</Text>
         </Center>
       </Box>
       <Box minHeight="20vh" w="80%" border="1px solid gray" mb="1em" position="relative">

@@ -40,9 +40,9 @@ function RequestFriend() {
 
   return (
     <Box>
-      {friendStatus === 'friend' && <Button> Chat Now </Button>}
-      {friendStatus === 'pending' && <Button> Pending </Button>}
-      {friendStatus === 'stranger' && <Button onClick={() => handleRequest()}> Request Friend </Button>}
+      {friendStatus === 'friend' && <Button background="rgba(250,250,250,1)" color="blue.500"> Chat Now </Button>}
+      {friendStatus === 'pending' && <Button background="rgba(250,250,250,1)" color="blue.500"> Pending </Button>}
+      {friendStatus === 'stranger' && <Button background="rgba(250,250,250,1)" color="blue.500" onClick={() => handleRequest()}> Request Friend </Button>}
     </Box>
   );
 }
