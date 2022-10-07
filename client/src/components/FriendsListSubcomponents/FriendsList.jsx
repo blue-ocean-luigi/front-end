@@ -7,15 +7,14 @@ import Friend from './Friend';
 
 // TODO: edit the hook to work for page control????
 
-function FriendsList({ friends, isGroupInvite, members}) {
+function FriendsList({ friends, isGroupInvite, members }) {
   // console.log(friends);
 
   return (
-    <Box align="center">
-            <Heading mb={1} fontSize="xl">
-        Your Friends
-      </Heading>
-      {friends && friends.map((f) => <Friend key={f.name} friend={f} isGroupInvite={isGroupInvite} members={members}/>)}
+    <Box overflow="hidden" width="95%" maxHeight="500px" position="relative">
+      <Box align="center" width="105%" overflowY="scroll" maxHeight="500px" paddingRight="15px">
+        {friends && friends.map((f) => <Friend key={f.name} friend={f} isGroupInvite={isGroupInvite} members={members} />)}
+      </Box>
     </Box>
   );
 }
