@@ -24,14 +24,14 @@ import { UseContextAll } from '../ContextAll';
 import Maps from './Maps';
 
 function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps }) {
-  console.log('DEBUG this is eventinfo: ', eventInfo)
+  // console.log('DEBUG this is eventinfo: ', eventInfo)
   const { userID } = UseContextAll();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [comment, setComment] = useState('');
   const [going, setGoing] = useState(rsvps.filter(r => r.user_id === userID).length > 0);
 
-  console.log('DEBUG this is rsvps: ', rsvps)
-  console.log('DEBUG this is going: ', rsvps.filter(r => r.user_id === userID).length > 0)
+  // console.log('DEBUG this is rsvps: ', rsvps)
+  // console.log('DEBUG this is going: ', rsvps.filter(r => r.user_id === userID).length > 0)
 
   function sendRSVP() {
     please.createRsvp({ post_id: eventInfo.post_id, user_id: userID, paid: false })

@@ -36,6 +36,14 @@ function HomePage() {
   const [search, setSearch] = useState('');
   const [content, setContent] = useState([]);
 
+  const debounce = (func, timeout = 500)  => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {func.apply(this, args); }, timeout)
+    }
+  }
+
   function handleChange(e) {
     setSearch(e.target.value);
   }
@@ -69,16 +77,16 @@ function HomePage() {
             </Heading>
             <Input variant="filled" placeholder="Search for users and groupssss" onChange={(e) => handleChange(e)} value={search}/>
             {/* <Button onClick={(e) => handleSubmit(e)}>Search</Button> */}
-
+            { content[0] &&
             <Box >
-              <Box maxH='40vh' width='100%' p='0' overflowY='auto' position='absolute'>
+              <Box style={{position: "absolute", width:"100%", zIndex:1, backgroundColor: 'var(--chakra-colors-chakra-body-bg'}}>
                 <Box px={4}>
                   <Box borderTopWidth='1px' pt={2} pb={4}>
                     <Searches data={content}/>
                   </Box>
                 </Box>
               </Box>
-            </Box>
+            </Box>}
           </Box>
         </Flex>
         <Divider />
@@ -99,9 +107,14 @@ function HomePage() {
                 onClick={() => console.log('clicked profile image')}
               />
             </Box>
-            <CreateGroupButton />
-            <GroupList groups={userGroups} />
-            <FriendsList friends={userFriends.friendlist} />
+            <Box style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '15px'}}>
+              <Box style={{display: 'flex', justifyContent: 'center', alignItems: 'center', paddingBottom: '15px'}}>
+                <Heading fontSize='30px' paddingRight='15px'>Your Groups</Heading>
+                <CreateGroupButton />
+              </Box>
+              <GroupList groups={userGroups} />
+              <FriendsList friends={userFriends.friendlist} />
+            </Box>
           </Box>
           {newUser ? <NewUserFeed /> : <ReturnUserFeed homePosts={homePosts} />}
         </Flex>

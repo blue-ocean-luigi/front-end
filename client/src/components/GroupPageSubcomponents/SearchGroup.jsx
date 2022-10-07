@@ -7,9 +7,8 @@ import SearchCard from '../HomePage/SearchCard';
 
 function SearchGroup({members, events}) {
   const [ searchArray, setSearchArray ] = useState([]);
-  const [emptyResults, setEmptyResults] = useState(false);
 
-  const debounce = (func, timeout = 500)  => {
+  let debounce = (func, timeout = 500)  => {
     let timer;
     return (...args) => {
       clearTimeout(timer);
@@ -19,7 +18,6 @@ function SearchGroup({members, events}) {
 
   const search = debounce((e) => {
     const term = e.target.value.toLowerCase();
-    setEmptyResults(searchArray.length === 0 && term !== '');
     const curSearchArray = [];
 
     if(term !== '') {
@@ -37,17 +35,16 @@ function SearchGroup({members, events}) {
         };
       });
       events.forEach(event => {
+        if (event.isevent) {
         let eventName = event.eventname;
-
-        if(eventName.toLowerCase().includes(term)) {
-
-          let eventObj = {
-            id: event.post_id,
-            name: eventName,
-            picture: event.photos[0] || 'https://cdn.vox-cdn.com/thumbor/-naXoT1PTZa-nEbqdI5hsbHsIjo=/0x0:1215x717/1520x1013/filters:focal(662x145:856x339):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/52782137/Ahri_Splash_4.0.jpg'
+          if(eventName.toLowerCase().includes(term)) {
+            let eventObj = {
+              id: event.post_id,
+              name: eventName,
+              picture: event.picture || 'https://cdn.vox-cdn.com/thumbor/-naXoT1PTZa-nEbqdI5hsbHsIjo=/0x0:1215x717/1520x1013/filters:focal(662x145:856x339):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/52782137/Ahri_Splash_4.0.jpg'
+            };
+            curSearchArray.push(eventObj);
           };
-
-          curSearchArray.push(eventObj);
         };
       });
     }
@@ -63,11 +60,6 @@ function SearchGroup({members, events}) {
           {searchArray.map((obj, index) =>
             <SearchCard key={index} id={obj.id} name={obj.name} picture={obj.picture}/>
           )}
-        </Box>
-      }
-      { emptyResults &&
-        <Box style={{position: 'absolute', width:'100%', zIndex:1, backgroundColor: 'var(--chakra-colors-chakra-body-bg', display:'flex', justifyContent: 'center', fontSize: '50px'}}>
-          NOTHING FOUND, TRY AGAIN SUCKA
         </Box>
       }
     </>

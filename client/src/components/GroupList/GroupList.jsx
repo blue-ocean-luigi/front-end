@@ -8,10 +8,7 @@ import GroupItem from './GroupItem';
 
 function GroupList({ groups}) {
   return (
-    <Box align="center">
-      <Heading mb={1} fontSize="xl">
-        Your Groups
-      </Heading>
+    <Box align="center" width='95%' overflow='scroll'  height='600px'>
       {groups.map((group) => <GroupItem key={group.id} group={group} />)}
     </Box>
   );

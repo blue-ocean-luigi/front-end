@@ -10,7 +10,7 @@ import {
 import { UseContextAll } from '../ContextAll';
 
 function GroupItem({ group }) {
-  console.log(group);
+  // console.log(group);
   const {
     setCurrentGroupID,
     setMainPage,
@@ -18,7 +18,7 @@ function GroupItem({ group }) {
 
   // on click of group, go to group page
   function handleSelect() {
-    console.log(group.id);
+    // console.log(group.id);
     setCurrentGroupID(group.id);
     setMainPage('group');
   }

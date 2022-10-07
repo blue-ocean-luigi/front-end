@@ -25,7 +25,7 @@ const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
 
 function NewPost({ updateFeed }) {
   const {currentGroupID, userID} = UseContextAll();
-  console.log('NewPost here is updateFeed: ', updateFeed)
+  // console.log('NewPost here is updateFeed: ', updateFeed)
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [postContent, setPostContent] = useState('');
   const [postPhoto, setPostPhoto] = useState();
