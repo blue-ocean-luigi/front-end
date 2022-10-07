@@ -11,9 +11,16 @@ import {
   Button,
   Textarea,
 } from '@chakra-ui/react'
+import { UseContextAll } from '../ContextAll';
+import { please } from '../../request.jsx'
 
-function BioUpdate() {
-  console.log('bio update modal')
+function BioUpdate(props) {
+  const {
+    userInfo,
+    userGroups,
+    userFriends,
+    homePosts,
+  } = UseContextAll();
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   let [value, setValue] = useState('')
@@ -25,7 +32,17 @@ function BioUpdate() {
 
   let handleBioUpdate = (e) => {
     e.preventDefault();
+    props.updateBio(value)
+
+    //close modal & reset form
+    onClose()
+
     console.log(value)
+
+    please.updateUser(userInfo.firstname, userInfo.lastname, userInfo.email, value, userInfo.picture, userInfo.id, userInfo.banner)
+
+    .then((data)=> console.log(data))
+    .catch((err)=>console.log(err))
   }
 
 

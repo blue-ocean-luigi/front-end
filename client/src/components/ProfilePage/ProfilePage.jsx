@@ -35,13 +35,14 @@ function ProfilePage() {
   } = UseContextAll();
 
   const { isOpen, onOpen, onClose } = useDisclosure()
-
   const [banner, setBanner] = useState('');
+  const [bio, setBio] = useState('')
 
   useEffect(() => {
     //  set banner to the one in db if it exists, otherwise use def
     const currBanner = userInfo.banner ? userInfo.banner : defaultBackgroundImage;
     setBanner(currBanner);
+    setBio(userInfo.aboutme || "This user has not filled out their bio :(")
   }, []);
 
   const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
@@ -94,9 +95,8 @@ function ProfilePage() {
       </Box>
       <Box minHeight="20vh" w="80%" border="1px solid gray" mb="1em" position="relative">
         <Text fontSize="2em">About Me</Text>
-        <Text fontSize="1.2em">{userInfo.aboutme || 'This user has not filled out their bio :('}</Text>
-        {/* <Button position="absolute" right="5px" bottom="5px" onClick={(e)=>handleBioUpdate(e)}>Update Bio</Button> */}
-        <BioUpdate onClose={onClose} onOpen={onOpen} isOpen={isOpen} />
+        <Text fontSize="1.2em">{bio}</Text>
+        <BioUpdate updateBio={setBio} onClose={onClose} onOpen={onOpen} isOpen={isOpen} />
       </Box>
       <Flex flexDirection="row" w="80%" justifyContent="space-evenly">
         <Box w="50%" h="50vh" overflowY="auto" border="1px solid red" mb="5em" mr="0.5em">
