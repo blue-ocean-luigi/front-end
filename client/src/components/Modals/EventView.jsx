@@ -94,7 +94,7 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps, events
             borderRadius="full"
             boxSize="150px"
             objectFit="cover"
-            src={eventInfo.picture ? eventInfo.picture : 'https://picsum.photos/seed/picsum/200/300'}
+            src={eventInfo.photos[0].url ? eventInfo.picture : 'https://picsum.photos/seed/picsum/200/300'}
             alt="Event Pic"
           />
           <Box w="100%" mt={4}>
