@@ -28,7 +28,7 @@ function GroupFeed({events, setEvents, updateFeed}) {
 
   return (
     <Box>
-      <Flex position="absolute" top={0} w="100%" justifyContent="flex-end">
+      <Flex position="absolute" top={0} w="100%" justifyContent="flex-end" paddingRight="40px">
         <NewPost updateFeed={updateFeed}/>
         <NewEvent updateFeed={updateFeed}/>
       </Flex>

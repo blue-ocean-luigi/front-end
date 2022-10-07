@@ -52,7 +52,7 @@ function SearchGroup({ members, events }) {
       { searchArray[0]
         && (
         <Box style={{
-          position: 'absolute', width: '100%', zIndex: 1, backgroundColor: 'var(--chakra-colors-chakra-body-bg',
+          position: 'absolute', width: '97.2%', zIndex: 1, backgroundColor: 'var(--chakra-colors-chakra-body-bg',
         }}
         >
           {searchArray.map((obj, index) => (

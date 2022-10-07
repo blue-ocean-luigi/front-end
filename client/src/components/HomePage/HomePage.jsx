@@ -110,6 +110,7 @@ function HomePage() {
             w="30%"
             rounded="lg"
             p={1}
+            marginLeft="2%"
           >
             <Box w="100%" h="fit-content" p={1} align="center" onClick={() => navProfile()}>
               <Image
@@ -132,6 +133,7 @@ function HomePage() {
                 <CreateGroupButton />
               </Box>
               <GroupList groups={userGroups} />
+              <Heading fontSize="20px" padding="20px">Your Friends</Heading>
               <FriendsList friends={userFriends.friendlist} />
             </Box>
           </Box>
