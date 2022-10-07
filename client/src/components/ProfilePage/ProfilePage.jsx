@@ -144,7 +144,7 @@ function ProfilePage() {
         </InputGroup>
         )}
         <Center w="20vw" h="100%" position="relative" background="rgba(0 , 0, 0, 0.6)" borderRadius="0 10px 10px 0">
-          <Image src={pic || defaultProfilePic} boxSize="15vw" borderRadius="full" position="absolute" top="calc((100% - 13vw) / 2)" alt="PIC" border="3px solid" borderColor="#f7d359" />
+          <Image src={pic || defaultProfilePic} objectFit="cover" boxSize="15vw" borderRadius="full" position="absolute" top="calc((100% - 13vw) / 2)" alt="PIC" border="3px solid" borderColor="#f7d359" />
           <Text w="100%" zIndex="2" position="absolute" left="0" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" fontWeight="300" textShadow="2px 2px 2px black" color="#f7d359">{`${profileInfo.firstname} ${profileInfo.lastname}`}</Text>
         </Center>
       </Box>

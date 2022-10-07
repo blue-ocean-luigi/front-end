@@ -52,7 +52,7 @@ function FriendRequestCard({request, setReqCount}) {
   return (
     <Flex justifyContent="space-between" alignItems="center" h="8vw" borderBottom="1px solid lightgray" padding="10px 0px" position="relative">
 
-      <Image src={request.picture} boxSize="5vw" borderRadius="full" />
+      <Image src={request.picture} boxSize="5vw" borderRadius="full" objectFit="cover" />
       <Text fontSize="1.2em" position="absolute" left="6vw" top="calc(((100% - 1.2em) / 2 ) - 8)">{`${request.firstname} ${request.lastname}`}</Text>
       <Box h="100%">
         {replied ?
