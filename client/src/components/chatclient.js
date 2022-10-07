@@ -1,6 +1,5 @@
 import { io } from 'socket.io-client';
 
-//const socket = io('http://localhost:3002');
 const socket = io('http://54.151.79.77:3002');
 
   /*

@@ -106,7 +106,6 @@ function NewEvent({ updateFeed }) {
       endDate,
       payment_amt: 0,
     };
-    console.log(formBody);
     please.createPost(formBody)
       .then((response) => {
         console.log(response);

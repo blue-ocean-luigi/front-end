@@ -19,10 +19,13 @@ import {
   Box,
 } from '@chakra-ui/react';
 import { please } from '../../request';
+import {UseContextAll} from '../ContextAll';
 
 const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
 
-function NewPost({ groupID, userID, updateFeed }) {
+function NewPost({ updateFeed }) {
+  const {currentGroupID, userID} = UseContextAll();
+  console.log('NewPost here is updateFeed: ', updateFeed)
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [postContent, setPostContent] = useState('');
   const [postPhoto, setPostPhoto] = useState();
@@ -48,9 +51,9 @@ function NewPost({ groupID, userID, updateFeed }) {
   function handleSubmit() {
     const formBody = {
       user_id: userID,
-      group_id: groupID,
+      group_id: currentGroupID,
       content: postContent,
-      isevent: false,
+      isEvent: false,
       photos: [postPhoto],
     };
     please.createPost(formBody)
