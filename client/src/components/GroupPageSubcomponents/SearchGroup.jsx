@@ -29,6 +29,7 @@ function SearchGroup({members, events}) {
             id: member.id,
             name: userName,
             picture: member.picture,
+            type: 'user',
           };
 
           curSearchArray.push(memberObj);
@@ -41,7 +42,9 @@ function SearchGroup({members, events}) {
             let eventObj = {
               id: event.post_id,
               name: eventName,
-              picture: event.picture || 'https://cdn.vox-cdn.com/thumbor/-naXoT1PTZa-nEbqdI5hsbHsIjo=/0x0:1215x717/1520x1013/filters:focal(662x145:856x339):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/52782137/Ahri_Splash_4.0.jpg'
+              picture: event.picture || 'https://cdn.vox-cdn.com/thumbor/-naXoT1PTZa-nEbqdI5hsbHsIjo=/0x0:1215x717/1520x1013/filters:focal(662x145:856x339):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/52782137/Ahri_Splash_4.0.jpg',
+              type: 'event'
+
             };
             curSearchArray.push(eventObj);
           };
@@ -54,11 +57,11 @@ function SearchGroup({members, events}) {
 
   return (
     <>
-      <Input variant="filled" placeholder="Search for group members, events, posts..." onChange={search} />
+      <Input variant="filled" placeholder="Search for group members, events, posts..." onChange={search} width='99%'/>
       { searchArray[0] &&
         <Box style={{position: "absolute", width:"100%", zIndex:1, backgroundColor: 'var(--chakra-colors-chakra-body-bg'}}>
           {searchArray.map((obj, index) =>
-            <SearchCard key={index} id={obj.id} name={obj.name} picture={obj.picture}/>
+            <SearchCard key={index} id={obj.id} name={obj.name} picture={obj.picture} type={obj.type}/>
           )}
         </Box>
       }

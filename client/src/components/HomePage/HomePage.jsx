@@ -75,10 +75,10 @@ function HomePage() {
             <Heading mt={4} mb={1}>
               Home
             </Heading>
-            <Input variant="filled" placeholder="Search for users and groupssss" onChange={(e) => handleChange(e)} value={search}/>
+            <Input variant="filled" placeholder="Search for users and groupssss" onChange={(e) => handleChange(e)} value={search} width='99%'/>
             {/* <Button onClick={(e) => handleSubmit(e)}>Search</Button> */}
             { content[0] &&
-            <Box >
+            <Box>
               <Box style={{position: "absolute", width:"100%", zIndex:1, backgroundColor: 'var(--chakra-colors-chakra-body-bg'}}>
                 <Box px={4}>
                   <Box borderTopWidth='1px' pt={2} pb={4}>
