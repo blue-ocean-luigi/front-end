@@ -126,17 +126,12 @@ function HomePage() {
               display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '15px',
             }}
             >
-<<<<<<< HEAD
-              <Heading fontSize="20px">Your Groups</Heading>
-              <CreateGroupButton />
-=======
               <Box style={{
                 display: 'flex', justifyContent: 'center', alignItems: 'center', paddingBottom: '15px',
               }}
               >
                 <CreateGroupButton />
               </Box>
->>>>>>> 7895a2d (updated image circles to crop to square in multiple locations)
               <GroupList groups={userGroups} />
               <Heading fontSize="20px" padding="20px">Your Friends</Heading>
               <FriendsList friends={userFriends.friendlist} />
