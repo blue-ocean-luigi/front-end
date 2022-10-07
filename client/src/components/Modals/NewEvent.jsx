@@ -27,7 +27,6 @@ const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
 
 function NewEvent({ updateFeed }) {
   const { userID, currentGroupID } = UseContextAll();
-  console.log('DEBUG in NewEvent here is context: ', userID, currentGroupID)
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [name, setEventName] = useState('');
   const [content, setContent] = useState('');

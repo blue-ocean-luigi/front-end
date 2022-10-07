@@ -52,16 +52,15 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps }) {
   return (
     <div>
       <Button onClick={onOpen}>Event Details</Button>
-
       <Modal size="xl" isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent p={4}>
           <ModalHeader>{eventInfo.eventname}</ModalHeader>
           <ModalCloseButton />
           <Image
             borderRadius='full'
             boxSize='150px'
-            src={eventInfo.picture}
+            src={eventInfo.picture ? eventInfo.picture : 'https://picsum.photos/seed/picsum/200/300'}
             alt="Event Pic"
           />
           <Text>Posted in {eventInfo.groupname}</Text>
