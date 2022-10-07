@@ -25,7 +25,7 @@ import Maps from './Maps';
 
 function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps }) {
   // console.log('DEBUG this is eventinfo: ', eventInfo)
-  const { userID } = UseContextAll();
+  const { userID, setOpenEventModal, openEventModal } = UseContextAll();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [comment, setComment] = useState('');
   const [going, setGoing] = useState(rsvps.filter(r => r.user_id === userID).length > 0);
@@ -49,6 +49,7 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps }) {
     sendComment(comment);
     setComment('');
   }
+
 
   return (
     <div>

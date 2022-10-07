@@ -30,15 +30,13 @@ import { UseContextAll } from '../ContextAll';
 
 
 function Signup({setExistingUser, setMainPage }) {
-  //const { setUserInfo, setUserId, setUserGroups, setUserFriends } = UseContextAll();
+  const { setUserInfo, setUserId, setUserGroups, setUserFriends } = UseContextAll();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
   const [user, loading, error] = useAuthState(auth);
 
   const register = () => {
-    if (!name) alert('enter name!');
-    registerWithEmailAndPassword(name, email, password);
+    registerWithEmailAndPassword(email, email, password);
   };
   useEffect(() => {
     if (loading) return;
@@ -55,48 +53,36 @@ function Signup({setExistingUser, setMainPage }) {
 
   return (
       <Center>
-        <Flex flexDirection="column" h="calc(100vh)">
-          <Center>
+        <Flex flexDirection="column" h="calc(50vh)">
+          <Center mt={8} mb={8}>
             <Heading>Sign Up</Heading>
           </Center>
-          <Spacer />
           <Box >
             <FormControl>
-              <Flex flexDirection="column">
-                  <Box>
-                    <FormLabel>Name</FormLabel>
-                    <Input
-                      type="email"
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                  </Box>
-                  <Spacer />
-                  <Box>
-                    <FormLabel>Email Address</FormLabel>
-                    <Input
-                      type="email"
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </Box>
-                  <Spacer />
-                  <Box>
-                    <FormLabel>Password</FormLabel>
-                    <Input
-                      type="password"
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </Box>
-                  <Spacer />
-                <Button onClick={register}>
+              <Box mb={8}>
+                <FormLabel>Email Address</FormLabel>
+                <Input
+                  type="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Box>
+              <Box mb={8}>
+                <FormLabel>Password</FormLabel>
+                <Input
+                  type="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Box>
+              <Box mb={8}>
+                <Button w="100%" onClick={register}>
                   Sign Up
                 </Button>
-                <Spacer />
-                <Text>Or...</Text>
-                <Spacer />
-                <Button onClick={signInWithGoogle}>
+              </Box>
+              <Box mb={8}>
+                <Button w="100%" onClick={signInWithGoogle}>
                   Sign up using Google
                 </Button>
-              </Flex>
+              </Box>
             </FormControl>
           </Box>
           <Spacer />
@@ -122,11 +108,8 @@ function Login({user, loading, error, setExistingUser, setMainPage }) {
       return;
     }
     if (user) {
-      //console.log('signup: email:', email);
       please.getUserByEmail(user.email)
         .then(res => {
-          //console.log(res.data); // {id:, firstname, lastname, email, aboutme
-          //console.log(res.data.info); // {id:, firstname, lastname, email, aboutme
           setUserInfo(res.data.info);
           setUserID(res.data.info.id);
           setUserGroups(res.data.groups);
@@ -142,47 +125,45 @@ function Login({user, loading, error, setExistingUser, setMainPage }) {
     }
   }, [user, loading]);
   return (
-      <Center minH="500px" maxH="800px">
-        <Flex flexDirection="column" h="100%">
-          <Center>
-            <Heading>Sign Up</Heading>
+      <Center h="calc(50vh)" mt={12}>
+        <Flex flexDirection="column">
+          <Center mb={8}>
+            <Heading>Log In</Heading>
           </Center>
           <Spacer />
           <Box minH="300px" minW="400px" maxH="600px" maxW="600px">
             <FormControl>
-              <Flex flexDirection="column">
-                  <Box>
-                    <FormLabel>Email Address</FormLabel>
-                    <Input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </Box>
-                  <Spacer />
-                  <Box>
-                    <FormLabel>Password</FormLabel>
-                    <Input
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </Box>
-                  <Spacer />
-                <Button
-                  onClick={
-                    () => logInWithEmailAndPassword(email, password)
-                  }
-                >
-                  Log In
-                </Button>
-                <Spacer />
-                Or...
-                <Spacer />
-                <Button onClick={signInWithGoogle}>
+                <Box mb={8}>
+                  <FormLabel>Email Address</FormLabel>
+                  <Input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </Box>
+                <Box mb={8}>
+                  <FormLabel>Password</FormLabel>
+                  <Input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Box>
+              <Box mb={8}>
+              <Button
+                w="100%"
+                onClick={
+                  () => logInWithEmailAndPassword(email, password)
+                }
+              >
+                Log In
+              </Button>
+              </Box>
+              <Box mb={8}>
+                <Button w="100%" onClick={signInWithGoogle}>
                   Log in with Google
                 </Button>
-              </Flex>
+              </Box>
             </FormControl>
           </Box>
           <Spacer />

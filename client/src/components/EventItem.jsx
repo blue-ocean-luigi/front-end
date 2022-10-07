@@ -102,7 +102,7 @@ class EventItem extends React.Component {
     const { comment, likes, comments } = this.state;
     // console.log('in event item and rendering: ', event);
     const convertTime = (time) => {
-      let startTimeEnd = time<= 1159 ? 'A.M' : time === 2400 ? 'A.M.' : 'P.M'
+      let startTimeEnd = time <= 1200 ? 'A.M' : 'P.M'
       let startTime = time > 1200 ? time - 1200 : time
       let newTime = startTime >= 1000  ?  startTime.toString() : '0' + startTime
       return newTime.substr(0, 2) + ':' + newTime.substr(2, 3) + ' ' + startTimeEnd

@@ -22,7 +22,9 @@ const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
 
 function CreateGroupButton() {
   const [openModal, setOpenModal] = useState(false);
-  const { userID, setCurrentGroupID, setMainPage, setUserGroups } = UseContextAll();
+  const {
+    userID, setCurrentGroupID, setMainPage, setUserGroups,
+  } = UseContextAll();
   const formRef = useRef();
 
   const handlePhoto = (photo) => {
@@ -34,7 +36,7 @@ function CreateGroupButton() {
       method: 'post',
       url: 'https://api.imgbb.com/1/upload',
       data: body,
-    })
+    });
   };
 
   const submitForm = async () => {
@@ -50,16 +52,14 @@ function CreateGroupButton() {
       photoURL = getPhotoURL.data.data.display_url;
     }
 
-
-    const getId = await please.createNewGroup(userID, name, about, state, city, zip, photoURL)
-    const updateGroups = await please.getGroupsOfUser(userID)
+    const getId = await please.createNewGroup(userID, name, about, state, city, zip, photoURL);
+    const updateGroups = await please.getGroupsOfUser(userID);
 
     const groupID = getId.data.id;
     setOpenModal(false);
-    setUserGroups(updateGroups.data)
+    setUserGroups(updateGroups.data);
     setCurrentGroupID(groupID);
     setMainPage('group');
-
   };
 
   const clearForm = () => {

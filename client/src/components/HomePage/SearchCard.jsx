@@ -7,23 +7,17 @@ function SearchCard({id, name, picture, type}) {
   const { mainPage, setMainPage, setCurrentUserID, setCurrentGroupID } = UseContextAll();
 
   function handleSelect() {
-    console.log({id,type, picture, name})
     if (type === 'users') {
       setCurrentUserID(id);
       setMainPage('profile');
-    } else if ( type === 'event' ) {
-
     } else if ( type === 'groups' ) {
       setCurrentGroupID(id);
       setMainPage('group');
     }
-    console.log('connect to friend profile or group page')
-    // setCurrentUserID(friend.id);
-    // setMainPage('profile');
   }
   return (
 
-    <Box >
+    <Box onClick={() => handleSelect()}>
       <Grid
         sx={{
           gridTemplateColumns: '50px 1fr',
@@ -31,7 +25,7 @@ function SearchCard({id, name, picture, type}) {
           height: '40px',
           overflow: 'hidden'
         }}>
-        <Box onClick={() => handleSelect()}>
+        <Box>
           <Image
             borderRadius="full"
             boxSize="40px"
