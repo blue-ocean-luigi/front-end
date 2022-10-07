@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   ChakraProvider,
   Center,
@@ -6,6 +7,9 @@ import {
   Box,
   Text,
   Heading,
+  Input,
+  InputGroup,
+  InputRightElement,
   Image,
   Button,
   useDisclosure,
@@ -16,6 +20,7 @@ import './ProfilePage.css';
 import FriendRequests from '../Modals/FriendRequests.jsx'
 import FriendsList from '../FriendsListSubcomponents/FriendsList.jsx'
 import GroupList from '../GroupList/GroupList.jsx'
+import BioUpdate from '../Modals/BioUpdate.jsx'
 import { please } from '../../request.jsx'
 
 function ProfilePage() {
@@ -29,16 +34,47 @@ function ProfilePage() {
     homePosts,
   } = UseContextAll();
 
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const [banner, setBanner] = useState('');
+  const [bio, setBio] = useState('')
 
   useEffect(() => {
     //  set banner to the one in db if it exists, otherwise use def
     const currBanner = userInfo.banner ? userInfo.banner : defaultBackgroundImage;
     setBanner(currBanner);
+    setBio(userInfo.aboutme || "This user has not filled out their bio :(")
   }, []);
 
-  // console.log(userInfo);
-  // console.log(userFriends);
+  const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
+
+  function handlePhoto(e) {
+    const body = new FormData();
+    body.set('key', IMGBB_API_KEY);
+    body.append('image', e.target.files[0]);
+
+    axios({
+      method: 'post',
+      url: 'https://api.imgbb.com/1/upload',
+      data: body,
+    })
+      .then((response) => {
+        console.log(response.data.data.display_url);
+        setBanner(response.data.data.display_url);
+        //updateUser: (firstname, lastname, email, aboutme, picture, user_id, banner)
+        please.updateUser(userInfo.firstname, userInfo.lastname, userInfo.email, userInfo.aboutme, userInfo.picture, userInfo.id, response.data.data.display_url).then((data)=> console.log(data))
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  function handleBioUpdate() {
+    console.log("bio click")
+  }
+
+  function handleBannerClick() {
+    document.getElementById('ban_up').click();
+  }
 
   return (
     <Center display="flex" flexDirection="column">
@@ -48,17 +84,19 @@ function ProfilePage() {
             requests={userFriends.requestlist}
           />
         </Box>
-        <Button rightIcon={<MdInsertPhoto />} position="absolute" right="5" bottom="5%">
-          Update banner
-        </Button>
+        <InputGroup w="15vw" position="absolute" right="5" bottom="5%">
+          <Input type="file" id="ban_up" display="none" onChange={(e) => { handlePhoto(e); }} />
+          <Button position="absolute" right="0" bottom="5%" rightIcon={<MdInsertPhoto />}onClick={(e)=>handleBannerClick(e)}>Update Banner</Button>
+        </InputGroup>
         <Center w="20vw" h="100%" position="relative">
           <Image src={userInfo.picture === undefined ? userInfo.picture : defaultProfilePic} boxSize="15vw" borderRadius="full" position="absolute" top="calc((100% - 13vw) / 2)" />
           <Text zIndex="2" position="absolute" left="0" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="white" transform="translateX(20%)">{`${userInfo.firstname} ${userInfo.lastname}`}</Text>
         </Center>
       </Box>
-      <Box minHeight="20vh" w="80%" border="1px solid gray" mb="1em">
+      <Box minHeight="20vh" w="80%" border="1px solid gray" mb="1em" position="relative">
         <Text fontSize="2em">About Me</Text>
-        <Text fontSize="1.2em">{userInfo.aboutme || 'This user has not filled out their bio :('}</Text>
+        <Text fontSize="1.2em">{bio}</Text>
+        <BioUpdate updateBio={setBio} onClose={onClose} onOpen={onOpen} isOpen={isOpen} />
       </Box>
       <Flex flexDirection="row" w="80%" justifyContent="space-evenly">
         <Box w="50%" h="50vh" overflowY="auto" border="1px solid red" mb="5em" mr="0.5em">
