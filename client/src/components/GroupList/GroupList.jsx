@@ -9,7 +9,7 @@ import { UseContextAll } from '../ContextAll';
 function GroupList({ groups }) {
   const { mainPage } = UseContextAll();
   return (
-    <Box overflow="hidden" width="95%" maxHeight="500px" position="relative">
+    <Box overflow="hidden" width="95%" maxHeight="500px" position="relative" align="center">
       {mainPage === 'home' && (
       <Heading mb={1} fontSize="xl">
         Your Groups
