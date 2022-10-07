@@ -99,7 +99,7 @@ class EventItem extends React.Component {
   }
 
   render() {
-    const { event, userID, updateFeed, rsvps, setRsvps, going, setGoing } = this.props;
+    const { event, userID, updateFeed, rsvps, setRsvps, going, setGoing, setEvents } = this.props;
     const { comment, likes, comments } = this.state;
 
     return (
@@ -150,7 +150,7 @@ class EventItem extends React.Component {
             </Tooltip>
           </Stack>
         </HStack>
-        <EventView eventInfo={event} handleLike={this.handleLike} sendComment={this.sendComment} rsvps={rsvps} setRsvps={setRsvps} />
+        <EventView eventInfo={event} handleLike={this.handleLike} sendComment={this.sendComment} rsvps={rsvps} setRsvps={setRsvps} setEvents={setEvents}/>
         <Box>
           <CommentList comments={comments} />
         </Box>
