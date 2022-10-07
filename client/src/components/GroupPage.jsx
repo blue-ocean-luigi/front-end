@@ -181,6 +181,7 @@ function GroupPage() {
                   <>
                     <Button
                       size="xs"
+                      backgroundColor="#f7d359"
                       onClick={onOpenFriendsList}
                     >
                       Invite your friends
@@ -253,6 +254,7 @@ function GroupPage() {
                       </Box>
                       <Button
                         width="50%"
+                        backgroundColor="#f7d359"
                         onClick={onOpenGroupRequest}
                       >
                         Join

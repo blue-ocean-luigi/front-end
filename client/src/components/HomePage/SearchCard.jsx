@@ -7,7 +7,6 @@ function SearchCard({id, name, picture}) {
   const { mainPage, setMainPage, setCurrentUserID } = UseContextAll();
 
   function handleSelect() {
-    console.log('connect to friend profile or group page')
     // setCurrentUserID(friend.id);
     // setMainPage('profile');
   }

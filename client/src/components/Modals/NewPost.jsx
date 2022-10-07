@@ -68,7 +68,7 @@ function NewPost({ updateFeed }) {
 
   return (
     <Box mr={1}>
-      <Button onClick={onOpen}>New Post</Button>
+      <Button backgroundColor="#f7d359" onClick={onOpen}>New Post</Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -78,7 +78,7 @@ function NewPost({ updateFeed }) {
           <ModalBody>
             <FormControl>
               <FormLabel>Comment</FormLabel>
-              <Textarea onChange={(e) => { setPostContent(e.target.value); }} />
+              <Textarea required onChange={(e) => { setPostContent(e.target.value); }} />
               <FormLabel>Add a photo</FormLabel>
               <Input type="file" onChange={(e) => { handlePhoto(e); }} />
               <FormHelperText>Optional</FormHelperText>

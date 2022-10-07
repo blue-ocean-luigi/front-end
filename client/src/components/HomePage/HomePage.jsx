@@ -42,22 +42,20 @@ function HomePage() {
 
   useEffect(() => {
     if (!search) {
-      setContent([])
-      return
+      setContent([]);
+      return;
     }
     ;(async () => {
       try {
-        const results = await please.searchPeopleAndGroups(search)
+        const results = await please.searchPeopleAndGroups(search);
         const data = results.data
         setContent(data)
-        console.log('THIS IS DATA', data)
-
+        console.log('THIS IS DATA', data);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
-
-     })()
-  }, [search])
+    })();
+  }, [search]);
 
   return (
     <Flex h="100vh" w="100%" justifyContent="space-between">
@@ -67,14 +65,14 @@ function HomePage() {
             <Heading mt={4} mb={1}>
               Home
             </Heading>
-            <Input variant="filled" placeholder="Search for users and groupssss" onChange={(e) => handleChange(e)} value={search}/>
+            <Input variant="filled" placeholder="Search for users and groupssss" onChange={(e) => handleChange(e)} value={search} />
             {/* <Button onClick={(e) => handleSubmit(e)}>Search</Button> */}
 
-            <Box >
+            <Box>
               <Box maxH='40vh' width='100%' p='0' overflowY='auto' position='absolute'>
                 <Box px={4}>
                   <Box borderTopWidth='1px' pt={2} pb={4}>
-                    <Searches data={content}/>
+                    <Searches data={content} />
                   </Box>
                 </Box>
               </Box>

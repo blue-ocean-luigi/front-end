@@ -123,7 +123,7 @@ function NewEvent({ updateFeed }) {
 
   return (
     <Box ml={1} mr={2}>
-      <Button onClick={onOpen}>New Event</Button>
+      <Button backgroundColor="#f7d359" onClick={onOpen}>New Event</Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -133,10 +133,10 @@ function NewEvent({ updateFeed }) {
           <ModalBody>
             <FormControl>
               <FormLabel>Name of Event</FormLabel>
-              <Input type="text" onChange={(e) => { setEventName(e.target.value); }} />
+              <Input type="text" required onChange={(e) => { setEventName(e.target.value); }} />
 
               <FormLabel>About the Event</FormLabel>
-              <Textarea onChange={(e) => { setContent(e.target.value); }} />
+              <Textarea required onChange={(e) => { setContent(e.target.value); }} />
 
               <FormLabel>Upload a Picture for the Event</FormLabel>
               <Input type="file" onChange={(e) => { handlePhoto(e); }} />
@@ -144,17 +144,17 @@ function NewEvent({ updateFeed }) {
               <FormLabel>Location of Event</FormLabel>
               <Box>
                 <Autocomplete>
-                  <input type="text" ref={location}/>
+                  <input required type="text" ref={location} />
                 </Autocomplete>
               </Box>
               <FormLabel>Date and Time</FormLabel>
               <FormHelperText>Start Date</FormHelperText>
-              <Input type="date" onChange={(e) => { setStartDate(e.target.value); }} />
+              <Input type="date" required onChange={(e) => { setStartDate(e.target.value); }} />
               <FormHelperText>End Date</FormHelperText>
-              <Input type="date" onChange={(e) => { setEndDate(e.target.value); }} />
+              <Input type="date" required onChange={(e) => { setEndDate(e.target.value); }} />
               <FormHelperText>Start Time</FormHelperText>
               <Stack shouldWrapChildren direction="row">
-                <Select placeholder="12" onChange={(e) => { setStartHour(e.target.value); }}>
+                <Select required placeholder="12" onChange={(e) => { setStartHour(e.target.value); }}>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -169,20 +169,20 @@ function NewEvent({ updateFeed }) {
                   <option value="12">12</option>
                 </Select>
                 <FormHelperText>:</FormHelperText>
-                <Select placeholder="00" onChange={(e) => { setStartMins(e.target.value); }}>
+                <Select required placeholder="00" onChange={(e) => { setStartMins(e.target.value); }}>
                   <option value="00">00</option>
                   <option value="15">15</option>
                   <option value="30">30</option>
                   <option value="45">45</option>
                 </Select>
-                <Select placeholder="PM" onChange={(e) => { setStartMeridiem(e.target.value); }}>
+                <Select required placeholder="PM" onChange={(e) => { setStartMeridiem(e.target.value); }}>
                   <option value="AM">AM</option>
                   <option value="PM">PM</option>
                 </Select>
               </Stack>
               <FormHelperText>End Time</FormHelperText>
               <Stack shouldWrapChildren direction="row">
-                <Select placeholder="1" onChange={(e) => { setEndHour(e.target.value); }}>
+                <Select required placeholder="1" onChange={(e) => { setEndHour(e.target.value); }}>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -197,13 +197,13 @@ function NewEvent({ updateFeed }) {
                   <option value="12">12</option>
                 </Select>
                 <FormHelperText>:</FormHelperText>
-                <Select placeholder="00" onChange={(e) => { setEndMins(e.target.value); }}>
+                <Select required placeholder="00" onChange={(e) => { setEndMins(e.target.value); }}>
                   <option value="00">00</option>
                   <option value="15">15</option>
                   <option value="30">30</option>
                   <option value="45">45</option>
                 </Select>
-                <Select placeholder="PM" onChange={(e) => { setEndMeridiem(e.target.value); }}>
+                <Select required placeholder="PM" onChange={(e) => { setEndMeridiem(e.target.value); }}>
                   <option value="AM">AM</option>
                   <option value="PM">PM</option>
                 </Select>
@@ -212,7 +212,7 @@ function NewEvent({ updateFeed }) {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={() => { handleSubmit(); }}>
+            <Button backgroundColor="#f7d359" mr={3} onClick={() => { handleSubmit(); }}>
               Post Event
             </Button>
           </ModalFooter>

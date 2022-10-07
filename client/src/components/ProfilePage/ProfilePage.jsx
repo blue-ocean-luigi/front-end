@@ -148,18 +148,18 @@ function ProfilePage() {
           <Text w="100%" zIndex="2" position="absolute" left="0" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="blue.300">{`${profileInfo.firstname} ${profileInfo.lastname}`}</Text>
         </Center>
       </Box>
-      <Box minHeight="20vh" w="80%" border="1px solid gray" mb="1em" position="relative">
+      <Box minHeight="20vh" w="80%" border="1px solid #f7d359" mb="1em" position="relative">
         <Text fontSize="2em">About Me</Text>
         <Text fontSize="1.2em">{bio || 'This user has not filled out their bio :('}</Text>
         {isMyprofile && (
         <BioUpdate updateBio={setBio} onClose={onClose} onOpen={onOpen} isOpen={isOpen} />)}
       </Box>
       <Flex flexDirection="row" w="80%" justifyContent="space-evenly">
-        <Box w="50%" h="50vh" overflowY="auto" border="1px solid red" mb="5em" mr="0.5em">
+        <Box w="50%" h="50vh" overflowY="auto" border="1px solid #f7d359" mb="5em" mr="0.5em">
           {profileFriends ? <FriendsList friends={profileFriends} />
             : <Text> No friends to view </Text>}
         </Box>
-        <Box w="50%" h="50vh" overflowY="auto" border="1px solid red" mb="5em" ml="0.5em">
+        <Box w="50%" h="50vh" overflowY="auto" border="1px solid #f7d359" mb="5em" ml="0.5em">
           {profileGroups && <GroupList groups={profileGroups} />}
         </Box>
       </Flex>
