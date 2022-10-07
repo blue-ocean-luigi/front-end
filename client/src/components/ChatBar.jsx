@@ -50,7 +50,7 @@ import { please } from '../request';
 
 
 export default function ChatBar() {
-  const { userInfo, userID, userFriends } = UseContextAll();
+  const { userInfo, userID, userFriends, currentUserID, openChatModal, setOpenChatModal } = UseContextAll();
   const [chatFocus, setChatFocus] = useState(false);
   const [friendID, setFriendID] = useState(0)
   const [friendName, setFriendName] = useState('')
@@ -90,6 +90,21 @@ export default function ChatBar() {
     messageRef.current = messageHistory;
     friendRef.current = friendID;
   });
+  useEffect(() => {
+    console.log('openChatModal changed');
+    if (openChatModal) {
+      setFriendID(currentUserID);
+      modalOnOpen()
+    }
+  }, [openChatModal]);
+  useEffect(() => {
+    if (modalIsOpen) {
+      console.log('modal was open');
+    } else {
+      console.log('modal was closed');
+      setOpenChatModal(false);
+    }
+  }, [modalIsOpen]);
   useEffect(() => {
     socket.off('messageResponse');
     socket.on('messageResponse', (data) => {
@@ -135,9 +150,7 @@ export default function ChatBar() {
     if (userFriends && userFriends.friendlist) {
       userFriends.friendlist.forEach(f => {
         please.getMessages(userID, f.id).then(res => {
-          //const id = f.id;
-          //const msg = res.data[0];
-          lastMessages[f.id] = res.data[res.data.length - 1].message;
+          res.data.length ? lastMessages[f.id] = res.data[res.data.length - 1].message : null;
           setLastMessages({...lastMessages})
         })
       })
