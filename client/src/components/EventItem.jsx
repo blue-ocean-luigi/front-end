@@ -12,9 +12,11 @@ import {
   Icon,
   Textarea,
   Tooltip,
+  IconButton,
 } from '@chakra-ui/react';
 import EventView from './Modals/EventView';
 import CommentList from './Comments/CommentList';
+import RsvpList from './RsvpList';
 import { UseContextAll } from './ContextAll';
 import { please } from '../request';
 
@@ -100,9 +102,8 @@ class EventItem extends React.Component {
   }
 
   render() {
-    const {
-      event, userID, updateFeed, rsvps, setRsvps, going, setGoing, setEvents,
-    } = this.props;
+    const { event, userID, updateFeed, rsvps, setRsvps, going, setGoing, events, setEvents } = this.props;
+    const { onOpenRsvp, isOpenRsvp, onCloseRsvp } = this.props;
     const { comment, likes, comments } = this.state;
 
     const convertTime = (time) => {
@@ -149,23 +150,33 @@ class EventItem extends React.Component {
             {/* <Text>{event.postlikes.length}</Text> */}
             <Text>{likes}</Text>
             <Tooltip label="likes">
-              <span><Icon as={BiHomeSmile} w={6} h={6} onClick={() => this.handleLike(event, userID)} /></span>
+              <IconButton variant="ghost">
+                <Icon as={BiHomeSmile} w={6} h={6} onClick={() => this.handleLike(event, userID)} />
+              </IconButton>
             </Tooltip>
-            <Text>{comments.length}</Text>
+            {/* <Text>{comments.length}</Text>
             <Tooltip label="comments">
-              <span><Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} /></span>
-            </Tooltip>
-            <Text>
-              {' '}
-              {rsvps.length}
-              {' '}
-            </Text>
+              <IconButton variant="ghost">
+                <Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} />
+              </IconButton>
+            </Tooltip> */}
+            <Text> {' '}{rsvps.length}{' '} </Text>
             <Tooltip label="RSVPs">
-              <span><Icon as={FaRegEnvelopeOpen} w={6} h={6} /></span>
+              {
+                rsvps.length > 0
+                  ? (
+                    <IconButton variant="ghost" onClick={onOpenRsvp}>
+                      <Icon as={FaRegEnvelopeOpen} w={5} h={5} />
+                    </IconButton>
+                  )
+                  : <Icon as={FaRegEnvelopeOpen} w={5} h={5} />
+              }
+
             </Tooltip>
+            <RsvpList onClose={onCloseRsvp} isOpen={isOpenRsvp} rsvps={rsvps} />
           </Stack>
         </HStack>
-        <EventView eventInfo={event} handleLike={this.handleLike} sendComment={this.sendComment} rsvps={rsvps} setRsvps={setRsvps} setEvents={setEvents} />
+        <EventView eventInfo={event} handleLike={this.handleLike} sendComment={this.sendComment} rsvps={rsvps} setRsvps={setRsvps} events={events} setEvents={setEvents}/>
         <Box>
           <CommentList comments={comments} />
         </Box>

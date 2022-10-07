@@ -64,9 +64,6 @@ function BioUpdate(props) {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
-              Close
-            </Button>
             <Button variant='ghost' onClick={(e)=>handleBioUpdate(e)}>Update!</Button>
           </ModalFooter>
         </ModalContent>

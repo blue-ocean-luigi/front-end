@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import { Box } from '@chakra-ui/react';
+import { Box, useDisclosure } from '@chakra-ui/react';
 import './HomeFeedPost.css';
 import PostItem from '../../PostItem';
 import EventItem from '../../EventItem';
 import { UseContextAll } from '../../ContextAll';
 import { please } from '../../../request';
 
-function Post({post, updateFeed, setEvents}) {
-  // console.log('this is post')
+function Post({post, updateFeed, events, setEvents}) {
   // function sendComment(comment) {
   //   console.log('in send comment here is the big object: ', comment)
   //   // send post request
@@ -27,6 +26,13 @@ function Post({post, updateFeed, setEvents}) {
       .catch((err) => console.log(err))
   }, [])
 
+  // hook for handling whether the rsvp list is open
+  const {
+    isOpen: isOpenRsvp,
+    onOpen: onOpenRsvp,
+    onClose: onCloseRsvp,
+  } = useDisclosure();
+
   return (
     <Box mr={4}>
       {
@@ -39,7 +45,11 @@ function Post({post, updateFeed, setEvents}) {
           rsvps={rsvps}
           setRsvps={setRsvps}
           currentGroupID={currentGroupID}
+          events={events}
           setEvents={setEvents}
+          isOpenRsvp={isOpenRsvp}
+          onOpenRsvp={onOpenRsvp}
+          onCloseRsvp={onCloseRsvp}
         />
       ) : (
         <PostItem
@@ -48,6 +58,7 @@ function Post({post, updateFeed, setEvents}) {
           userInfo={userInfo}
           updateFeed={updateFeed}
           currentGroupID={currentGroupID}
+          events={events}
           setEvents={setEvents}
         />
       )

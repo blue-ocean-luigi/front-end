@@ -8,6 +8,7 @@ import {
   Heading,
   Button,
   Divider,
+  Badge,
 } from '@chakra-ui/react';
 import {
   useDisclosure,
@@ -37,7 +38,7 @@ function GroupPage() {
   const [isGroupAdmin, setGroupAdmin] = useState(false);
   const [inGroup, setInGroup] = useState(false);
   const [memberRequests, setMemberRequests] = useState([]);
-
+  const [requested, setRequested] = useState(false); // for group requests;
   // on load of group, get all group page info
   useEffect(() => {
     please.getGroupInfo(currentGroupID)
@@ -123,7 +124,6 @@ function GroupPage() {
         .then((res) => setMembers(res.data.members))
         .catch((err) => console.log(err));
     } else {
-      console.log('DEBUG preparing to remove');
       please.removeGroupMember(currentGroupID, e.id)
         .then(() => please.getGroupInfo(currentGroupID))
         .then((res) => setMembers(res.data.members))
@@ -252,18 +252,18 @@ function GroupPage() {
                       <Box mr={4} mb={4}>
                         Sorry, group feeds are only viewable to members of the group
                       </Box>
-                      <Button
-                        width="50%"
-                        backgroundColor="#f7d359"
-                        onClick={onOpenGroupRequest}
-                      >
-                        Join
-                        {groupInfo.name}
-                      </Button>
+                      {
+                        !requested
+                          ? <Button width="50%" backgroundColor="#f7d359" onClick={onOpenGroupRequest}>Request to join group</Button>
+                          : <Badge colorScheme="yellow" variant="subtle">Group Request Pending</Badge>
+
+                      }
                       <RequestToJoinGroup
                         onClose={onCloseGroupRequest}
                         isOpen={isOpenGroupRequest}
                         groupInfo={groupInfo}
+                        requested={requested}
+                        setRequested={setRequested}
                       />
                     </Box>
                   </Box>
