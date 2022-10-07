@@ -7,8 +7,6 @@ import { UseContextAll } from '../../ContextAll';
 import { please } from '../../../request';
 
 function Post({post, updateFeed, events, setEvents}) {
-  console.log('HAI this is setEvents: ', setEvents)
-  console.log('HAI in post this is events: ', events)
   // function sendComment(comment) {
   //   console.log('in send comment here is the big object: ', comment)
   //   // send post request

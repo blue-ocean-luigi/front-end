@@ -15,6 +15,7 @@ import {
   FormHelperText,
   useDisclosure,
   Button,
+  Badge,
 } from '@chakra-ui/react';
 import { UseContextAll } from '../ContextAll';
 import { please } from '../../request';
@@ -24,10 +25,11 @@ function RequestToJoinGroup({onClose, isOpen, groupInfo}) {
   const {userID, currentGroupID} = UseContextAll();
   const [postContent, setPostContent] = useState('');
 
+
   function handleSubmit() {
     please.requestToJoinGroup(currentGroupID, userID, postContent)
       .then((response) => {
-        console.log('HAI: ', response);
+        setRequested(true);
         onClose();
       })
       .catch((err) => {
@@ -39,7 +41,7 @@ function RequestToJoinGroup({onClose, isOpen, groupInfo}) {
     <Modal isOpen={isOpen} onClose={onClose} isCentered size="lg">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Join {groupInfo.name}</ModalHeader>
+        <ModalHeader>Request to join group</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <FormControl>
@@ -48,7 +50,7 @@ function RequestToJoinGroup({onClose, isOpen, groupInfo}) {
           </FormControl>
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={() => { handleSubmit(); }}>
+          <Button variant="ghost" colorScheme="gray" mr={3} onClick={() => { handleSubmit(); }}>
             Send request
           </Button>
         </ModalFooter>

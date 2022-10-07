@@ -26,9 +26,6 @@ import { UseContextAll } from '../ContextAll';
 import Maps from './Maps';
 
 function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps, events, setEvents}) {
-
-  console.log('HAI HAI -------- here is setEvents in eventView: ', setEvents)
-  console.log('BLOO here is events---------: ', events)
   const { userID } = UseContextAll();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [comment, setComment] = useState('');
@@ -47,7 +44,6 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps, events
   }
 
   function sendComment(comment) {
-    console.log('HAI sending comment nao: ', eventInfo)
 
     // const { event, setEvents, userID, updateFeed, currentGroupID } = this.props;
     please.createComment({ post_id: eventInfo.post_id, user_id: userID, message: comment })

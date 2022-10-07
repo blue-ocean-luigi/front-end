@@ -96,7 +96,7 @@ function HomePage() {
             <FriendsList friends={userFriends.friendlist} />
           </Box>
           <Divider orientation = 'vertical' />
-          {newUser ? <NewUserFeed /> : <ReturnUserFeed homePosts={homePosts} />}
+          {newUser ? <NewUserFeed /> : <ReturnUserFeed />}
         </Flex>
       </VStack>
     </Flex>
