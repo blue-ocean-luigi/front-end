@@ -114,7 +114,7 @@ class PostItem extends React.Component {
             </Box>
           </Flex>
           <Stack shouldWrapChildren direction="row">
-            <Text>{likes}</Text>
+            <Text mt={2}>{' '}{likes}{' '}</Text>
             <Tooltip label="likes">
               <IconButton variant="ghost">
                 <Icon as={BiHomeSmile} w={6} h={6} onClick={() => this.handleLike(post, userID)} />
