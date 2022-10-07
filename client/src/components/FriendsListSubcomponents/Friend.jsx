@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Text,
@@ -6,13 +6,16 @@ import {
   Image,
   Button,
   HStack,
+  Badge,
 } from '@chakra-ui/react';
 import { UseContextAll } from '../ContextAll';
 
-function Friend({ friend }) {
-  console.log(friend);
-  const { mainPage, setMainPage, setCurrentUserID } = UseContextAll();
-
+function Friend({ friend, isGroupInvite, members }) {
+  console.log('DEBUG this is friend: ', friend);
+  console.log('DEBUG this is members: ', members)
+  const { mainPage, setMainPage, setCurrentUserID, currentGroupID } = UseContextAll();
+  let friendAlreadyInGroup;
+  isGroupInvite ? friendAlreadyInGroup = members.filter(m => m.id === friend.id).length > 0 : friendAlreadyInGroup=false;
   //  if you click friends name and pic => friend profile
   function handleSelect() {
     setCurrentUserID(friend.id);
@@ -24,6 +27,7 @@ function Friend({ friend }) {
   }
 
   return (
+
     <Box
       boxShadow="sm"
       rounded="lg"
@@ -46,13 +50,22 @@ function Friend({ friend }) {
           </Box>
         </Flex>
         { mainPage === 'group'
+          && !friendAlreadyInGroup
           && (
           <Flex p={1}>
             <Button size="xs" onClick={() => onInvite(friend)}> Invite </Button>
           </Flex>
           ) }
+        { mainPage === 'group'
+          && friendAlreadyInGroup
+          && (
+          <Flex p={1}>
+            <Badge size="xs"> Already in group </Badge>
+          </Flex>
+          ) }
       </HStack>
     </Box>
+
   );
 }
 
