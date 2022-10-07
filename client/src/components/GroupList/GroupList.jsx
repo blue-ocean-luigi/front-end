@@ -5,14 +5,12 @@ import {
 } from '@chakra-ui/react';
 import GroupItem from './GroupItem';
 
-
-function GroupList({ groups}) {
+function GroupList({ groups }) {
   return (
-    <Box align="center">
-      <Heading mb={1} fontSize="xl">
-        Your Groups
-      </Heading>
-      {groups.map((group) => <GroupItem key={group.id} group={group} />)}
+    <Box overflow="hidden" width="95%" maxHeight="500px" position="relative">
+      <Box align="center" width="105%" overflowY="scroll" maxHeight="500px" paddingRight="15px">
+        {groups.map((group) => <GroupItem key={group.id} group={group} />)}
+      </Box>
     </Box>
   );
 }
