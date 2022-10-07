@@ -11,6 +11,7 @@ import {
   Icon,
   Textarea,
   Tooltip,
+  IconButton,
 } from '@chakra-ui/react';
 import EventView from './Modals/EventView';
 import CommentList from './Comments/CommentList';
@@ -87,8 +88,6 @@ class PostItem extends React.Component {
     // console.log('in event item and rendering: ', event);
 
     return (
-      // eslint-disable-next-line max-len
-      // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
       <Box
         boxShadow="md"
         rounded="lg"
@@ -116,13 +115,14 @@ class PostItem extends React.Component {
           <Stack shouldWrapChildren direction="row">
             <Text>{likes}</Text>
             <Tooltip label="likes">
-              <span><Icon as={BiHomeSmile} w={6} h={6} onClick={() => this.handleLike(post, userID)} /></span>
+              <IconButton variant="ghost">
+                <Icon as={BiHomeSmile} w={6} h={6} onClick={() => this.handleLike(post, userID)} />
+              </IconButton>
             </Tooltip>
-            <Text>{comments.length}</Text>
-            <Tooltip label="comments">
+            {/* <Text>{comments.length}</Text> */}
+            {/* <Tooltip label="comments">
               <span><Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} /></span>
-            </Tooltip>
-
+            </Tooltip> */}
           </Stack>
         </HStack>
         <Box>

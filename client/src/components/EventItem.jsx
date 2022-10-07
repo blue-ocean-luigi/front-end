@@ -12,6 +12,7 @@ import {
   Icon,
   Textarea,
   Tooltip,
+  IconButton,
 } from '@chakra-ui/react';
 import EventView from './Modals/EventView';
 import CommentList from './Comments/CommentList';
@@ -137,15 +138,21 @@ class EventItem extends React.Component {
             {/* <Text>{event.postlikes.length}</Text> */}
             <Text>{likes}</Text>
             <Tooltip label="likes">
-              <span><Icon as={BiHomeSmile} w={6} h={6} onClick={() => this.handleLike(event, userID)} /></span>
+              <IconButton variant="ghost">
+                <Icon as={BiHomeSmile} w={6} h={6} onClick={() => this.handleLike(event, userID)} />
+              </IconButton>
             </Tooltip>
-            <Text>{comments.length}</Text>
+            {/* <Text>{comments.length}</Text>
             <Tooltip label="comments">
-              <span><Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} /></span>
-            </Tooltip>
+              <IconButton variant="ghost">
+                <Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} />
+              </IconButton>
+            </Tooltip> */}
             <Text> {rsvps.length} </Text>
             <Tooltip label="RSVPs">
-              <span><Icon as={FaRegEnvelopeOpen} w={6} h={6} /></span>
+              <IconButton variant="ghost">
+                <Icon as={FaRegEnvelopeOpen} w={5} h={5} />
+              </IconButton>
             </Tooltip>
           </Stack>
         </HStack>
