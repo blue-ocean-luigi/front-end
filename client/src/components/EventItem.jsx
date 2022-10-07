@@ -148,7 +148,7 @@ class EventItem extends React.Component {
 
           <Stack shouldWrapChildren direction="row">
             {/* <Text>{event.postlikes.length}</Text> */}
-            <Text>{likes}</Text>
+            <Text mt={2}>{' '}{likes}{' '}</Text>
             <Tooltip label="likes">
               <IconButton variant="ghost">
                 <Icon as={BiHomeSmile} w={6} h={6} onClick={() => this.handleLike(event, userID)} />
@@ -160,7 +160,7 @@ class EventItem extends React.Component {
                 <Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} />
               </IconButton>
             </Tooltip> */}
-            <Text> {' '}{rsvps.length}{' '} </Text>
+            <Text mt={2}> {' '}{rsvps.length}{' '} </Text>
             <Tooltip label="RSVPs">
               {
                 rsvps.length > 0
@@ -169,7 +169,7 @@ class EventItem extends React.Component {
                       <Icon as={FaRegEnvelopeOpen} w={5} h={5} />
                     </IconButton>
                   )
-                  : <Icon as={FaRegEnvelopeOpen} w={5} h={5} />
+                  : <Icon as={FaRegEnvelopeOpen} w={5} h={5} mt={2}/>
               }
 
             </Tooltip>
@@ -194,7 +194,11 @@ class EventItem extends React.Component {
             colorScheme="gray"
             variant="ghost"
             onClick={() => {
-              this.sendComment(comment);
+              if (!comment) {
+                alert('you cannot post an empty comment!')
+              } else {
+                this.sendComment(comment);
+              }
             }}
           >
             Post Comment

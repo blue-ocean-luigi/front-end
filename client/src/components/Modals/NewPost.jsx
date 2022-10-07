@@ -79,8 +79,8 @@ function NewPost({ updateFeed }) {
             <FormControl>
               <FormLabel>Comment</FormLabel>
               <Textarea required onChange={(e) => { setPostContent(e.target.value); }} />
-              <FormLabel>Add a photo</FormLabel>
-              <Input type="file" border="0px" onChange={(e) => { handlePhoto(e); }} />
+              {/* <FormLabel>Add a photo</FormLabel>
+              <Input type="file" border="0px" onChange={(e) => { handlePhoto(e); }} /> */}
               <FormHelperText>Optional</FormHelperText>
             </FormControl>
           </ModalBody>
