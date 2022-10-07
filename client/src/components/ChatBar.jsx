@@ -94,9 +94,13 @@ export default function ChatBar() {
     console.log('openChatModal changed');
     if (openChatModal) {
       setFriendID(currentUserID);
-      modalOnOpen()
     }
   }, [openChatModal]);
+  useEffect(() => {
+    if (openChatModal) {
+      modalOnOpen()
+    }
+  }, [friendID]);
   useEffect(() => {
     if (modalIsOpen) {
       console.log('modal was open');
