@@ -19,12 +19,9 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import CommentList from '../Comments/CommentList';
-<<<<<<< HEAD
 import { please } from '../../request';
 import { UseContextAll } from '../ContextAll';
-=======
 import Maps from './Maps';
->>>>>>> main
 
 function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps }) {
   console.log('DEBUG this is eventinfo: ', eventInfo)
