@@ -14,14 +14,15 @@ import {
   Button,
   useDisclosure,
 } from '@chakra-ui/react';
-import { MdBuild , MdInsertPhoto } from "react-icons/md"
+import { MdBuild, MdInsertPhoto } from 'react-icons/md';
 import { UseContextAll } from '../ContextAll';
 import './ProfilePage.css';
-import FriendRequests from '../Modals/FriendRequests.jsx'
-import FriendsList from '../FriendsListSubcomponents/FriendsList.jsx'
-import GroupList from '../GroupList/GroupList.jsx'
-import BioUpdate from '../Modals/BioUpdate.jsx'
-import { please } from '../../request.jsx'
+import FriendRequests from '../Modals/FriendRequests';
+import FriendsList from '../FriendsListSubcomponents/FriendsList';
+import GroupList from '../GroupList/GroupList';
+import RequestFriend from './RequestFriend';
+import BioUpdate from '../Modals/BioUpdate';
+import { please } from '../../request';
 
 function ProfilePage() {
   const defaultBackgroundImage = 'https://news.clas.ufl.edu/wp-content/uploads/sites/4/2020/06/AdobeStock_345118478-copy-1440x961-1-e1613512040649.jpg';
@@ -32,22 +33,52 @@ function ProfilePage() {
     userGroups,
     userFriends,
     homePosts,
+    userID,
+    currentUserID,
   } = UseContextAll();
 
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [banner, setBanner] = useState('');
-  const [bio, setBio] = useState('')
-  const [pic, setPic] = useState('')
+  const [bio, setBio] = useState('');
+  const [isMyprofile, setMyProfile] = useState(true);
+  const [profileFriends, setProfileFriends] = useState([]);
+  const [profileGroups, setProfileGroups] = useState([]);
+  const [profileInfo, setProfileInfo] = useState({});
+  const [profileReqests, setProfileRequests] = useState([]);
 
   useEffect(() => {
-    console.log(userInfo)
-    const currBanner = userInfo.banner === null ? defaultBackgroundImage : userInfo.banner;
-    const currPic = userInfo.picture === null ?
-    defaultProfilePic : userInfo.picture;
-    setBanner(currBanner);
-    setPic(currPic)
-    setBio(userInfo.aboutme || "This user has not filled out their bio :(")
-  }, []);
+    //  set banner to the one in db if it exists, otherwise use def
+    console.log(userID, currentUserID);
+    if (userID === currentUserID) {
+      setMyProfile(true);
+      please.getUserByID(userID)
+        .then((response) => {
+          console.log(response.data);
+          setBio(response.data.info.aboutme);
+          setProfileInfo(response.data.info);
+          setProfileFriends(response.data.friends.friendlist);
+          setProfileGroups(response.data.groups);
+          setProfileRequests(response.data.friends.requestlist);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setMyProfile(false);
+      please.getUserByID(currentUserID)
+        .then((response) => {
+          console.log(response.data);
+          setBio(response.data.info.aboutme);
+          setProfileInfo(response.data.info);
+          setProfileFriends(response.data.friends.friendlist);
+          setProfileGroups(response.data.groups);
+          setProfileRequests(response.data.friends.requestlist);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [currentUserID, userFriends]);
 
   const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
 
@@ -90,35 +121,41 @@ function ProfilePage() {
 
   return (
     <Center display="flex" flexDirection="column">
-      <Box backgroundImage={`url(${banner})`} backgroundSize="cover" backgroundPosition="center" w="80%" h="40vh" minHeight="20vw" position="relative" m="1em">
+      <Box backgroundImage={`url(${profileInfo.banner || defaultBackgroundImage})`} backgroundSize="cover" backgroundPosition="center" w="80%" h="40vh" minHeight="20vw" position="relative" m="1em">
         <Box position="absolute" right="5" top="5%" zIndex="2" cursor="pointer">
+          {isMyprofile && (
           <FriendRequests
-            requests={userFriends.requestlist}
+            requests={profileReqests}
           />
+          )}
+          {!isMyprofile && (
+          <RequestFriend />
+          )}
         </Box>
-        <InputGroup w="100%" position="absolute" right="5" bottom="5%">
+        {isMyprofile && (
+        <InputGroup w="15vw" position="absolute" right="5" bottom="5%">
           <Input type="file" id="ban_up" display="none" onChange={(e) => { handlePhoto(e); }} />
-          <Input type="file" id="pic_up" display="none" onChange={(e) => { handlePhoto(e); }} />
-          <Button id="ban" position="absolute" right="0" bottom="5%" rightIcon={<MdInsertPhoto />}onClick={(e)=>handleBannerClick(e, "ban")}>Update Banner</Button>
-          <Button id="pic" position="absolute" left="5" bottom="0px" leftIcon={<MdInsertPhoto />}onClick={(e)=>handleBannerClick(e, "pic")} zIndex="5">Update Pic</Button>
+          <Button position="absolute" right="0" bottom="5%" rightIcon={<MdInsertPhoto />} onClick={(e) => handleBannerClick(e)}>Update Banner</Button>
         </InputGroup>
+        )}
         <Center w="20vw" h="100%" position="relative">
-          <Image src={pic} boxSize="15vw" borderRadius="full" position="absolute" top="calc((100% - 13vw) / 2)" />
-          <Text zIndex="2" position="absolute" left="0" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="white" transform="translateX(20%)">{`${userInfo.firstname} ${userInfo.lastname}`}</Text>
+          <Image src={profileInfo.picture} boxSize="15vw" borderRadius="full" position="absolute" top="calc((100% - 13vw) / 2)" alt="PIC" />
+          <Text zIndex="2" position="absolute" left="0" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" color="white" transform="translateX(20%)">{`${profileInfo.firstname} ${profileInfo.lastname}`}</Text>
         </Center>
       </Box>
       <Box minHeight="20vh" w="80%" border="1px solid gray" mb="1em" position="relative">
         <Text fontSize="2em">About Me</Text>
-        <Text fontSize="1.2em">{bio}</Text>
-        <BioUpdate updateBio={setBio} onClose={onClose} onOpen={onOpen} isOpen={isOpen} />
+        <Text fontSize="1.2em">{bio || 'This user has not filled out their bio :('}</Text>
+        {isMyprofile && (
+        <BioUpdate updateBio={setBio} onClose={onClose} onOpen={onOpen} isOpen={isOpen} />)}
       </Box>
       <Flex flexDirection="row" w="80%" justifyContent="space-evenly">
         <Box w="50%" h="50vh" overflowY="auto" border="1px solid red" mb="5em" mr="0.5em">
-          {userFriends.friendlist ? <FriendsList friends={userFriends.friendlist} />
-            : <Text>Add a friend!</Text>}
+          {profileFriends ? <FriendsList friends={profileFriends} />
+            : <Text> No friends to view </Text>}
         </Box>
         <Box w="50%" h="50vh" overflowY="auto" border="1px solid red" mb="5em" ml="0.5em">
-          <GroupList groups={userGroups} />
+          {profileGroups && <GroupList groups={profileGroups} />}
         </Box>
       </Flex>
     </Center>
