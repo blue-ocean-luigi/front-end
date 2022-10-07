@@ -8,11 +8,9 @@ import NewPost from '../Modals/NewPost';
 import HomeFeedPost from '../HomePage/post/HomeFeedPost';
 
 function GroupFeed({events, setEvents, updateFeed}) {
-  console.log('HAI IN GROUP FEED HERE IS SETEVENTS: ', setEvents)
-
   return (
     <Box>
-      <Flex position="absolute" top={0} w="100%" justifyContent="flex-end">
+      <Flex position="absolute" top={0} w="100%" justifyContent="flex-end" paddingRight="40px">
         <NewPost updateFeed={updateFeed}/>
         <NewEvent updateFeed={updateFeed}/>
       </Flex>

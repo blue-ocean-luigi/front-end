@@ -99,13 +99,14 @@ class PostItem extends React.Component {
             <Image
               borderRadius="full"
               boxSize="80px"
+              objectFit="cover"
               src={post.picture}
               alt={post.firstname}
               p={1}
             />
             <Box p={1} align="left">
-              <Text fontSize="2xl">
-                {post.firstname}
+              <Text fontSize="xl">
+                {`${post.firstname} ${post.lastname}: `}
               </Text>
               <Text>
                 {post.content}
@@ -138,11 +139,12 @@ class PostItem extends React.Component {
           <Button
             mt={2}
             mb={2}
+            mr={2}
             colorScheme="gray"
             variant="ghost"
             onClick={() => this.sendComment(comment)}
           >
-            Post
+            Post Comment
           </Button>
         </Box>
       </Box>

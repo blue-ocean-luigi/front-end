@@ -25,7 +25,7 @@ const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
 
 function NewPost({ updateFeed }) {
   const {currentGroupID, userID} = UseContextAll();
-  console.log('NewPost here is updateFeed: ', updateFeed)
+  // console.log('NewPost here is updateFeed: ', updateFeed)
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [postContent, setPostContent] = useState('');
   const [postPhoto, setPostPhoto] = useState();
@@ -68,7 +68,7 @@ function NewPost({ updateFeed }) {
 
   return (
     <Box mr={1}>
-      <Button onClick={onOpen}>New Post</Button>
+      <Button backgroundColor="#f7d359" onClick={onOpen}>New Post</Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -78,15 +78,15 @@ function NewPost({ updateFeed }) {
           <ModalBody>
             <FormControl>
               <FormLabel>Comment</FormLabel>
-              <Textarea onChange={(e) => { setPostContent(e.target.value); }} />
+              <Textarea required onChange={(e) => { setPostContent(e.target.value); }} />
               <FormLabel>Add a photo</FormLabel>
-              <Input type="file" onChange={(e) => { handlePhoto(e); }} />
+              <Input type="file" border="0px" onChange={(e) => { handlePhoto(e); }} />
               <FormHelperText>Optional</FormHelperText>
             </FormControl>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={() => { handleSubmit(); }}>
+            <Button backgroundColor="#f7d359" mr={3} onClick={() => { handleSubmit(); }}>
               Post
             </Button>
           </ModalFooter>

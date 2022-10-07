@@ -181,6 +181,7 @@ function GroupPage() {
                   && (
                   <>
                     <Button
+                      backgroundColor="#f7d359"
                       onClick={onOpenFriendsList}
                     >
                       Invite your friends
@@ -198,6 +199,7 @@ function GroupPage() {
                   && (
                     <>
                       <Button
+                        backgroundColor="#f7d359"
                         onClick={() => {
                           setEditing(true);
                           onOpenAdminControl();
@@ -251,9 +253,9 @@ function GroupPage() {
                         Sorry, group feeds are only viewable to members of the group
                       </Box>
                       {
-                        requested
-                          ? <Button width="50%" onClick={onOpenGroupRequest}>Request to join group</Button>
-                          : <Badge colorScheme="gray" variant="subtle">Group Request Pending</Badge>
+                        !requested
+                          ? <Button width="50%" backgroundColor="#f7d359" onClick={onOpenGroupRequest}>Request to join group</Button>
+                          : <Badge colorScheme="yellow" variant="subtle">Group Request Pending</Badge>
 
                       }
                       <RequestToJoinGroup

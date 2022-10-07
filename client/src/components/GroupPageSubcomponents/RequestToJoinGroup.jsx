@@ -21,7 +21,7 @@ import { UseContextAll } from '../ContextAll';
 import { please } from '../../request';
 // TODO: add invite button to either FriendsList as a conditionally rendered button
 // OR map each individual friend to a new friends list with invite buttons
-function RequestToJoinGroup({onClose, isOpen, groupInfo}) {
+function RequestToJoinGroup({onClose, isOpen, groupInfo, requested, setRequested}) {
   const {userID, currentGroupID} = UseContextAll();
   const [postContent, setPostContent] = useState('');
 

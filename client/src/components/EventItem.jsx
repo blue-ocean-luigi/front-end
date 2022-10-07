@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BiHomeSmile, BiMessageAdd } from 'react-icons/bi';
-import { FaRegEnvelopeOpen } from "react-icons/fa";
+import { FaRegEnvelopeOpen } from 'react-icons/fa';
 import {
   Box,
   Text,
@@ -29,7 +29,7 @@ class EventItem extends React.Component {
       comment: '',
       comments: props.event.comments,
       likes: props.event.postlikes.length,
-      meLikey: props.event.postlikes.filter(u => u.id === props.userID).length > 0,
+      meLikey: props.event.postlikes.filter((u) => u.id === props.userID).length > 0,
     };
     this.requestInFlight = false;
   }
@@ -60,7 +60,7 @@ class EventItem extends React.Component {
             meLikey: false,
           });
           this.requestInFlight = false;
-        })
+        });
     } else {
       // console.log('DEBUG: likes++');
       please
@@ -83,7 +83,9 @@ class EventItem extends React.Component {
   }
 
   sendComment(comment) {
-    const { event, setEvents, userID, updateFeed, currentGroupID } = this.props;
+    const {
+      event, setEvents, userID, updateFeed, currentGroupID,
+    } = this.props;
     please.createComment({ post_id: event.post_id, user_id: userID, message: comment })
       .then((response) => {
         console.log(response);
@@ -93,17 +95,24 @@ class EventItem extends React.Component {
       })
       .then((res) => please.getGroupPosts(event.group_id))
       .then((res) => {
-        const newComments = res.data.filter(i=> i.post_id===event.post_id)[0].comments;
-        this.setState({comments: newComments})
+        const newComments = res.data.filter((i) => i.post_id === event.post_id)[0].comments;
+        this.setState({ comments: newComments });
       })
-      .catch((err) => console.log('HAI hit an error getting group posts: ', err))
-
+      .catch((err) => console.log('HAI hit an error getting group posts: ', err));
   }
 
   render() {
     const { event, userID, updateFeed, rsvps, setRsvps, going, setGoing, events, setEvents } = this.props;
     const { onOpenRsvp, isOpenRsvp, onCloseRsvp } = this.props;
     const { comment, likes, comments } = this.state;
+
+    const convertTime = (time) => {
+      const startTimeEnd = time <= 1200 ? 'A.M' : 'P.M';
+      const startTime = time > 1200 ? time - 1200 : time;
+      const newTime = startTime >= 1000 ? startTime.toString() : `0${startTime}`;
+      return `${newTime.substr(0, 2)}:${newTime.substr(2, 3)} ${startTimeEnd}`;
+    };
+
     return (
       <Box
         boxShadow="md"
@@ -114,6 +123,7 @@ class EventItem extends React.Component {
         <HStack justifyContent="space-between" p={1}>
           <Flex justifyContent="left">
             <Image
+              objectFit="cover"
               borderRadius="full"
               boxSize="80px"
               src={event.picture}
@@ -125,7 +135,7 @@ class EventItem extends React.Component {
                 {event.eventname}
               </Text>
               <Text>
-                {event.starttime}
+                {convertTime(event.starttime)}
               </Text>
             </Box>
           </Flex>
@@ -150,7 +160,7 @@ class EventItem extends React.Component {
                 <Icon as={BiMessageAdd} w={6} h={6} onClick={() => { console.log('scroll to comment?'); }} />
               </IconButton>
             </Tooltip> */}
-            <Text> {rsvps.length} </Text>
+            <Text> {' '}{rsvps.length}{' '} </Text>
             <Tooltip label="RSVPs">
               {
                 rsvps.length > 0

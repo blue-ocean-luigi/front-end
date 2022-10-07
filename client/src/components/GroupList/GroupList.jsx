@@ -4,15 +4,25 @@ import {
   Heading,
 } from '@chakra-ui/react';
 import GroupItem from './GroupItem';
+import { UseContextAll } from '../ContextAll';
 
-
-function GroupList({ groups}) {
+function GroupList({ groups }) {
+  const { mainPage } = UseContextAll();
   return (
-    <Box align="center">
+    <Box overflow="hidden" width="95%" maxHeight="500px" position="relative" align="center">
+      {mainPage === 'home' && (
       <Heading mb={1} fontSize="xl">
         Your Groups
       </Heading>
-      {groups.map((group) => <GroupItem key={group.id} group={group} />)}
+      )}
+      {mainPage === 'profile' && (
+      <Heading mb={1} fontSize="xl">
+        Groups
+      </Heading>
+      )}
+      <Box align="center" width="105%" overflowY="scroll" maxHeight="470px" paddingRight="15px">
+        {groups.map((group) => <GroupItem key={group.id} group={group} />)}
+      </Box>
     </Box>
   );
 }

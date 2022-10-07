@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { BiHomeSmile, BiMessageAdd } from "react-icons/bi";
-import { FaRegEnvelopeOpen } from "react-icons/fa";
+import { BiHomeSmile, BiMessageAdd } from 'react-icons/bi';
+import { FaRegEnvelopeOpen } from 'react-icons/fa';
 import {
   Modal,
   ModalOverlay,
@@ -36,7 +36,7 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps, events
       .then((res) => please.getRsvp(eventInfo.post_id))
       .then((res) => setRsvps(res.data))
       .then((res) => setGoing(true))
-      .catch((err) => console.log(err))
+      .catch((err) => console.log(err));
   }
 
   function handleInvite() {
@@ -44,7 +44,6 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps, events
   }
 
   function sendComment(comment) {
-
     // const { event, setEvents, userID, updateFeed, currentGroupID } = this.props;
     please.createComment({ post_id: eventInfo.post_id, user_id: userID, message: comment })
       .then((response) => {
@@ -56,29 +55,28 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps, events
   }
 
   useEffect(() => {
-    let already = false
+    let already = false;
     if (rsvps.length > 0) {
-      for (var users of rsvps) {
+      for (const users of rsvps) {
         if (users.user_id === userID) {
           already = true;
-          break
+          break;
         }
       }
     }
     if (already === true) {
-      setGoing(true)
+      setGoing(true);
     }
-    return
-  }, [rsvps])
+  }, [rsvps]);
 
   return (
     <div>
-      <Button mt={4} mb={1} size="md" variant="ghost" onClick={onOpen}>Event Details</Button>
+      <Button mt={4} mb={1} size="sm" backgroundColor="#f7d359" onClick={onOpen}>Event Details</Button>
       <Modal
         size="xl"
         isOpen={isOpen}
         onClose={onClose}
-        scrollBehavior={'outside'}
+        scrollBehavior="outside"
       >
         <ModalOverlay />
         <ModalContent p={4}>
@@ -86,41 +84,56 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps, events
           <ModalCloseButton />
           <Image
             mr={2}
-            borderRadius='full'
-            boxSize='150px'
+            borderRadius="full"
+            boxSize="150px"
+            objectFit="cover"
             src={eventInfo.picture ? eventInfo.picture : 'https://picsum.photos/seed/picsum/200/300'}
             alt="Event Pic"
           />
           <Box w="100%" mt={4}>
-            <Text fontSize="xl">Posted in {eventInfo.groupname}</Text>
+            <Text fontSize="xl">
+              Posted in
+              {' '}
+              {eventInfo.groupname}
+            </Text>
             <Text>{eventInfo.starttime}</Text>
           </Box>
           <ModalBody>
             {eventInfo.content}
           </ModalBody>
           <Stack shouldWrapChildren direction="row">
-            <Text> {eventInfo.postlikes.length} </Text>
+            <Text>
+              {' '}
+              {eventInfo.postlikes.length}
+              {' '}
+            </Text>
             <Tooltip label="likes">
               <span><Icon as={BiHomeSmile} w={6} h={6} onClick={() => handleLike()} /></span>
             </Tooltip>
-            <Text> {eventInfo.comments.length} </Text>
+            <Text>
+              {' '}
+              {eventInfo.comments.length}
+              {' '}
+            </Text>
             <Tooltip label="comments">
               <span><Icon as={BiMessageAdd} w={6} h={6} onClick={() => console.log('scroll to comment?')} /></span>
             </Tooltip>
-            <Text> {rsvps.length} </Text>
+            <Text>
+              {' '}
+              {rsvps.length}
+              {' '}
+            </Text>
             <Tooltip label="RSVPs">
               <span><Icon as={FaRegEnvelopeOpen} w={6} h={6} /></span>
             </Tooltip>
           </Stack>
           <Maps endLoc={eventInfo.location} />
           <ModalFooter>
-            <Button mr={1} colorScheme="gray" variant="ghost" onClick={() => handleInvite()}> Invite </Button>
             { !going
-              && <Button ml={1} colorScheme="gray" variant="ghost" onClick={() => sendRSVP()}> RSVP </Button>
-            }
+              && <Button ml={1} backgroundColor="#f7d359" variant="ghost" onClick={() => sendRSVP()}> RSVP </Button>}
             {
               going
-              && <Badge colorScheme="gray" variant='subtle'>You RSVPed</Badge>
+              && <Badge colorScheme="grey" variant="subtle">You RSVPed</Badge>
             }
           </ModalFooter>
           <CommentList comments={eventInfo.comments} />

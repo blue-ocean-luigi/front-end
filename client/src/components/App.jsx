@@ -37,14 +37,14 @@ export default function App() {
 
   return (
     <ChakraProvider>
-      <Flex justifyContent="right">
+      <Flex justifyContent="right" position="absolute" right= "20px">
         <ColorModeSwitcher />
       </Flex>
       <Center zIndex={-9999}>
         <Box className="site_banner_container">
           <Box
             className="site_banner_background"
-            style={{backgroundImage: 'url(../static/suburb2.png)' }}
+            style={ {backgroundImage: 'url(../static/suburb2.png)' }}
           />
           <Box className="site_banner_img">
             <Image
@@ -95,6 +95,7 @@ export default function App() {
           }
         })()}
       </div>
+
       { (user && (mainPage != 'login') && (mainPage != 'welcome')) ? <NavButton zIndex={9999} /> : null }
       { (user && (mainPage != 'login') && (mainPage != 'welcome')) ? <ChatBar /> : null }
     </ChakraProvider>
