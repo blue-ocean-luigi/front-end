@@ -15,7 +15,7 @@ function FriendsList({ friends, isGroupInvite, members }) {
     <>
       {mainPage === 'home' && (
         <Box overflow="hidden" width="95%" maxHeight="500px" position="relative">
-          <Box align="center" width="105%" overflowY="scroll" maxHeight="500px" paddingRight="15px">
+          <Box align="center" width="105%" overflowY="scroll" maxHeight="470px" paddingRight="15px">
             {friends && friends.map((f) => <Friend key={f.name} friend={f} isGroupInvite={isGroupInvite} members={members} />)}
           </Box>
         </Box>

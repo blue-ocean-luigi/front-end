@@ -20,7 +20,7 @@ function GroupList({ groups }) {
         Groups
       </Heading>
       )}
-      <Box align="center" width="105%" overflowY="scroll" maxHeight="500px" paddingRight="15px">
+      <Box align="center" width="105%" overflowY="scroll" maxHeight="470px" paddingRight="15px">
         {groups.map((group) => <GroupItem key={group.id} group={group} />)}
       </Box>
     </Box>
