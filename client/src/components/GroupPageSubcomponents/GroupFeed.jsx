@@ -10,6 +10,7 @@ import { please } from '../../request';
 import { UseContextAll } from '../ContextAll';
 
 function GroupFeed({events, setEvents, updateFeed}) {
+  console.log('GroupFeed this is updateFeed: ', updateFeed)
   // TODO Replace hardcoded data with axios call
   const { currentGroupID } = UseContextAll();
   // const [events, setEvents] = useState([]);
