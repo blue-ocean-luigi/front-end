@@ -19,6 +19,7 @@ export function ContextAllProvider({ children }) {
   const [homePosts, setHomePosts] = useState([]);
   const [currentGroupID, setCurrentGroupID] = useState(''); //  expects group ID
   const [currentUserID, setCurrentUserID] = useState('');
+  const [openChatModal, setOpenChatModal] = useState(false);
 
   useEffect(() => {
     please.getUserPosts(userID) // replace with userID
@@ -59,6 +60,8 @@ export function ContextAllProvider({ children }) {
     setCurrentGroupID,
     currentUserID,
     setCurrentUserID,
+    openChatModal,
+    setOpenChatModal,
   };
   return (
     <ContextAll.Provider value={values}>
