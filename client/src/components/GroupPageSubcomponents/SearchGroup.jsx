@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Input,
   Box,
@@ -7,6 +7,7 @@ import SearchCard from '../HomePage/SearchCard';
 
 function SearchGroup({members, events}) {
   const [ searchArray, setSearchArray ] = useState([]);
+  const [emptyResults, setEmptyResults] = useState(false);
 
   const debounce = (func, timeout = 500)  => {
     let timer;
@@ -18,6 +19,7 @@ function SearchGroup({members, events}) {
 
   const search = debounce((e) => {
     const term = e.target.value.toLowerCase();
+    setEmptyResults(searchArray.length === 0 && term !== '');
     const curSearchArray = [];
 
     if(term !== '') {
@@ -61,6 +63,11 @@ function SearchGroup({members, events}) {
           {searchArray.map((obj, index) =>
             <SearchCard key={index} id={obj.id} name={obj.name} picture={obj.picture}/>
           )}
+        </Box>
+      }
+      { emptyResults &&
+        <Box style={{position: 'absolute', width:'100%', zIndex:1, backgroundColor: 'var(--chakra-colors-chakra-body-bg', display:'flex', justifyContent: 'center', fontSize: '50px'}}>
+          NOTHING FOUND, TRY AGAIN SUCKA
         </Box>
       }
     </>
