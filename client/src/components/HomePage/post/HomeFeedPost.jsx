@@ -19,7 +19,6 @@ function Post({post, updateFeed, setEvents}) {
 
   const { userID, userInfo, currentGroupID } = UseContextAll();
   const [rsvps, setRsvps] = useState([]);
-  console.log('HAI this is groupID: ', currentGroupID)
 
   // get number of rsvps
   useEffect(() => {
