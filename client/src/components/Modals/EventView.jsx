@@ -28,6 +28,7 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps }) {
   console.log('DEBUG this is eventinfo: ', eventInfo)
   const { userID } = UseContextAll();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [scrollBehavior, setScrollBehavior] = useState('inside');
   const [comment, setComment] = useState('');
   const [going, setGoing] = useState(rsvps.filter(r => r.user_id === userID).length > 0);
   const [currentComments, setCurrentComments] = useState(eventInfo.comments)
@@ -51,10 +52,31 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps }) {
     setComment('');
   }
 
+  useEffect(() => {
+    let already = false
+    if (rsvps.length > 0) {
+      for (var users of rsvps) {
+        if (users.user_id === userID) {
+          already = true;
+          break
+        }
+      }
+    }
+    if (already === true) {
+      setGoing(true)
+    }
+    return
+  }, [rsvps])
+
   return (
     <div>
       <Button onClick={onOpen}>Event Details</Button>
-      <Modal size="xl" isOpen={isOpen} onClose={onClose}>
+      <Modal
+        size="xl"
+        isOpen={isOpen}
+        onClose={onClose}
+        scrollBehavior={scrollBehavior}
+      >
         <ModalOverlay />
         <ModalContent p={4}>
           <ModalHeader>{eventInfo.eventname}</ModalHeader>
@@ -91,7 +113,7 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps }) {
             }
             {
               going
-              && <Badge colorScheme="blue">Going</Badge>
+              && <Badge colorScheme="blue" variant='subtle'>Going</Badge>
             }
             <Button colorScheme="ghost" onClick={() => handleInvite()}> Invite </Button>
           </ModalFooter>

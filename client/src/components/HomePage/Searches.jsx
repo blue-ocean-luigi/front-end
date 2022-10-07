@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import SearchCard from './SearchCard';
-import { Grid } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 
 function Searches(props) {
 
   return (
-    <div>
+    <Box style={{position: "absolute", width:"100%", zIndex:1, backgroundColor: 'var(--chakra-colors-chakra-body-bg'}}>
       {props.data.map((search, index) => {
         let name, id
         let picture = search.picture
@@ -24,7 +24,7 @@ function Searches(props) {
 
         return <SearchCard key={index} id={id} name={name} picture={picture}/>
       })}
-    </div>
+    </Box>
   )
 
 }

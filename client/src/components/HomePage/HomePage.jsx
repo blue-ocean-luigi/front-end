@@ -69,16 +69,7 @@ function HomePage() {
             </Heading>
             <Input variant="filled" placeholder="Search for users and groupssss" onChange={(e) => handleChange(e)} value={search}/>
             {/* <Button onClick={(e) => handleSubmit(e)}>Search</Button> */}
-
-            <Box >
-              <Box maxH='40vh' width='100%' p='0' overflowY='auto' position='absolute'>
-                <Box px={4}>
-                  <Box borderTopWidth='1px' pt={2} pb={4}>
-                    <Searches data={content}/>
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
+            <Searches data={content}/>
           </Box>
         </Flex>
         <Divider />

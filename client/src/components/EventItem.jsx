@@ -101,11 +101,8 @@ class EventItem extends React.Component {
   render() {
     const { event, userID, updateFeed, rsvps, setRsvps, going, setGoing } = this.props;
     const { comment, likes, comments } = this.state;
-    // console.log('in event item and rendering: ', event);
 
     return (
-      // eslint-disable-next-line max-len
-      // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
       <Box
         boxShadow="md"
         rounded="lg"
