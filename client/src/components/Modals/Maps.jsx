@@ -81,7 +81,7 @@ function Maps(props) {
     <Box>
       <Box w="500px" h="30vh">
         <GoogleMap
-          center={edc}
+          center={geoEnd}
           zoom={10}
           mapContainerStyle={{ width: '100%', height: '100%' }}
           options={{

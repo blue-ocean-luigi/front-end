@@ -71,7 +71,7 @@ function HomePage() {
             {/* <Button onClick={(e) => handleSubmit(e)}>Search</Button> */}
 
             <Box >
-              <Box maxH='40vh' width='100%' p='0' overflowY='auto' position='absolute' bgColor='white' zIndex='9999'>
+              <Box maxH='40vh' width='100%' p='0' overflowY='auto' position='absolute'>
                 <Box px={4}>
                   <Box borderTopWidth='1px' pt={2} pb={4}>
                     <Searches data={content}/>
