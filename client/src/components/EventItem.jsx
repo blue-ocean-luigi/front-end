@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react';
 import EventView from './Modals/EventView';
 import CommentList from './Comments/CommentList';
+import RsvpList from './RsvpList';
 import { UseContextAll } from './ContextAll';
 import { please } from '../request';
 
@@ -101,6 +102,7 @@ class EventItem extends React.Component {
 
   render() {
     const { event, userID, updateFeed, rsvps, setRsvps, going, setGoing, events, setEvents } = this.props;
+    const { onOpenRsvp, isOpenRsvp, onCloseRsvp } = this.props;
     const { comment, likes, comments } = this.state;
     return (
       <Box
@@ -150,10 +152,11 @@ class EventItem extends React.Component {
             </Tooltip> */}
             <Text> {rsvps.length} </Text>
             <Tooltip label="RSVPs">
-              <IconButton variant="ghost">
+              <IconButton variant="ghost" onClick={onOpenRsvp}>
                 <Icon as={FaRegEnvelopeOpen} w={5} h={5} />
               </IconButton>
             </Tooltip>
+            <RsvpList onClose={onCloseRsvp} isOpen={isOpenRsvp} rsvps={rsvps} />
           </Stack>
         </HStack>
         <EventView eventInfo={event} handleLike={this.handleLike} sendComment={this.sendComment} rsvps={rsvps} setRsvps={setRsvps} events={events} setEvents={setEvents}/>

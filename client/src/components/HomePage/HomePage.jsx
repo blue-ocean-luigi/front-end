@@ -85,7 +85,7 @@ function HomePage() {
             <Box w="100%" h="fit-content" p={1} align="center">
               <Image
                 boxSize="200px"
-                src="https://i.pinimg.com/originals/42/90/35/429035c30c3e0aa7169168a93fdbe551.jpg"
+                src={userInfo.picture}
                 alt="User Name"
                 borderRadius="full"
                 onClick={() => console.log('clicked profile image')}

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Box } from '@chakra-ui/react';
+import { Box, useDisclosure } from '@chakra-ui/react';
 import './HomeFeedPost.css';
 import PostItem from '../../PostItem';
 import EventItem from '../../EventItem';
@@ -26,6 +26,13 @@ function Post({post, updateFeed, events, setEvents}) {
       .catch((err) => console.log(err))
   }, [])
 
+  // hook for handling whether the rsvp list is open
+  const {
+    isOpen: isOpenRsvp,
+    onOpen: onOpenRsvp,
+    onClose: onCloseRsvp,
+  } = useDisclosure();
+
   return (
     <Box mr={4}>
       {
@@ -40,6 +47,9 @@ function Post({post, updateFeed, events, setEvents}) {
           currentGroupID={currentGroupID}
           events={events}
           setEvents={setEvents}
+          isOpenRsvp={isOpenRsvp}
+          onOpenRsvp={onOpenRsvp}
+          onCloseRsvp={onCloseRsvp}
         />
       ) : (
         <PostItem
