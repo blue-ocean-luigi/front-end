@@ -25,12 +25,14 @@ import { please } from '../../request';
 import { UseContextAll } from '../ContextAll';
 import Maps from './Maps';
 
-function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps, setEvents }) {
+function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps, events, setEvents}) {
+
+  console.log('HAI HAI -------- here is setEvents in eventView: ', setEvents)
+  console.log('BLOO here is events---------: ', events)
   const { userID } = UseContextAll();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [comment, setComment] = useState('');
   const [going, setGoing] = useState(rsvps.filter(r => r.user_id === userID).length > 0);
-  const [currentComments, setCurrentComments] = useState(eventInfo.comments)
 
   function sendRSVP() {
     please.createRsvp({ post_id: eventInfo.post_id, user_id: userID, paid: false })
@@ -46,19 +48,14 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps, setEve
 
   function sendComment(comment) {
     console.log('HAI sending comment nao: ', eventInfo)
+
     // const { event, setEvents, userID, updateFeed, currentGroupID } = this.props;
     please.createComment({ post_id: eventInfo.post_id, user_id: userID, message: comment })
       .then((response) => {
-        console.log('HAI posted comment: ', response);
         setComment('');
       })
       .then((res) => please.getGroupPosts(eventInfo.group_id))
-      .then((res) => {
-        setEvents(res.data);
-        onClose();
-        // const newComments = res.data.filter(i=> i.post_id===event.post_id)[0].comments;
-        // this.setState({comments: newComments})
-      })
+      .then((res) => setEvents(res.data))
       .catch((err) => console.log('HAI hit an error getting group posts: ', err))
   }
 

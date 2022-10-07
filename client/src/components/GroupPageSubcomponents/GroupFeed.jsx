@@ -6,24 +6,9 @@ import {
 import NewEvent from '../Modals/NewEvent';
 import NewPost from '../Modals/NewPost';
 import HomeFeedPost from '../HomePage/post/HomeFeedPost';
-import { please } from '../../request';
-import { UseContextAll } from '../ContextAll';
 
 function GroupFeed({events, setEvents, updateFeed}) {
-  const { currentGroupID } = UseContextAll();
-  // const [events, setEvents] = useState([]);
-
-  // useEffect(() => {
-  //   please.getGroupPosts(currentGroupID)
-  //     .then((res) => setEvents(res.data))
-  //     .catch((err) => console.log(err));
-  // }, [currentGroupID]);
-
-  // function updateFeed() {
-  //   please.getGroupPosts(currentGroupID)
-  //     .then((res) => setEvents(res.data))
-  //     .catch((err) => console.log(err));
-  // }
+  console.log('HAI IN GROUP FEED HERE IS SETEVENTS: ', setEvents)
 
   return (
     <Box>
@@ -33,7 +18,7 @@ function GroupFeed({events, setEvents, updateFeed}) {
       </Flex>
       <Box position="relative" w="100%" align="center" mt={10}>
         <Box mr={4}>
-          {events.map((event) => <HomeFeedPost key={event.name} post={event} updateFeed={updateFeed} setEvents={setEvents}/>)}
+          {events.map((event) => <HomeFeedPost key={event.name} post={event} updateFeed={updateFeed} events={events} setEvents={setEvents}/>)}
         </Box>
       </Box>
 

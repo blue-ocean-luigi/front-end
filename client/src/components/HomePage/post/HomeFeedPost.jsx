@@ -6,8 +6,9 @@ import EventItem from '../../EventItem';
 import { UseContextAll } from '../../ContextAll';
 import { please } from '../../../request';
 
-function Post({post, updateFeed, setEvents}) {
-  // console.log('this is post')
+function Post({post, updateFeed, events, setEvents}) {
+  console.log('HAI this is setEvents: ', setEvents)
+  console.log('HAI in post this is events: ', events)
   // function sendComment(comment) {
   //   console.log('in send comment here is the big object: ', comment)
   //   // send post request
@@ -39,6 +40,7 @@ function Post({post, updateFeed, setEvents}) {
           rsvps={rsvps}
           setRsvps={setRsvps}
           currentGroupID={currentGroupID}
+          events={events}
           setEvents={setEvents}
         />
       ) : (
@@ -48,6 +50,7 @@ function Post({post, updateFeed, setEvents}) {
           userInfo={userInfo}
           updateFeed={updateFeed}
           currentGroupID={currentGroupID}
+          events={events}
           setEvents={setEvents}
         />
       )
