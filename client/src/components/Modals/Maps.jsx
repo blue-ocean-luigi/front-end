@@ -4,6 +4,7 @@ import {
   Input,
   Button,
   Text,
+  ButtonGroup,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import {
@@ -79,7 +80,7 @@ function Maps(props) {
 
   return (
     <Box>
-      <Box w="500px" h="30vh">
+      <Box p={8} w="500px" h="30vh">
         <GoogleMap
           center={geoEnd}
           zoom={10}
@@ -102,10 +103,11 @@ function Maps(props) {
         <Text>{props.endLoc}</Text>
       </Box>
       <Box>
-        <Button type="submit" onClick={calcRoute}> Route </Button>
-        <Button onClick={clearRoute}>X</Button>
+        <ButtonGroup gap={1}>
+          <Button mt={4} mb={4} type="submit" onClick={calcRoute}> Route </Button>
+          <Button mt={4} mb={4} onClick={clearRoute}>Clear</Button>
+        </ButtonGroup>
       </Box>
-
       <Text>
         Distance:
         {distance}
@@ -114,7 +116,7 @@ function Maps(props) {
         Duration:
         {duration}
       </Text>
-      <Box>
+      <Box mt={2}>
         <FaLocationArrow onClick={() => map.panTo(geoEnd)} />
       </Box>
       <Box>
