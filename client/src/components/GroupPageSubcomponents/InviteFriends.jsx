@@ -24,7 +24,7 @@ function InviteFriends({onClose, isOpen, members }) {
         <ModalHeader>Invite friends to this group</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <FriendsList friends={userFriends.friendlist} isGroupInvite={isGroupInvite} members={members}/>
+          <FriendsList friends={userFriends.friendlist} isGroupInvite={isGroupInvite} members={members} closeRequestModal={onClose}/>
         </ModalBody>
         <ModalFooter>
           <Button onClick={onClose}>Close</Button>
