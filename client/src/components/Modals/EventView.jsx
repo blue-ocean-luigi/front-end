@@ -69,6 +69,14 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps, events
     }
   }, [rsvps]);
 
+  const convertTime = (time) => {
+    const startTimeEnd = time <= 1200 ? 'A.M' : 'P.M';
+    const startTime = time > 1200 ? time - 1200 : time;
+    const newTime = startTime >= 1000 ? startTime.toString() : `0${startTime}`;
+    return `${newTime.substr(0, 2)}:${newTime.substr(2, 3)} ${startTimeEnd}`;
+  };
+  console.log('BLOO eventinfo: ', eventInfo)
+
   return (
     <div>
       <Button mt={4} mb={1} size="sm" backgroundColor="#f7d359" onClick={onOpen}>Event Details</Button>
@@ -96,7 +104,10 @@ function EventView({ eventInfo, handleLike, sendComment, rsvps, setRsvps, events
               {' '}
               {eventInfo.groupname}
             </Text>
-            <Text>{eventInfo.starttime}</Text>
+            <Text>
+              Posted by {' '}{eventInfo.firstname}{' '}{eventInfo.lastname}
+            </Text>
+            <Text>{convertTime(eventInfo.starttime)}</Text>
           </Box>
           <ModalBody>
             {eventInfo.content}
