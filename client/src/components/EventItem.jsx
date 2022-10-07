@@ -194,7 +194,7 @@ class EventItem extends React.Component {
             colorScheme="gray"
             variant="ghost"
             onClick={() => {
-              if (!comment.message) {
+              if (!comment) {
                 alert('you cannot post an empty comment!')
               } else {
                 this.sendComment(comment);
