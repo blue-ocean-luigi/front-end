@@ -20,7 +20,7 @@ function FriendsList({ friends, isGroupInvite, members }) {
           </Box>
         </Box>
       )}
-      {mainPage === 'profile' && (
+      {(mainPage === 'profile' || mainPage === 'group') && (
       <Box align="center">
         <Heading mb={1} fontSize="xl">
           Friends

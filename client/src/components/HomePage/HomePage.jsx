@@ -115,10 +115,9 @@ function HomePage() {
             <Box w="100%" h="fit-content" p={1} align="center" onClick={() => navProfile()}>
               <Image
                 boxSize="200px"
-                src="https://i.pinimg.com/originals/42/90/35/429035c30c3e0aa7169168a93fdbe551.jpg"
+                src={"https://i.pinimg.com/originals/42/90/35/429035c30c3e0aa7169168a93fdbe551.jpg"}
                 alt="User Name"
                 borderRadius="full"
-                objectFit="cover"
                 onClick={() => console.log('clicked profile image')}
               />
               <Text fontSize="2xl">{`${userInfo.firstname} ${userInfo.lastname}`}</Text>
@@ -127,12 +126,8 @@ function HomePage() {
               display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '15px',
             }}
             >
-              <Box style={{
-                display: 'flex', justifyContent: 'center', alignItems: 'center', paddingBottom: '15px',
-              }}
-              >
-                <CreateGroupButton />
-              </Box>
+              <Heading fontSize="20px">Your Groups</Heading>
+              <CreateGroupButton />
               <GroupList groups={userGroups} />
               <Heading fontSize="20px" padding="20px">Your Friends</Heading>
               <FriendsList friends={userFriends.friendlist} />
