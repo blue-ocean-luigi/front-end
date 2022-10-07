@@ -12,6 +12,7 @@ import {
   Icon,
   Textarea,
   Tooltip,
+  Badge,
 } from '@chakra-ui/react';
 import EventView from './Modals/EventView';
 import CommentList from './Comments/CommentList';
@@ -129,6 +130,7 @@ class EventItem extends React.Component {
               p={1}
             />
             <Box p={1} align="left">
+              <Badge colorScheme="yellow">Event</Badge>
               <Text fontSize="2xl">
                 {event.eventname}
               </Text>

@@ -99,7 +99,7 @@ function CreateGroupButton() {
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={submitForm}>
+            <Button backgroundColor="#f7d359" mr={3} onClick={submitForm}>
               Submit
             </Button>
             <Button mr={3} onClick={clearForm}>

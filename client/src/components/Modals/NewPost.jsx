@@ -80,13 +80,13 @@ function NewPost({ updateFeed }) {
               <FormLabel>Comment</FormLabel>
               <Textarea required onChange={(e) => { setPostContent(e.target.value); }} />
               <FormLabel>Add a photo</FormLabel>
-              <Input type="file" onChange={(e) => { handlePhoto(e); }} />
+              <Input type="file" border="0px" onChange={(e) => { handlePhoto(e); }} />
               <FormHelperText>Optional</FormHelperText>
             </FormControl>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={() => { handleSubmit(); }}>
+            <Button backgroundColor="#f7d359" mr={3} onClick={() => { handleSubmit(); }}>
               Post
             </Button>
           </ModalFooter>

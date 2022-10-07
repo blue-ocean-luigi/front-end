@@ -105,8 +105,8 @@ class PostItem extends React.Component {
               p={1}
             />
             <Box p={1} align="left">
-              <Text fontSize="2xl">
-                {post.firstname}
+              <Text fontSize="xl">
+                {`${post.firstname} ${post.lastname}: `}
               </Text>
               <Text>
                 {post.content}
