@@ -110,6 +110,7 @@ function HomePage() {
             w="30%"
             rounded="lg"
             p={1}
+            marginLeft="2%"
           >
             <Box w="100%" h="fit-content" p={1} align="center" onClick={() => navProfile()}>
               <Image
@@ -125,14 +126,10 @@ function HomePage() {
               display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', paddingTop: '15px',
             }}
             >
-              <Box style={{
-                display: 'flex', justifyContent: 'center', alignItems: 'center', paddingBottom: '15px',
-              }}
-              >
-                <Heading fontSize="30px" paddingRight="15px">Your Groups</Heading>
-                <CreateGroupButton />
-              </Box>
+              <Heading fontSize="20px">Your Groups</Heading>
+              <CreateGroupButton />
               <GroupList groups={userGroups} />
+              <Heading fontSize="20px" padding="20px">Your Friends</Heading>
               <FriendsList friends={userFriends.friendlist} />
             </Box>
           </Box>
