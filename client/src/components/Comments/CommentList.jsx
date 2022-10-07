@@ -40,7 +40,10 @@ class CommentList extends React.Component {
           <h2>
             <AccordionButton>
               <Box flex='1' textAlign='left'>
-                Show Comments
+                { (comments.length > 0)
+                  ? 'Show Comments'
+                  : 'No comments yet, be the first!'
+                }
               </Box>
               <AccordionIcon />
             </AccordionButton>
