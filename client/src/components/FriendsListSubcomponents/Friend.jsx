@@ -9,9 +9,10 @@ import {
   Badge,
 } from '@chakra-ui/react';
 import { UseContextAll } from '../ContextAll';
+import { sendInvite } from '../ChatBar';
 
 function Friend({ friend, isGroupInvite, members }) {
-  const { mainPage, setMainPage, setCurrentUserID, currentGroupID } = UseContextAll();
+  const { mainPage, setMainPage, setCurrentUserID, currentGroupID, userInfo} = UseContextAll();
   let friendAlreadyInGroup;
   isGroupInvite ? friendAlreadyInGroup = members.filter(m => m.id === friend.id).length > 0 : friendAlreadyInGroup=false;
   //  if you click friends name and pic => friend profile
@@ -22,6 +23,7 @@ function Friend({ friend, isGroupInvite, members }) {
   //  if you click invite button => invite chat message send
   function onInvite(e) {
     console.log('invited friend: ', e);
+    sendInvite(friend.id, userInfo.id, currentGroupID);
   }
 
   return (
