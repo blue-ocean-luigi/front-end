@@ -148,7 +148,7 @@ function ProfilePage() {
           <Text w="100%" zIndex="2" position="absolute" left="0" textAlign="center" top="calc((100% - 20vw) / 2)" fontSize="2em" fontWeight="300" textShadow="2px 2px 2px black" color="#f7d359">{`${profileInfo.firstname} ${profileInfo.lastname}`}</Text>
         </Center>
       </Box>
-      <Box h="20vh" w="80%" border="1px solid gray" mb="1em" position="relative" overflowY="auto">
+      <Box h="20vh" w="80%" border="1px solid #f7d359" mb="1em" position="relative" overflowY="auto" boxShadow="md" rounded="lg">
         <Text fontSize="2em" position="absolute" left="2%" top="5%">About Me: </Text>
         <Center overflowY="auto" w="70%" h="fit-content" zIndex="5">
           <Text fontSize="1.2em" position="absolute" m="1em" top="30%" left="15%" right="15%" textIndent="1em">{bio || 'This user has not filled out their bio :('}</Text>
@@ -157,11 +157,11 @@ function ProfilePage() {
         <BioUpdate updateBio={setBio} onClose={onClose} onOpen={onOpen} isOpen={isOpen} />)}
       </Box>
       <Flex flexDirection="row" w="80%" justifyContent="space-evenly">
-        <Box w="50%" h="50vh" overflowY="auto" border="1px solid red" mb="5em" mr="0.5em">
+        <Box w="50%" h="50vh" overflowY="auto" mb="5em" mr="0.5em">
           {profileFriends ? <FriendsList friends={profileFriends} />
             : <Text> No friends to view </Text>}
         </Box>
-        <Box w="50%" h="50vh" overflowY="auto" border="1px solid red" mb="5em" ml="0.5em">
+        <Box w="50%" h="50vh" overflowY="auto" mb="5em" ml="0.5em">
           {profileGroups && <GroupList groups={profileGroups} />}
         </Box>
       </Flex>
