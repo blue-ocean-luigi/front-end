@@ -1,6 +1,6 @@
 # Community Crossing
-*An online community for communitites*
-<img src="https://raw.githubusercontent.com/blue-ocean-luigi/front-end/main/client/dist/static/logo2.png" width="50" height="50">
+*An online community for communitites*\
+<img src="https://raw.githubusercontent.com/blue-ocean-luigi/front-end/main/client/dist/static/logo2.png" width="100" height="100">
 
 ## Contributors
 
@@ -95,11 +95,11 @@ This project was a one week challenge to complete a full-stack web application w
 
 ![biobannerswap](https://user-images.githubusercontent.com/107714292/194730545-0e92e99a-bde6-44d1-b39b-7cd140bc0f98.gif)
 
-</details
+</details>
  
 <details><summary>Friends</summary>
   
-![acc frnd req](https://user-images.githubusercontent.com/107714292/194730553-36c295f0-7b29-4051-87fb-5b6e36a2cfea.gif)
+![acc frnd req](https://user-images.githubusercontent.com/107714292/194730796-83ed73f5-3f11-47d9-9a6f-d3a78a1fcc8e.gif)
 
 </details>
 
@@ -114,11 +114,11 @@ This project was a one week challenge to complete a full-stack web application w
 
 ![chat](https://user-images.githubusercontent.com/107714292/194730557-7d8b75f0-57ac-4dfd-b2c5-c72fd6a99b1c.gif)
 
-</details
+</details>
  
 <details><summary>Posts/Comments</summary>
   
-![likepostcomment](https://user-images.githubusercontent.com/107714292/194730566-c24722f2-291f-4bef-a9e3-40232082074c.gif)
+![likepostcomment](https://user-images.githubusercontent.com/107714292/194730799-c75427b6-18a8-467f-adeb-303f445a2107.gif)
 
 </details>
 
