@@ -89,9 +89,45 @@ This project was a one week challenge to complete a full-stack web application w
     - Rigorously planning out the architecure of both our codebase and our UI as a team from the very beginning ensured that everyone knew what their responsibilites were and what the end product would be.
     - Preplanning, whiteboarding, and tracking tickets was a tedious process, but it really paid off for our team to keep everyone on the same page and workflow moving.
 
-## Video Demo / Screen shot walkthrough of the app
-  ** put gif of walkthru here **
-![alt text](https://github.com/blue-ocean-luigi/front-end/blob/main/client/dist/static/logo2.png?raw=true)
+## Video Demos
+
+<details><summary>Profile</summary>
+  
+![biobannerswap](https://user-images.githubusercontent.com/107714292/194730476-443c8937-8626-411c-bcf5-0bf57a95ebae.gif)
+ 
+</details>
+
+<details><summary>Friends</summary>
+  
+![Friend Request](https://user-images.githubusercontent.com/107714292/194730360-190f948c-7ba3-434d-a377-8f6aa527e346.gif)
+ 
+</details>
+
+<details><summary>Chat</summary>
+  
+![Chat](https://user-images.githubusercontent.com/107714292/194730360-190f948c-7ba3-434d-a377-8f6aa527e346.gif)
+
+</details>
+
+<details><summary>Groups</summary>
+ 
+![acc grp req](https://user-images.githubusercontent.com/107714292/194730460-1fb34b47-dbc1-46a4-9034-9d870c7e51e5.gif)
+![Joingroup](https://user-images.githubusercontent.com/107714292/194730455-d001f3cf-94b3-47bf-8a0a-3ff77bfde3f0.gif)
+
+</details>
+
+<details><summary>Posts/Comments</summary>
+ 
+![likepostcomment](https://user-images.githubusercontent.com/107714292/194730494-0b1fd917-de28-4a57-bdfe-3501a5bb5b82.gif)
+
+</details>
+
+<details><summary>Events</summary>
+ 
+![newevent](https://user-images.githubusercontent.com/107714292/194730509-604d7785-d30b-43c2-91f5-15bd4ca6c593.gif)
+![rsvptoevent](https://user-images.githubusercontent.com/107714292/194730510-cdbea1a1-2f06-40b5-bd89-41a7125b4dc0.gif)
+
+</details>
 
 
   * User story and MVP
