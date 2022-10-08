@@ -24,7 +24,7 @@ function RequestFriend() {
       .catch((err) => {
         console.log(err);
       });
-  }, [currentUserID]);
+  }, [currentUserID, userID]);
 
   function handleRequest() {
     please.requestFriend(userID, currentUserID)
@@ -38,7 +38,7 @@ function RequestFriend() {
 
   return (
     <Box>
-      {friendStatus === 'friend' && <Button onClick={() => setOpenChatModal(true) } background="#f7d359" color="black"> Chat Now </Button>}
+      {friendStatus === 'friend' && <Button onClick={() => setOpenChatModal(true)} background="#f7d359" color="black"> Chat Now </Button>}
       {friendStatus === 'pending' && <Button background="#f7d359" color="black"> Pending </Button>}
       {friendStatus === 'stranger' && <Button background="#f7d359" color="black" onClick={() => handleRequest()}> Request Friend </Button>}
     </Box>

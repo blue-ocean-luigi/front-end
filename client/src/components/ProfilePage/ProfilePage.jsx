@@ -77,9 +77,10 @@ function ProfilePage() {
           console.log(err);
         });
     }
-  }, [currentUserID, userFriends]);
+  }, [currentUserID, userFriends, userID]);
 
   function handlePhoto(e) {
+    // eslint-disable-next-line no-undef
     const body = new FormData();
     body.set('key', IMGBB_API_KEY);
     body.append('image', e.target.files[0]);

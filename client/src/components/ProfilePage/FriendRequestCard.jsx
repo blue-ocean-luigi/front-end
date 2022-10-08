@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-nested-ternary */
 import React, { useState } from 'react';
 import {
@@ -10,8 +11,10 @@ import {
 } from '@chakra-ui/react';
 import { MdThumbUp, MdThumbDown } from 'react-icons/md';
 import { UseContextAll } from '../ContextAll';
+// eslint-disable-next-line import/extensions
 import { please } from '../../request.jsx';
 
+// eslint-disable-next-line react/prop-types
 function FriendRequestCard({ request, setReqCount }) {
   const {
     userInfo,
@@ -47,8 +50,8 @@ function FriendRequestCard({ request, setReqCount }) {
       <Image src={request.picture} boxSize="5vw" borderRadius="full" objectFit="cover" />
       <Text fontSize="1.2em" position="absolute" left="6vw" top="calc(((100% - 1.2em) / 2 ) - 8)">{`${request.firstname} ${request.lastname}`}</Text>
       <Box h="100%">
-        {replied ?
-          ( accepted ? <Icon as={MdThumbUp} boxSize="2em" position="absolute" top="calc((100% - 2em) / 2)" right="5%" color="blue.500">done</Icon> : <Icon as={MdThumbDown} boxSize="2em" position="absolute" top="calc((100% - 2em) / 2)" right="5%" color="red.500" />)
+        {replied
+          ? (accepted ? <Icon as={MdThumbUp} boxSize="2em" position="absolute" top="calc((100% - 2em) / 2)" right="5%" color="blue.500">done</Icon> : <Icon as={MdThumbDown} boxSize="2em" position="absolute" top="calc((100% - 2em) / 2)" right="5%" color="red.500" />)
           : (
             <Flex
               flexDirection="column"
