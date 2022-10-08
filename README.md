@@ -1,5 +1,6 @@
 # Community Crossing
 *An online community for communitites*
+<img src="https://raw.githubusercontent.com/blue-ocean-luigi/front-end/main/client/dist/static/logo2.png" width="50" height="50">
 
 ## Contributors
 
@@ -89,11 +90,45 @@ This project was a one week challenge to complete a full-stack web application w
     - Rigorously planning out the architecure of both our codebase and our UI as a team from the very beginning ensured that everyone knew what their responsibilites were and what the end product would be.
     - Preplanning, whiteboarding, and tracking tickets was a tedious process, but it really paid off for our team to keep everyone on the same page and workflow moving.
 
-## Video Demo / Screen shot walkthrough of the app
-  ** put gif of walkthru here **
-![alt text](https://github.com/blue-ocean-luigi/front-end/blob/main/client/dist/static/logo2.png?raw=true)
+## Video Demo
+<details><summary>Profile</summary>
 
+![biobannerswap](https://user-images.githubusercontent.com/107714292/194730545-0e92e99a-bde6-44d1-b39b-7cd140bc0f98.gif)
 
+</details
+ 
+<details><summary>Friends</summary>
+  
+![acc frnd req](https://user-images.githubusercontent.com/107714292/194730553-36c295f0-7b29-4051-87fb-5b6e36a2cfea.gif)
+
+</details>
+
+<details><summary>Groups</summary>
+
+![acc grp req](https://user-images.githubusercontent.com/107714292/194730569-eba4f8d3-5338-41d4-b68a-94c21d83bbfd.gif)
+![joingroup](https://user-images.githubusercontent.com/107714292/194730571-945092d7-9f7e-4166-bd26-8443fdd4e862.gif)
+
+</details>
+
+<details><summary>Chat</summary>
+
+![chat](https://user-images.githubusercontent.com/107714292/194730557-7d8b75f0-57ac-4dfd-b2c5-c72fd6a99b1c.gif)
+
+</details
+ 
+<details><summary>Posts/Comments</summary>
+  
+![likepostcomment](https://user-images.githubusercontent.com/107714292/194730566-c24722f2-291f-4bef-a9e3-40232082074c.gif)
+
+</details>
+
+<details><summary>Events</summary>
+  
+![newevent](https://user-images.githubusercontent.com/107714292/194730576-8057fe30-2d4a-43a3-bea0-d7e312b19d94.gif)
+![rsvptoevent](https://user-images.githubusercontent.com/107714292/194730578-f0dd9853-1111-4aa2-8317-738e58f1a38d.gif)
+
+</details>
+ 
   * User story and MVP
     - Our minimal viable product would ensure that users could login securely and be able to navigate from a home page, to a profile page, and to group pages.
     - MVP would include the ability for users to add groups, add friends, post events and news within their groups, as well as chat with friends in their circle.
