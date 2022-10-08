@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
-  ChakraProvider,
   Center,
   Flex,
   Box,
   Text,
-  Heading,
   Input,
   InputGroup,
-  InputRightElement,
   Image,
   Button,
   useDisclosure,
 } from '@chakra-ui/react';
-import { MdBuild, MdInsertPhoto } from 'react-icons/md';
+import { MdInsertPhoto } from 'react-icons/md';
 import { UseContextAll } from '../ContextAll';
 import './ProfilePage.css';
 import FriendRequests from '../Modals/FriendRequests';
@@ -26,13 +23,14 @@ import { please } from '../../request';
 
 function ProfilePage() {
   const defaultBackgroundImage = 'https://news.clas.ufl.edu/wp-content/uploads/sites/4/2020/06/AdobeStock_345118478-copy-1440x961-1-e1613512040649.jpg';
+
   const defaultProfilePic = 'https://i.pinimg.com/736x/50/d8/03/50d803bda6ba43aaa776d0e243f03e7b.jpg';
+
+  const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
 
   const {
     userInfo,
-    userGroups,
     userFriends,
-    homePosts,
     userID,
     currentUserID,
   } = UseContextAll();
@@ -48,13 +46,10 @@ function ProfilePage() {
   const [profileReqests, setProfileRequests] = useState([]);
 
   useEffect(() => {
-    //  set banner to the one in db if it exists, otherwise use def
-    console.log(userID, currentUserID);
     if (userID === currentUserID) {
       setMyProfile(true);
       please.getUserByID(userID)
         .then((response) => {
-          console.log(response.data);
           setBio(response.data.info.aboutme);
           setProfileInfo(response.data.info);
           setProfileFriends(response.data.friends.friendlist);
@@ -70,7 +65,6 @@ function ProfilePage() {
       setMyProfile(false);
       please.getUserByID(currentUserID)
         .then((response) => {
-          console.log(response.data);
           setBio(response.data.info.aboutme);
           setProfileInfo(response.data.info);
           setProfileFriends(response.data.friends.friendlist);
@@ -85,8 +79,6 @@ function ProfilePage() {
     }
   }, [currentUserID, userFriends]);
 
-  const IMGBB_API_KEY = 'c29851f6cb13a79e0ff41dd116782a2f';
-
   function handlePhoto(e) {
     const body = new FormData();
     body.set('key', IMGBB_API_KEY);
@@ -100,15 +92,29 @@ function ProfilePage() {
       .then((response) => {
         console.log(response.data.data.display_url);
 
-        if (e.target.id === "ban_up") {
-          console.log('banner upload')
+        if (e.target.id === 'ban_up') {
           setBanner(response.data.data.display_url);
-          please.updateUser(userInfo.firstname, userInfo.lastname, userInfo.email, userInfo.aboutme, userInfo.picture, userInfo.id, response.data.data.display_url).then((data)=> console.log(data))
+          please.updateUser(
+            userInfo.firstname,
+            userInfo.lastname,
+            userInfo.email,
+            userInfo.aboutme,
+            userInfo.picture,
+            userInfo.id,
+            response.data.data.display_url,
+          );
         }
-        if (e.target.id === "pic_up") {
-          console.log("pic upload")
-          setPic(response.data.data.display_url)
-          please.updateUser(userInfo.firstname, userInfo.lastname, userInfo.email, userInfo.aboutme, response.data.data.display_url, userInfo.id, userInfo.banner).then((data)=>console.log(data))
+        if (e.target.id === 'pic_up') {
+          setPic(response.data.data.display_url);
+          please.updateUser(
+            userInfo.firstname,
+            userInfo.lastname,
+            userInfo.email,
+            userInfo.aboutme,
+            response.data.data.display_url,
+            userInfo.id,
+            userInfo.banner,
+          );
         }
       })
       .catch((error) => {
@@ -117,9 +123,10 @@ function ProfilePage() {
   }
 
   function handleBannerClick(e, type) {
-    type === "ban" ?
-    document.getElementById('ban_up').click() :
-    document.getElementById('pic_up').click()
+    // eslint-disable-next-line no-unused-expressions
+    type === 'ban'
+      ? document.getElementById('ban_up').click()
+      : document.getElementById('pic_up').click();
   }
 
   return (

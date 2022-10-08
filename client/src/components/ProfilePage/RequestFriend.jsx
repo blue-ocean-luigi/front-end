@@ -2,15 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Flex,
-  Text,
   Button,
 } from '@chakra-ui/react';
 import { UseContextAll } from '../ContextAll';
 import { please } from '../../request';
 
 function RequestFriend() {
-  const { userFriends, currentUserID, userID, setOpenChatModal } = UseContextAll();
+  const { currentUserID, userID, setOpenChatModal } = UseContextAll();
   const [friendStatus, setStatus] = useState('stranger');
 
   useEffect(() => {
@@ -46,6 +44,5 @@ function RequestFriend() {
     </Box>
   );
 }
-// James would you add Chat pop our for Chat now button
-// Request button sends reqest.
+
 export default RequestFriend;
