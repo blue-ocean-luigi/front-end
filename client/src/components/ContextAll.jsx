@@ -2,6 +2,8 @@ import React, {
   createContext, useContext, useState, useEffect,
 } from 'react';
 import { please } from '../request';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from './Auth/Auth';
 
 const ContextAll = createContext();
 
@@ -20,6 +22,7 @@ export function ContextAllProvider({ children }) {
   const [currentGroupID, setCurrentGroupID] = useState(''); //  expects group ID
   const [currentUserID, setCurrentUserID] = useState('');
   const [openChatModal, setOpenChatModal] = useState(false);
+  const [user, loading, error] = useAuthState(auth);
 
   useEffect(() => {
     please.getUserPosts(userID) // replace with userID
@@ -62,6 +65,9 @@ export function ContextAllProvider({ children }) {
     setCurrentUserID,
     openChatModal,
     setOpenChatModal,
+    user,
+    loading,
+    error,
   };
   return (
     <ContextAll.Provider value={values}>
