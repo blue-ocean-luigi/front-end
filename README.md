@@ -24,7 +24,7 @@
 * Before commits, run `npm run lint` and fix any discrepancies 🙏
 
 
-#Community Crossing
+# Community Crossing
  - cool graphic here
 ## Contributors
   * Kevin Pho: Link github
@@ -34,53 +34,53 @@
   * Matt Waelder: Link github
   * Amberly Malone: [github](https://github.com/amberlyM)
 
-##Introduction
+## Introduction
 This project was a one week challenge to complete a fully functional, full-stack web application for an external user, Mr.McGruff.
 
   *Add any additional content here pertaining to the timeline, any personal goals, etc.
 
-###Description
+### Description
 * What problem does it solve? Who uses it?
 * Why was it built?
 * User Inputs and Outputs
 *
 
-##Tech stack ( you can include logos)
+## Tech stack ( you can include logos)
   *React
   *express.js
   *Chakra UI
   *
 
-##Technical Challenges and research that you anticipated
+## Technical Challenges and research that you anticipated
   * Why, what was the plan to overcome those challenges?
   * What did you learn?
 
-###Challenges that were unexpected
+### Challenges that were unexpected
   * Why was it a challenge
   * What did you learn?
 
-##Video Demo / Screen shot walkthrough of the app
+## Video Demo / Screen shot walkthrough of the app
   * What were the user stories /  what was MVP (mention Minimal Viable Product)
 
-##How does the app work?
+## How does the app work?
   * What happens behind the scenes when the user interacts with it?
   * OR What are all the places the data travels?  What happens to that data?
   * Optionally include a diagram
   * How does the tech stack come together?
 
-##Workflow and Key lessons from your team - specifically those related to: Agile, CI/CD, testing, working with external stakeholders, ticketing, and user stories.
+## Workflow and Key lessons from your team - specifically those related to: Agile, CI/CD, testing, working with external stakeholders, ticketing, and user stories.
   * Your git workflow, style guides, commit guides, etc
   * What did you learn from the process
   * What were key takeaways from stand ups, code reviews, etc
   * Writing tests
   * Link to your trello board, discuss completed tickets
 
-##Additional features
-  *etc
+## Additional features
+  * etc
 
-##Notes from your Sprint Retro
+## Notes from your Sprint Retro
 
-##What additional features do you plan to add, how do you plan to implement those features?
+## What additional features do you plan to add, how do you plan to implement those features?
   * Future refactoring?
   * Additional dev ops considerations?
   * UI/UX additions?

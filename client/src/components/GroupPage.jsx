@@ -25,7 +25,6 @@ import { please } from '../request';
 function GroupPage() {
   const {
     userID,
-    userGroups,
     userInfo,
     userFriends,
     setMainPage,
@@ -39,6 +38,7 @@ function GroupPage() {
   const [inGroup, setInGroup] = useState(false);
   const [memberRequests, setMemberRequests] = useState([]);
   const [requested, setRequested] = useState(false); // for group requests;
+  const [userUpdatedGroups, setUserUpdatedGroups] = useState([]);
   // on load of group, get all group page info
   useEffect(() => {
     please.getGroupInfo(currentGroupID)
@@ -47,24 +47,33 @@ function GroupPage() {
         setMembers(res.data.members);
       })
       .catch((err) => console.log(err));
-  }, [currentGroupID]);
+
+    please.getGroupsOfUser(userID)
+      .then((res) => {
+        console.log(res.data);
+        setUserUpdatedGroups(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [currentGroupID, userID]);
 
   // on load of group, check if the current user gets admin control
 
   useEffect(() => {
-    const pos = userGroups.map(g => g.id).indexOf(currentGroupID);
+    const pos = userUpdatedGroups.map(g => g.id).indexOf(currentGroupID);
     if (
       // in group and admin
-      userGroups.filter((g) => g.id === currentGroupID).length > 0
-      && userGroups[pos].admin
+      userUpdatedGroups.filter((g) => g.id === currentGroupID).length > 0
+      && userUpdatedGroups[pos].admin
     ) {
       // console.log('DEBUG in group AND admin')
       setInGroup(true);
       setGroupAdmin(true);
     } else if (
       // not admin but in group
-      userGroups.filter((g) => g.id === currentGroupID).length > 0
-      && !userGroups[pos].admin) {
+      userUpdatedGroups.filter((g) => g.id === currentGroupID).length > 0
+      && !userUpdatedGroups[pos].admin) {
       // console.log('DEBUG in group but not admin here is userInfo: ', userInfo)
       setInGroup(true);
       setGroupAdmin(false);
@@ -73,7 +82,7 @@ function GroupPage() {
       // console.log('DEBUG not in group nor admin')
       setInGroup(false);
     }
-  }, [userGroups, currentGroupID]);
+  }, [userUpdatedGroups, currentGroupID]);
 
   function handleEditMembers() {
     please.getOpenGroupRequest(currentGroupID)
