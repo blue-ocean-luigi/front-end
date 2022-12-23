@@ -36,7 +36,7 @@ This project was a one week challenge to complete a full-stack web application w
     - One challenge that isn't unique to any large team is organizing the codebase and optimizing workflow
     - The environment can get very hectic and disorganize when there are so many moving parts and a tight time constraint.
     - We avoided confusion and disorganization by planning out everything we could forsee in the project planning phase.
-  * What did you learn?
+  * What did we learn?
     - Rigorously planning out the architecure of both our codebase and our UI as a team from the very beginning ensured that everyone knew what their responsibilites were and what the end product would be.
     - Preplanning, whiteboarding, and tracking tickets was a tedious process, but it really paid off for our team to keep everyone on the same page and workflow moving.
 
@@ -92,14 +92,12 @@ This project was a one week challenge to complete a full-stack web application w
     - Upon initial rendering of the page, the users information is pulled from the database utilizing axios, express, and postgreSQL queries
     - The users data is utilized to conditional render their homepage, profile, and group pages
     - React state is leveraged to render initial settings and update the display as the user makes changes, with data being updated in the backend simultaneously.
-  * OR What are all the places the data travels?  What happens to that data?
     - Common data shared by components is held in React-context. Data unique to a rendered page is held in state, then sent to the database via axios when appropriate.
     - On the backend, the data is organized and stored on the database server using Postgres as the database management system
-  * Optionally include a diagram
   * How does the tech stack come together?
     - Components of our tech stack communicate seemlessly: React directing rendering and axios request to the backend, the backend recieving those request with express.js and processing them with node.js to store them in a postgreSQL database.
 
-## Workflow and Key lessons from your team - specifically those related to: Agile, CI/CD, testing, working with external stakeholders, ticketing, and user stories.
+## Developer Workflow
 
   * Work from one of the forks ( [back-end](https://github.com/blue-ocean-luigi/back-end) or [front-end](https://github.com/blue-ocean-luigi/front-end): `git clone <pick a fork>`
   * Set up the main project as upstream: `git remote add upstream https://github.com/blue-ocean-luigi/blue-ocean.git`
@@ -111,10 +109,6 @@ This project was a one week challenge to complete a full-stack web application w
     3. Get the most current code from main: `git fetch < origin OR upstream > main`
     4. Merge any new code from main to your branch `git switch <branch name>` then `git merge main`
 
-    * What did you learn from the process
-    * What were key takeaways from stand ups, code reviews, etc
-    * Writing tests
-    * Link to your trello board, discuss completed tickets
 
 ### Front End Notes
 
