@@ -6,7 +6,6 @@
 
 This project was a one week challenge to complete a full-stack web application with a team of engineers while utilizing agile workflow.
 
-  * Add any additional content here pertaining to the timeline, any personal goals, etc.
   * As a team of 6, we built out a fully functional front to back application in 7 days.
   * Our external user wanted an application that was secure and included features like geolocation, live chat, and user authentication. Our goal was to deliver all of this along with a sleek UI.
 
